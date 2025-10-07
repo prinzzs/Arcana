@@ -1,0 +1,290 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: var(--septenary-color);
+    overflow: hidden;
+}
+
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(#8c4fff, transparent);
+    pointer-events: none;
+    animation: spark-animation 1.5s ease-out forwards;
+    opacity: 0.8;
+}
+
+@keyframes spark-animation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(var(--dx) * 100px), calc(var(--dy) * 100px)) scale(0.5);
+        opacity: 0;
+    }
+}
+
+.text-container {
+    position: relative;
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: opacity 1s ease-in-out;
+    word-wrap: break-word; /* Ensures text breaks properly */
+    max-width: 90%; /* Prevents text from overflowing */
+}
+
+.text.visible {
+    opacity: 1;
+}
+
+button {
+position: relative;
+width: 11em;
+height: 4em;
+outline: none;
+transition: 0.1s;
+background-color: transparent;
+border: none;
+font-size: 13px;
+font-weight: bold;
+color: var(--senary-color);
+}
+
+#clip {
+--color: var(--tertiary-color);
+position: absolute;
+top: 0;
+overflow: hidden;
+width: 100%;
+height: 100%;
+border: 5px double var(--color);
+box-shadow: inset 0px 0px 15px var(--quaternary-color);
+-webkit-clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.arrow {
+position: absolute;
+transition: 0.2s;
+background-color: var(--tertiary-color);
+top: 35%;
+width: 11%;
+height: 30%;
+}
+
+#leftArrow {
+left: -13.5%;
+-webkit-clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+#rightArrow {
+-webkit-clip-path: polygon(100% 49%, 0 0, 0 100%);
+left: 102%;
+}
+
+button:hover #rightArrow {
+background-color: var(--quaternary-color);
+left: -15%;
+animation: 0.6s ease-in-out both infinite alternate rightArrow8;
+}
+
+button:hover #leftArrow {
+background-color: var(--quaternary-color);
+left: 103%;
+animation: 0.6s ease-in-out both infinite alternate leftArrow8;
+}
+
+.corner {
+position: absolute;
+width: 4em;
+height: 4em;
+background-color: var(--tertiary-color);
+box-shadow: inset 1px 1px 8px var(--quaternary-color);
+transform: scale(1) rotate(45deg);
+transition: 0.2s;
+}
+
+#rightTop {
+top: -1.98em;
+left: 91%;
+}
+
+#leftTop {
+top: -1.96em;
+left: -3.0em;
+}
+
+#leftBottom {
+top: 2.10em;
+left: -2.15em;
+}
+
+#rightBottom {
+top: 45%;
+left: 88%;
+}
+
+button:hover #leftTop,
+button:hover #rightTop,
+button:hover #rightBottom,
+button:hover #leftBottom {
+animation: 0.1s ease-in-out 0.05s both changeColor8,
+0.2s linear 0.4s both lightEffect8;
+}
+
+button:hover .corner {
+transform: scale(1.25) rotate(45deg);
+}
+
+button:hover #clip {
+animation: 0.2s ease-in-out 0.55s both purpleLight8;
+--color: var(--quaternary-color);
+}
+
+@keyframes changeColor8 {
+from {
+background-color: var(--tertiary-color);
+}
+to {
+background-color: var(--quaternary-color);
+}
+}
+
+@keyframes lightEffect8 {
+from {
+box-shadow: 1px 1px 5px var(--quaternary-color);
+}
+to {
+box-shadow: 0 0 2px var(--quaternary-color);
+}
+}
+
+@keyframes purpleLight8 {
+to {
+box-shadow: inset 0px 0px 32px var(--quaternary-color);
+}
+}
+
+@keyframes leftArrow8 {
+from {
+transform: translate(0px);
+}
+to {
+transform: translateX(10px);
+}
+}
+
+@keyframes rightArrow8 {
+from {
+transform: translate(0px);
+}
+to {
+transform: translateX(-10px);
+}
+}
+
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 999;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.page-transition.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .text {
+        transition: none;
+    }
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .text {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .text {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .text {
+        font-size: 1.4rem;
+        padding: 15px; /* Adds space on small screens */
+    }
+
+    #start-button {
+        font-size: 0.9rem; /* Slightly smaller button text */
+    }
+}
+
+
+#start-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 11em;
+    height: 4em;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+    #fixed-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 10px 20px;
+        background-color: #222;
+        color: var(--septenary-color);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease;
+    }
+
+    #fixed-button:hover {
+        background-color: #444;
+    }

@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--primary-color);
+}
+
+h2 {
+    font-family: Nevan;
+    font-size: 25px;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.btn {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: var(--button-color);
+    color: var(--septenary-color);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 36px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--quaternary-color);
+}
+
+.settings-section {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    padding: 8px;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid var(--primary-extra-color);
+    border-radius: 36px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+input::placeholder {
+    color: var(--primary-extra-color);
+   
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary-extra-color);
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 10px 0;
+}
+
+.header {
+    font-family: Nevan;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq, .support {
+    list-style-type: none;
+    padding: 0;
+}
+
+.faq li, .support li {
+    margin-bottom: 10px;
+}
+
+.faq li a, .support li a {
+    text-decoration: none;
+    color: var(--tertiary-color);
+}
+
+.faq li a:hover, .support li a:hover {
+    text-decoration: underline;
+}

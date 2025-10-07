@@ -1,0 +1,52 @@
+:root {
+    /* Index.html */
+    --bg-primary: #c9c9c9 !important; 
+    --text-color: #d2d2d2 !important;
+    --auxiliary-bg: #f5f5f5 !important;
+    --base-color: #d2d2d2 !important;
+    
+
+    --senary-color: #d2d2d2 !important;
+    --primary-color: #c9c9c9 !important;
+    --septenary-color: #d2d2d2 !important;
+    --primary-extra-color: #f5f5f5;
+
+    --secondary-color: #1c1c1c !important;
+    --tertiary-color: #9851e0 !important;
+    --quaternary-color: #a461e3 !important;
+    --quinary-color: #aaaaaa !important;
+    --senary-color: #d2d2d2 !important;
+    --septenary-color: #ffffff !important;
+
+    --primary-extra-color: #f5f5f5;
+    --auxiliary-color: #8c43ff;
+    --button-color: #8145e4;
+    --text-color: #0d0d0d !important;
+
+}
+
+body.light-mode {
+    /* Index.html */
+    --bg-primary: #1c1c1c !important; 
+    --text-color: #d2d2d2 !important;
+    --auxiliary-bg: #f5f5f5 !important;
+    --base-color: #d2d2d2 !important;
+
+    --senary-color: #d2d2d2 !important;
+    --auxiliary-bg: #f5f5f5 !important;
+
+    --secondary-color: #3d3d3d !important;
+    --tertiary-color: #9b51e0 !important;
+    --quaternary-color: #a461e3 !important;
+    --quinary-color: #f5f5f5 !important;
+    --senary-color: #ffffff !important;
+    --septenary-color: #d2d2d2 !important;
+
+    /*--button-color: #; */
+    --primary-extra-color: #050107;
+    --text-color: #d2d2d2 !important;
+}
+
+body {
+    transition: background 0.3s, color 0.3s;
+}

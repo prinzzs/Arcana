@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #fff;
+}
+
+header {
+    background-color: #1c1c1c;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #6c1ee6;
+}
+
+header h1 {
+    font-family: Nevan;
+    font-size: 3rem;
+    color: #6c1ee6;
+}
+
+.banner {
+    background-color: #6c1ee6;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.content {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    border: 1px solid #6c1ee6;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title h2 {
+    font-family: Nevan;
+    font-size: 2.9rem;
+    color: #fff;
+}
+
+.hp-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #2c2c2c;
+    border-radius: 6px;
+    border: 1px solid #fff;
+}
+
+.hp-bar button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.hp-bar button:hover {
+    color: #ff4d4d;
+}
+
+.abc{
+    margin-top: 20px;
+}
+
+.hp-bar span {
+    font-size: 1.5rem;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #6c1ee6;
+    margin-bottom: 25px;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.tabs button.active {
+    color: #6c1ee6;
+    border-bottom: 3px solid #6c1ee6;
+}
+
+.section {
+    margin: 25px 0;
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.section h3 {
+    margin-bottom: 2px;
+    color: #6c1ee6;
+    font-size: 1.5rem;
+}
+
+.attributes {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.attributes div {
+    flex: 1;
+    font-size: 1.1rem;
+}
+
+#periciastexto{
+    margin-top: 15px;
+    margin-bottom: 10px
+}
+
+.pericias {
+    border: 1px solid #6c1ee6;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.pericias table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pericias th, .pericias td {
+    padding: 12px;
+    border-bottom: 1px solid #6c1ee6;
+    font-size: 1.1rem;
+}
+
+.pericias th {
+    color: #6c1ee6;
+}
+
+.pericias td {
+    color: #fff;
+}
+
+.pericias td:last-child {
+    text-align: right;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 10px;
+    }
+  
+    .content {
+        padding: 20px;
+        margin: 20px;
+        border: none,
+    }
+
+    .hp-bar {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+    }
+
+    .hp-bar span {
+        font-size: 1.2rem;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tabs button {
+        margin-bottom: 12px;
+    }
+
+    .attributes {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    }
+
+    .attributes div {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    .content{
+        margin: none;
+        border: none;
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .title h2 {
+        font-size: 1.8rem;
+    }
+
+    .hp-bar span {
+        font-size: 1.2rem;
+    }
+
+    .tabs button {
+        font-size: 1rem;
+    }
+
+    .section h3 {
+        font-size: 1.3rem;
+    }
+
+    .pericias th, .pericias td {
+        font-size: 1rem;
+    }
+}

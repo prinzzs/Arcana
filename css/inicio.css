@@ -1,0 +1,314 @@
+/* Geral */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #050107;
+    color: var(--septenary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transition: background-image 0.5s ease;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.voltara {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1.5px solid var(--senary-color);
+    padding: 5px 20px;
+    color: var(--senary-color);
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.voltara:hover {
+    background-color: var(--senary-color);
+    color: #050107;
+}
+
+/* Cabeçalho */
+.header {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+}
+
+.persona {
+    font-size: 48px;
+    font-weight: bold;
+    font-family: Nevan;
+}
+
+/* Contêiner Principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+}
+
+/* Lista de Personagens */
+.char-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.char-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--septenary-color);
+    border-radius: 5px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.char-img img {
+    width: 50px;
+    height: 50px;
+    background-color: var(--septenary-color);
+    border-radius: 5px;
+}
+
+.char-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.char-info p:first-child {
+    letter-spacing: 0.1rem;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.create-btn {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #050107;
+    color: var(--senary-color);
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-btn:hover {
+    background-color: var(--senary-color);
+    color: #050107;
+}
+
+/* Detalhes (Nível + Estatísticas) */
+.details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#nivelNumero {
+    font-family: Nevan;
+    font-size: 60px;
+    margin: 0;
+}
+
+#nivel {
+    font-family: Nevan;
+    font-size: 18px;
+    color: var(--quinary-color);
+    margin: 5px 0 0;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.attributes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.attr-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.attr-item p {
+    margin: 0;
+}
+
+.nomeRobo {
+    font-size: 28px;
+    font-family: Nevan;
+}
+
+.attr-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.habilidades {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: start;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.start-btn {
+    text-align: center;
+}
+
+.start-btn button {
+    width: 100%;
+    max-width: 300px;
+    background-color: transparent;
+    color: #8c4fff;
+    border: 1.6px solid #8c4fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.start-btn button:hover {
+    background-color: #8c4fff;
+    color: #050107;
+}
+
+progress {
+    width: 100%;
+    background-color: #050107;
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--senary-color);
+    height: 2px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--septenary-color);
+    height: 6px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header {
+        text-align: center;
+    }
+
+    .persona {
+        font-size: 36px;
+    }
+
+    .container {
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .details-container {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+}
+
+@media (min-width: 769px) {
+    .container {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .details-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .persona {
+        font-size: 62px;
+    }
+
+    .voltara {
+        font-size: 24px;
+        padding: 5px 30px;
+    }
+
+    .char-img img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .create-btn {
+        font-size: 19.5px;
+    }
+
+    .level {
+        padding: 20px;
+    }
+
+    #nivelNumero {
+        font-size: 80px;
+    }
+
+    #nivel {
+        font-size: 22px;
+    }
+}
