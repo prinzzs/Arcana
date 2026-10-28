@@ -1,68 +1,67 @@
 <?php
 session_start();
 
-// Verifica se o usuário está autenticado
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redireciona para login se não estiver autenticado
+    header('Location: login.php');
     exit();
 }
 
-// Configurações do banco de dados
 $servername = "localhost";
 $username = "root";
 $password = "usbw";
 $dbname = "UserDB";
+$conn = null;
+$nome = '';
+$email = '';
+$message = null;
+$userId = (int) $_SESSION['user_id'];
 
-// Conectar ao banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
 
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
+    $stmt = $conn->prepare("SELECT email, nome FROM usuarios WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->bind_result($email, $nome);
+    $stmt->fetch();
+    $stmt->close();
 
-// Recupera as informações do usuário
-$userId = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT email, nome FROM usuarios WHERE id = ?");
-if (!$stmt) {
-    die("Erro na preparação da consulta: " . $conn->error);
-}
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$stmt->bind_result($email, $nome);
-$stmt->fetch();
-$stmt->close();
-
-// Processa as alterações
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Alterar nome do usuário
-    if (!empty($_POST['new_name'])) {
-        $newName = htmlspecialchars($_POST['new_name']);
-        $stmt = $conn->prepare("UPDATE usuarios SET nome = ? WHERE id = ?");
-        $stmt->bind_param("si", $newName, $userId);
-        $stmt->execute();
-        $stmt->close();
-        $message = "Nome alterado com sucesso!";
-    }
-
-    // Alterar senha
-    if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
-        $newPassword = $_POST['new_password'];
-        $confirmPassword = $_POST['confirm_password'];
-
-        if ($newPassword === $confirmPassword) {
-            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-            $stmt = $conn->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
-            $stmt->bind_param("si", $hashedPassword, $userId);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!empty($_POST['new_name'])) {
+            $newName = trim($_POST['new_name']);
+            $stmt = $conn->prepare("UPDATE usuarios SET nome = ? WHERE id = ?");
+            $stmt->bind_param("si", $newName, $userId);
             $stmt->execute();
             $stmt->close();
-            $message = "Senha alterada com sucesso!";
-        } else {
-            $message = "As senhas não coincidem!";
+            $nome = $newName;
+            $message = "Nome alterado com sucesso!";
+        }
+
+        if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
+            $newPassword = $_POST['new_password'];
+            $confirmPassword = $_POST['confirm_password'];
+
+            if ($newPassword === $confirmPassword) {
+                $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+                $stmt = $conn->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
+                $stmt->bind_param("si", $hashedPassword, $userId);
+                $stmt->execute();
+                $stmt->close();
+                $message = "Senha alterada com sucesso!";
+            } else {
+                $message = "As senhas não coincidem!";
+            }
         }
     }
+} catch (Throwable $e) {
+    $message = "Não foi possível acessar o banco de dados. Verifique se o MySQL está iniciado no XAMPP e se usuário e senha estão corretos.";
 }
 
-$conn->close();
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
 ?>
 
 

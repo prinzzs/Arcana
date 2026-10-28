@@ -3,80 +3,81 @@ $servername = "localhost";
 $username = "root";
 $password = "usbw";
 $dbname = "UserDB";
+$conn = null;
+$feedbackMessage = null;
 
-// Conectando ao servidor e ao banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
 
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
+    $conn->query("CREATE TABLE IF NOT EXISTS administradores (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL,
+        cpf VARCHAR(20) NOT NULL UNIQUE,
+        rg VARCHAR(20) NOT NULL,
+        cep VARCHAR(10) NOT NULL,
+        rua VARCHAR(100) NOT NULL,
+        numero VARCHAR(10) NOT NULL,
+        complemento VARCHAR(50),
+        bairro VARCHAR(50) NOT NULL,
+        cidade VARCHAR(50) NOT NULL,
+        uf VARCHAR(2) NOT NULL,
+        celular VARCHAR(20) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        senha VARCHAR(255) NOT NULL
+    )");
 
-// Garantir que a coluna 'senha' exista na tabela administradores
-$checkColumnQuery = "SHOW COLUMNS FROM administradores LIKE 'senha'";
-$result = $conn->query($checkColumnQuery);
-if ($result->num_rows == 0) {
-    $alterTableQuery = "ALTER TABLE administradores ADD COLUMN senha VARCHAR(255) NOT NULL";
-    if (!$conn->query($alterTableQuery)) {
-        die("Erro ao adicionar a coluna 'senha': " . $conn->error);
+    $result = $conn->query("SHOW COLUMNS FROM administradores LIKE 'senha'");
+    if ($result->num_rows === 0) {
+        $conn->query("ALTER TABLE administradores ADD COLUMN senha VARCHAR(255) NOT NULL");
     }
+} catch (Throwable $e) {
+    $feedbackMessage = "Não foi possível conectar ao banco de dados. Verifique se o MySQL está iniciado no XAMPP e se usuário e senha estão corretos.";
 }
 
-// Criar tabela se não existir
-$createTableQueryAdmin = "CREATE TABLE IF NOT EXISTS administradores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(20) NOT NULL UNIQUE,
-    rg VARCHAR(20) NOT NULL,
-    cep VARCHAR(10) NOT NULL,
-    rua VARCHAR(100) NOT NULL,
-    numero VARCHAR(10) NOT NULL,
-    complemento VARCHAR(50),
-    bairro VARCHAR(50) NOT NULL,
-    cidade VARCHAR(50) NOT NULL,
-    uf VARCHAR(2) NOT NULL,
-    celular VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL
-)";
-
-if (!$conn->query($createTableQueryAdmin)) {
-    die("Erro ao criar a tabela de administradores: " . $conn->error);
-}
-
-// Inserir dados se o formulário for enviado
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nome = $_POST['nome'];
-    $cpf = $_POST['cpf'];
-    $rg = $_POST['rg'];
-    $cep = $_POST['cep'];
-    $rua = $_POST['rua'];
-    $numero = $_POST['numero'];
-    $complemento = $_POST['complemento'];
-    $bairro = $_POST['bairro'];
-    $cidade = $_POST['cidade'];
-    $uf = $_POST['uf'];
-    $celular = $_POST['celular']; 
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Segurança
-
-    if (!empty($cpf) && !empty($email) && !empty($celular)) {
-        // Preparar e executar a query
-        $stmtAdmin = $conn->prepare("INSERT INTO administradores (nome, cpf, rg, cep, rua, numero, complemento, bairro, cidade, uf, celular, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmtAdmin->bind_param("sssssssssssss", $nome, $cpf, $rg, $cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $celular, $email, $senha);
-
-        if ($stmtAdmin->execute()) {
-            echo "<script>alert('Cadastro realizado com sucesso!');</script>";
-        } else {
-            echo "<script>alert('Erro ao cadastrar: " . $stmtAdmin->error . "');</script>";
-        }
-
-        $stmtAdmin->close();
+    if (!$conn instanceof mysqli) {
+        $feedbackMessage = "O cadastro está indisponível porque não foi possível conectar ao banco de dados.";
     } else {
-        echo "<script>alert('Por favor, preencha todos os campos obrigatórios.');</script>";
+        $nome = trim($_POST['nome'] ?? '');
+        $cpf = trim($_POST['cpf'] ?? '');
+        $rg = trim($_POST['rg'] ?? '');
+        $cep = trim($_POST['cep'] ?? '');
+        $rua = trim($_POST['rua'] ?? '');
+        $numero = trim($_POST['numero'] ?? '');
+        $complemento = trim($_POST['complemento'] ?? '');
+        $bairro = trim($_POST['bairro'] ?? '');
+        $cidade = trim($_POST['cidade'] ?? '');
+        $uf = trim($_POST['uf'] ?? '');
+        $celular = trim($_POST['celular'] ?? '');
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+        $senha = $_POST['senha'] ?? '';
+
+        if ($nome === '' || $cpf === '' || $email === '' || $celular === '' || $senha === '') {
+            $feedbackMessage = "Por favor, preencha todos os campos obrigatórios.";
+        } else {
+            try {
+                $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+                $stmtAdmin = $conn->prepare("INSERT INTO administradores (nome, cpf, rg, cep, rua, numero, complemento, bairro, cidade, uf, celular, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmtAdmin->bind_param("sssssssssssss", $nome, $cpf, $rg, $cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $celular, $email, $senhaHash);
+                $stmtAdmin->execute();
+                $stmtAdmin->close();
+                $feedbackMessage = "Cadastro realizado com sucesso!";
+            } catch (Throwable $e) {
+                $feedbackMessage = "Não foi possível realizar o cadastro. Verifique se o CPF ou e-mail já está cadastrado.";
+            }
+        }
     }
 }
 
-$conn->close();
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
+
+if ($feedbackMessage !== null) {
+    echo "<script>alert(" . json_encode($feedbackMessage, JSON_UNESCAPED_UNICODE) . ");</script>";
+}
 ?>
 
 <!DOCTYPE html>

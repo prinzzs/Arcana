@@ -1,57 +1,56 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "usbw";
-$dbname = "UserDB";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-$conn->set_charset("utf8mb4");
-
 if (!isset($_SESSION['admin_id'])) {
     header("Location: loginAdm.php");
     exit;
 }
 
-// Parâmetros da busca
+$servername = "localhost";
+$username = "root";
+$password = "usbw";
+$dbname = "UserDB";
+$conn = null;
+$result = false;
+$databaseError = null;
+
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$order = 'nome';  // por enquanto fixo por nome
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+$order = 'nome';
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
 $items_per_page = 10;
 $offset = ($page - 1) * $items_per_page;
-
-// Monta o WHERE com múltiplas palavras
-$where_sql = '';
-if ($search !== '') {
-    $words = array_filter(explode(' ', $search));
-    $where_clauses = [];
-    foreach ($words as $word) {
-        $word = $conn->real_escape_string($word);
-        // Procura em nome e email a palavra
-        $where_clauses[] = "(nome LIKE '%$word%' OR email LIKE '%$word%')";
-    }
-    $where_sql = 'WHERE ' . implode(' AND ', $where_clauses);
-}
-
-// Conta total para paginação
-$sql_count = "SELECT COUNT(*) AS total FROM usuarios $where_sql";
-$res_count = $conn->query($sql_count);
 $total_items = 0;
-if ($res_count) {
+$total_pages = 0;
+
+try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
+
+    $where_sql = '';
+    if ($search !== '') {
+        $words = array_filter(explode(' ', $search));
+        $where_clauses = [];
+        foreach ($words as $word) {
+            $word = $conn->real_escape_string($word);
+            $where_clauses[] = "(nome LIKE '%$word%' OR email LIKE '%$word%')";
+        }
+        $where_sql = 'WHERE ' . implode(' AND ', $where_clauses);
+    }
+
+    $res_count = $conn->query("SELECT COUNT(*) AS total FROM usuarios $where_sql");
     $row_count = $res_count->fetch_assoc();
-    $total_items = (int)$row_count['total'];
+    $total_items = (int) $row_count['total'];
+
+    $result = $conn->query("SELECT * FROM usuarios $where_sql ORDER BY $order ASC LIMIT $items_per_page OFFSET $offset");
+    $total_pages = (int) ceil($total_items / $items_per_page);
+} catch (Throwable $e) {
+    $databaseError = "Não foi possível acessar o banco de dados. Verifique se o MySQL está iniciado no XAMPP e se usuário e senha estão corretos.";
 }
 
-// Busca usuários paginados
-$sql = "SELECT * FROM usuarios $where_sql ORDER BY $order ASC LIMIT $items_per_page OFFSET $offset";
-$result = $conn->query($sql);
-
-// Calcula total de páginas
-$total_pages = ceil($total_items / $items_per_page);
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -87,6 +86,10 @@ $total_pages = ceil($total_items / $items_per_page);
 </div>
 
 <div class="content">
+
+<?php if ($databaseError !== null): ?>
+    <div class="message error"><?= htmlspecialchars($databaseError, ENT_QUOTES, 'UTF-8') ?></div>
+<?php endif; ?>
 
     <!-- Formulário de busca -->
     <form method="GET" class="search-form" action="">
