@@ -1,108 +1,76 @@
 <?php
-// Inicia a sessão
 session_start();
 
-// Configurações do banco de dados
 $servername = "localhost";
 $username = "root";
 $password = "usbw";
 $dbname = "UserDB";
+$conn = null;
 
-// Conectar ao banco de dados com tratamento de erro
 try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $conn = new mysqli($servername, $username, $password);
-    if ($conn->connect_error) {
-        throw new Exception("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-    }
-
-    // Verifica se o banco de dados existe e cria se necessário
-    $dbCheckQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$dbname'";
-    $result = $conn->query($dbCheckQuery);
-
-    if ($result->num_rows == 0) {
-        $createDbQuery = "CREATE DATABASE $dbname";
-        if (!$conn->query($createDbQuery)) {
-            throw new Exception("Erro ao criar banco de dados: " . $conn->error);
-        }
-        $_SESSION['msg'] = "Banco de dados '$dbname' criado com sucesso.";
-        $_SESSION['msg_type'] = "success";
-    }
-
-    $conn->select_db($dbname);
     $conn->set_charset("utf8mb4");
 
-
-    // Criação da tabela 'usuarios' se não existir
-    $createTableQuery = "CREATE TABLE IF NOT EXISTS usuarios (
+    $conn->query("CREATE DATABASE IF NOT EXISTS `$dbname`");
+    $conn->select_db($dbname);
+    $conn->query("CREATE TABLE IF NOT EXISTS usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL
-    )";
-
-    if (!$conn->query($createTableQuery)) {
-        throw new Exception("Erro ao criar tabela 'usuarios': " . $conn->error);
-    }
-
-} catch (Exception $e) {
-    $_SESSION['msg'] = $e->getMessage();
+    )");
+} catch (Throwable $e) {
+    $_SESSION['msg'] = "Não foi possível conectar ao banco de dados. Verifique se o MySQL está iniciado no XAMPP e se usuário e senha estão corretos.";
     $_SESSION['msg_type'] = "error";
 }
 
-// Verifica se a requisição é POST para processar o cadastro
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Captura e sanitiza os dados
-    $nome = trim($_POST['nome']);
-    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $senha = $_POST['senha'];
-
-    if (empty($nome) || empty($email) || empty($senha)) {
-        $_SESSION['msg'] = "Todos os campos são obrigatórios.";
-        $_SESSION['msg_type'] = "error";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['msg'] = "Formato de email inválido.";
+    if (!$conn instanceof mysqli) {
+        $_SESSION['msg'] = "O cadastro está indisponível porque não foi possível conectar ao banco de dados.";
         $_SESSION['msg_type'] = "error";
     } else {
-        // Verifica se o email já está cadastrado
-        $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
-        if (!$stmt) {
-            $_SESSION['msg'] = "Erro interno ao preparar a consulta.";
+        $nome = trim($_POST['nome'] ?? '');
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+        $senha = $_POST['senha'] ?? '';
+
+        if ($nome === '' || $email === '' || $senha === '') {
+            $_SESSION['msg'] = "Todos os campos são obrigatórios.";
             $_SESSION['msg_type'] = "error";
-        }
-
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            $_SESSION['msg'] = "Este e-mail já está cadastrado.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['msg'] = "Formato de email inválido.";
             $_SESSION['msg_type'] = "error";
         } else {
-            // Hash da senha para segurança
-            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            try {
+                $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $stmt->store_result();
 
-            // Insere o usuário no banco de dados
-            $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
-            if (!$stmt) {
-                $_SESSION['msg'] = "Erro ao preparar a inserção.";
+                if ($stmt->num_rows > 0) {
+                    $_SESSION['msg'] = "Este e-mail já está cadastrado.";
+                    $_SESSION['msg_type'] = "error";
+                } else {
+                    $stmt->close();
+                    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+                    $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
+                    $stmt->bind_param("sss", $nome, $email, $senhaHash);
+                    $stmt->execute();
+                    $_SESSION['msg'] = "Cadastro realizado com sucesso!";
+                    $_SESSION['msg_type'] = "success";
+                }
+                $stmt->close();
+            } catch (Throwable $e) {
+                $_SESSION['msg'] = "Não foi possível concluir o cadastro. Tente novamente.";
                 $_SESSION['msg_type'] = "error";
             }
-
-            $stmt->bind_param("sss", $nome, $email, $senhaHash);
-            if ($stmt->execute()) {
-                $_SESSION['msg'] = "Cadastro realizado com sucesso!";
-                $_SESSION['msg_type'] = "success";
-            } else {
-                $_SESSION['msg'] = "Erro ao cadastrar usuário: " . $stmt->error;
-                $_SESSION['msg_type'] = "error";
-            }
-
-            $stmt->close();
         }
     }
 }
 
-$conn->close();
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,39 +1,37 @@
 <?php
-// Inicia a sessão
 session_start();
 
-// Configurações do banco de dados
 $servername = "localhost";
 $username = "root";
 $password = "usbw";
 $dbname = "UserDB";
+$conn = null;
 
-// Conectar ao banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
+try {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
+} catch (Throwable $e) {
+    $_SESSION['msg'] = "Não foi possível conectar ao banco de dados. Verifique se o MySQL está iniciado no XAMPP e se usuário e senha estão corretos.";
+    $_SESSION['msg_type'] = "error";
 }
 
-// Verifica se a requisição é POST para processar o login
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Captura e sanitiza os dados
-    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $senha = $_POST['senha'];
+    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+    $senha = $_POST['senha'] ?? '';
 
-    if (empty($email) || empty($senha)) {
+    if (!$conn instanceof mysqli) {
+        $_SESSION['msg'] = "O login está indisponível porque não foi possível conectar ao banco de dados.";
+        $_SESSION['msg_type'] = "error";
+    } elseif ($email === '' || $senha === '') {
         $_SESSION['msg'] = "E-mail e senha são obrigatórios.";
         $_SESSION['msg_type'] = "error";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['msg'] = "Formato de e-mail inválido.";
         $_SESSION['msg_type'] = "error";
     } else {
-        // Verifica se o e-mail existe na tabela administradores
-        $stmt = $conn->prepare("SELECT id, nome, senha FROM administradores WHERE email = ?");
-        if (!$stmt) {
-            $_SESSION['msg'] = "Erro interno ao preparar a consulta.";
-            $_SESSION['msg_type'] = "error";
-        } else {
+        try {
+            $stmt = $conn->prepare("SELECT id, nome, senha FROM administradores WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $stmt->store_result();
@@ -42,17 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['msg'] = "E-mail não encontrado.";
                 $_SESSION['msg_type'] = "error";
             } else {
-                // O e-mail foi encontrado, agora verifica a senha
                 $stmt->bind_result($userId, $nome, $storedPassword);
                 $stmt->fetch();
 
                 if (password_verify($senha, $storedPassword)) {
-                    // Login bem-sucedido
                     $_SESSION['admin_id'] = $userId;
                     $_SESSION['admin_nome'] = $nome;
-                    $_SESSION['msg'] = "Login realizado com sucesso!";
-                    $_SESSION['msg_type'] = "success";
-                    header("Location: painelAdm.php"); // Redireciona para o painel do admin
+                    header("Location: painelAdm.php");
                     exit;
                 } else {
                     $_SESSION['msg'] = "Senha incorreta.";
@@ -60,11 +54,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             }
             $stmt->close();
+        } catch (Throwable $e) {
+            $_SESSION['msg'] = "Não foi possível processar o login. Tente novamente.";
+            $_SESSION['msg_type'] = "error";
         }
     }
 }
 
-$conn->close();
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
