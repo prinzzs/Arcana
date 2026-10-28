@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcana - Fichas</title>
     <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/fichas.css">
     <link rel="stylesheet" href="css/fontes.css">
-    <link rel="stylesheet" href="css/global.css">
 </head>
-<body>
+<body class="page-catalog">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <header>
-        <h1>ARCANA</h1>
+        <h1>Entidades</h1>
         <nav>
             <a href="dado.php">Dados</a>
             <a href="#">Personagem</a>
@@ -28,14 +36,15 @@
     <div class="content">
         <div class="filters">
             <div class="tabs">
-                <button class="active" data-filter="all">Todos</button>
-                <button data-filter="Conhecimento">Conhecimento</button>
-                <button data-filter="Energia">Energia</button>
-                <button data-filter="Morte">Morte</button>
-                <button data-filter="Sangue">Sangue</button>
-                <button data-filter="Medo">Medo</button>
-                <button data-filter="Realidade">Realidade</button>
+                <button type="button" class="active" aria-pressed="true" data-filter="all">Todos</button>
+                <button type="button" aria-pressed="false" data-filter="Conhecimento">Conhecimento</button>
+                <button type="button" aria-pressed="false" data-filter="Energia">Energia</button>
+                <button type="button" aria-pressed="false" data-filter="Morte">Morte</button>
+                <button type="button" aria-pressed="false" data-filter="Sangue">Sangue</button>
+                <button type="button" aria-pressed="false" data-filter="Medo">Medo</button>
+                <button type="button" aria-pressed="false" data-filter="Realidade">Realidade</button>
             </div>
+            <label class="visually-hidden" for="search">Buscar entidades</label>
             <input type="text" id="search" placeholder="Buscar">
         </div>
 
@@ -45,7 +54,7 @@
                 <h3>Noxlith</h3>
                 <p class="type">Criatura - Médio</p>
             </div>
-           <button><a href="Entidades/fichaNoxlith.php"> Ficha </a></button>
+           <a class="button" href="Entidades/fichaNoxlith.php">Ver ficha</a>
         </div>
 
         <div class="card" data-category="Energia">
@@ -54,7 +63,7 @@
                 <h3>Serafim Decaído</h3>
                 <p class="type">Entidade - Grande</p>
             </div>
-            <button><a href="Entidades/fichaSerafim.php"> Ficha </a></button>
+            <a class="button" href="Entidades/fichaSerafim.php">Ver ficha</a>
         </div>
 
         <div class="card" data-category="Realidade">
@@ -62,47 +71,38 @@
                 <h3>Ratos</h3>
                 <p class="type">Animal (enxame) - médio</p>
             </div>
-            <button><a href="Entidades/fichaRatos.php"> Ficha </a></button>
+            <a class="button" href="Entidades/fichaRatos.php">Ver ficha</a>
         </div>
     </div>
 
+    <p class="empty-state content" id="empty-state" role="status" hidden>Nenhuma entidade encontrada. Tente outro nome ou categoria.</p>
     <script>
         const filterButtons = document.querySelectorAll('.filters .tabs button');
         const cards = document.querySelectorAll('.card');
         const searchInput = document.getElementById('search');
 
+        function applyFilters() {
+            const filter = document.querySelector('.tabs button.active').dataset.filter;
+            const searchText = searchInput.value.trim().toLocaleLowerCase('pt-BR');
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const matchesCategory = filter === 'all' || card.dataset.category === filter;
+                const matchesName = card.querySelector('h3').textContent.toLocaleLowerCase('pt-BR').includes(searchText);
+                card.hidden = !(matchesCategory && matchesName);
+                if (!card.hidden) visibleCount++;
+            });
+            document.getElementById('empty-state').hidden = visibleCount > 0;
+        }
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                const filter = button.dataset.filter;
-
-                cards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                filterButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn === button);
+                    btn.setAttribute('aria-pressed', String(btn === button));
                 });
+                applyFilters();
             });
         });
-
-        searchInput.addEventListener('input', () => {
-            const searchText = searchInput.value.toLowerCase();
-
-            cards.forEach(card => {
-                const cardText = card.querySelector('h3').textContent.toLowerCase();
-
-                if (cardText.includes(searchText)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+        searchInput.addEventListener('input', applyFilters);
     </script>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

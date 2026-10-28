@@ -1,0 +1,5 @@
+.dashboard { max-width: var(--content-width); margin: 32px auto; padding: 20px; display: grid; grid-template-columns: 240px 1fr; gap: 24px; }
+.sidebar, .main-content { padding: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.collections { display: flex; flex-wrap: wrap; gap: 16px; }
+.collections .card { padding: 24px; background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+@media (max-width: 760px) { .dashboard { grid-template-columns: 1fr; } }

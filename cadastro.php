@@ -109,34 +109,23 @@ $conn->close();
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcana - Cadastro</title>
     <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
     <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/cadastro.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css'>
-    
-    <style>
-        .message {
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
-            border-radius: 5px;
-        }
-
-        .message.success {
-            background-color: #4CAF50;
-            color: var(--septenary-color);
-        }
-
-        .message.error {
-            background-color: #f44336;
-            color: var(--septenary-color);
-        }
-    </style>
 </head>
-<body>
+<body class="page-auth">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <div class="container">
         <h1>ARCANA</h1>
         <p class="subtitulo">Faça seu cadastro</p>
@@ -153,31 +142,33 @@ $conn->close();
         <?php endif; ?>
 
         <form id="formCadastro" method="POST">
-            <input type="text" placeholder="Nome de usuário" id="nome" name="nome" required>
-            <input type="email" placeholder="Email:" id="email" name="email" required>
-            <input type="password" placeholder="Senha:" id="senha" name="senha" required>
-            
+            <div class="form-field"><label for="nome">Nome</label>
+            <input type="text" placeholder="Nome de usuário" id="nome" name="nome" required></div>
+            <div class="form-field"><label for="email">E-mail</label>
+            <input autocomplete="email" type="email" placeholder="Email:" id="email" name="email" required></div>
+            <div class="form-field"><label for="senha">Senha</label>
+            <input autocomplete="new-password" type="password" placeholder="Senha:" id="senha" name="senha" required></div>
+
             <div class="termos-container">
                 <input type="checkbox" id="termos" required>
                 <label for="termos">Li e aceito os Termos e Condições</label>
             </div>
             <button type="submit" class="entrar">Cadastre-se</button>
         </form>
-        
+
         <div class="social-container">
             <p>Entre com:</p>
             <button onclick="initGoogleLogin()" class="entre abcd">
-                <i class="fi fi-brands-google"></i>
+                Google
             </button>
             <button onclick="loginWithApple()" class="entre abcd">
-                <i class="fi fi-brands-apple"></i>
+                Apple
             </button>
         </div>
-        
+
         <a href="login.php" class="link">Já tenho uma conta</a>
     </div>
 
     <script src="js/cadastro.js"></script>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

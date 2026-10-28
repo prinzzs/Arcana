@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Simulado - RPG</title>
     <link rel="stylesheet" href="css/conversas.css">
-    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/fontes.css">
 </head>
-<body>
+<body class="page-chat">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <div class="container">
         <div class="header">
             <button class="back-button" onclick="previousStep()">&#9664; Voltar</button>
             <h3>RPG - Escolha sua Aventura</h3>
         </div>
-        <div class="chat" id="chat"></div>  
+        <div class="chat" id="chat" role="log" aria-live="polite" aria-label="Mensagens da aventura"></div>
         <div class="footer" id="options"></div>
     </div>
     <script src="js/conversas.js"></script>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>
-
-

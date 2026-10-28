@@ -67,22 +67,30 @@ $conn->close();
 
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="img/logo.png">
     <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/edit.css">
-    <link rel="stylesheet" href="css/global.css">
     <title>Arcana - Configurações</title>
 </head>
-<body>
+<body class="page-settings">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
 
 <div class="container" id="container">
     <div class="header">
         <h1>Página de Configurações</h1>
-        <button class="btn" id="lightModeToggle">Mudar para modo claro</button>
     </div>
 
     <?php if (isset($message)): ?>
@@ -94,8 +102,10 @@ $conn->close();
     <div class="settings-section">
         <h2>Alterar Senha</h2>
         <form method="POST">
-            <input type="password" class="input-field" name="new_password" placeholder="Nova Senha" required>
-            <input type="password" class="input-field" name="confirm_password" placeholder="Confirmar Senha" required>
+            <div class="form-field"><label for="campo-new_password">Nova senha</label>
+            <input autocomplete="new-password" id="campo-new_password" type="password" class="input-field" name="new_password" placeholder="Nova Senha" required></div>
+            <div class="form-field"><label for="campo-confirm_password">Confirmar senha</label>
+            <input autocomplete="new-password" id="campo-confirm_password" type="password" class="input-field" name="confirm_password" placeholder="Confirmar Senha" required></div>
             <button class="btn" type="submit">Alterar Senha</button>
         </form>
     </div>
@@ -103,7 +113,8 @@ $conn->close();
     <div class="settings-section">
         <h2>Alterar Avatar</h2>
         <form method="POST" enctype="multipart/form-data">
-            <input type="file" class="input-field" name="avatar" accept="image/*" required>
+            <div class="form-field"><label for="campo-avatar">Imagem do avatar</label>
+            <input id="campo-avatar" type="file" class="input-field" name="avatar" accept="image/*" required></div>
             <button class="btn" type="submit">Alterar Avatar</button>
         </form>
         <?php if (isset($_SESSION['user_avatar'])): ?>
@@ -114,7 +125,8 @@ $conn->close();
     <div class="settings-section">
         <h2>Alterar Nome do Jogador</h2>
         <form method="POST">
-            <input type="text" class="input-field" name="new_name" placeholder="Novo Nome do Jogador" value="<?= $nome ?>" required>
+            <div class="form-field"><label for="campo-new_name">Nome do jogador</label>
+            <input id="campo-new_name" type="text" class="input-field" name="new_name" placeholder="Novo Nome do Jogador" value="<?= $nome ?>" required></div>
             <button class="btn" type="submit">Alterar Nome</button>
         </form>
     </div>
@@ -135,6 +147,5 @@ $conn->close();
         </ul>
     </div>
 </div>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>
