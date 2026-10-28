@@ -1,0 +1,26 @@
+/* Formulários de acesso e administração compartilham os mesmos componentes. */
+.page-auth { background: radial-gradient(ellipse at 50% 10%, var(--glow), transparent 65%), var(--bg); }
+.page-auth .container {
+    width: min(460px, calc(100% - 32px)); margin: 56px auto; padding: 36px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; box-shadow: var(--shadow);
+}
+.page-auth h1 { font-family: Nevan, "Segoe UI", sans-serif; color: var(--text); font-size: clamp(1.5rem, 4vw, 2.1rem); text-align: center; }
+.page-auth .subtitulo { margin: 12px 0 28px; color: var(--text-muted); text-align: center; }
+.page-auth form { display: grid; gap: 16px; }
+.page-auth .container > p:last-child { margin-top: 24px; color: var(--text-muted); font-size: .9rem; text-align: center; }
+.form-field { display: grid; gap: 6px; min-width: 0; }
+.form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.form-row .form-field { flex: 1 1 120px; }
+.form-row .field-street { flex-grow: 3; }
+.form-row .field-short { flex: 1 1 70px; }
+.termos-container, .checkbox-container { display: flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text-muted); }
+.termos-container label, .checkbox-container label { font-weight: 400; cursor: pointer; }
+.page-auth form > button { width: 100%; margin-top: 4px; }
+.page-auth .link { display: block; text-align: center; margin-top: 20px; font-weight: 600; font-size: .9rem; }
+.social-container { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--border); margin-top: 24px; padding-top: 20px; }
+.social-container p { flex-basis: 100%; text-align: center; color: var(--text-muted); font-size: .875rem; }
+.social-container button { background: var(--surface-raised); color: var(--text); border-color: var(--border); font-size: .9rem; }
+.social-container button:hover { background: var(--accent-soft); color: var(--accent); }
+.page-auth.admin-registration .container { max-width: 680px; width: min(680px, calc(100% - 32px)); }
+@media (max-width: 560px) { .page-auth .container { padding: 24px 20px; margin-block: 28px; } }

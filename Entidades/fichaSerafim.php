@@ -2,16 +2,26 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="../js/lightmode.js"></script>
+    <link rel="stylesheet" href="../css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha - Serafim Decaído</title>
-    <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="imagex/png" href="../img/logo.png">
     <link rel="stylesheet" href="../Entidades/fichaentidades.css">
     <link rel="stylesheet" href="../css/fontes.css">
 </head>
-<body>
+<body class="page-entity">
+    <div class="site-toolbar">
+        <a class="brand" href="../index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <header>
         <h1>Arcana</h1>
+    <nav aria-label="Navegação da ficha"><a href="../fichas.php">← Todas as entidades</a></nav>
     </header>
 
     <div class="banner">
@@ -31,9 +41,9 @@
         </div>
 
         <div class="tabs">
-            <button class="active" onclick="showTab('status')">Status</button>
-            <button onclick="showTab('combate')">Combate</button>
-            <button onclick="showTab('descricao')">Descrição</button>
+            <button type="button" class="active" aria-pressed="true" aria-controls="status" onclick="showTab('status')">Status</button>
+            <button type="button" aria-pressed="false" aria-controls="combate" onclick="showTab('combate')">Combate</button>
+            <button type="button" aria-pressed="false" aria-controls="descricao" onclick="showTab('descricao')">Descrição</button>
         </div>
 
         <div id="status" class="section active">
@@ -134,16 +144,16 @@
             <h3>Descrição</h3>
             <p>Suas asas eram o primeiro sinal de sua decadência, o que antes tinha belas plumas radiantes
                 agora são escombros carbonizados. Muitas das penas caíram, deixando apenas ossos quebrados
-                e carne necrosada, retorcida em ângulos impossíveis. Chamas negras e cinzas flutuam 
+                e carne necrosada, retorcida em ângulos impossíveis. Chamas negras e cinzas flutuam
                 ao redor dessas asas. Seus olhos, veem mais do que qualquer visão mortal eles enxergam as
                 almas, despindo as intenções e medos de quem cruzar seu caminho. <br/>
 
                 Seus rostos possuem uma beleza angelical perfeita, mas estão sempre escondidos por máscaras
                 sombrias de metal escurecido, adornadas com fissuras que deixam escapar uma luz pálida
-                e perturbadora. Seus corpos, apesar de cobertos por longas vestes que arrastam no 
+                e perturbadora. Seus corpos, apesar de cobertos por longas vestes que arrastam no
                 chão como um manto de luto, ainda mantêm traços de sua antiga glória celestial. A pele
                 é impecável, quase translúcida, mas veias negras se enraízam lentamente, como as garras
-                da corrupção que tentam se infiltrar em cada parte de sua existência, prometendo consumir 
+                da corrupção que tentam se infiltrar em cada parte de sua existência, prometendo consumir
                 o que resta de sua divindade.
                 </p>
         </div>
@@ -160,8 +170,10 @@
             const buttons = document.querySelectorAll('.tabs button');
             buttons.forEach(button => {
                 button.classList.remove('active');
+                button.setAttribute('aria-pressed', 'false');
             });
             document.querySelector(`.tabs button[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.querySelector(`[aria-controls="${tabName}"]`).setAttribute('aria-pressed', 'true');
         }
     </script>
 </body>

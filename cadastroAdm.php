@@ -80,52 +80,74 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cadastro</title>
-  <link rel="stylesheet" href="css/cadastroAdm.css" />
+  <link rel="stylesheet" href="css/cadastroadm.css" />
   <link rel="stylesheet" href="css/fontes.css">
-  <link rel="stylesheet" href="css/global.css">
 </head>
-<body>
+<body class="page-auth admin-registration">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
   <div class="container">
     <h1>Cadastro</h1>
     <p class="subtitulo">Preencha seus dados</p>
 
     <form action="" method="POST" id="formCadastro">
 
-      <input type="text" name="nome" placeholder="Nome" required />
-      <input type="text" name="cpf" id="cpf" placeholder="CPF" required onblur="TestaCPF(this.value)" />
-      <input type="text" name="rg" placeholder="RG" required />
-      <input type="text" name="cep" id="cep" placeholder="CEP" required onblur="pesquisacep(this.value)" />
+      <div class="form-field"><label for="campo-nome">Nome</label>
+            <input id="campo-nome" type="text" name="nome" placeholder="Nome" required /></div>
+      <div class="form-field"><label for="cpf">CPF</label>
+            <input type="text" name="cpf" id="cpf" placeholder="CPF" required onblur="TestaCPF(this.value)" /></div>
+      <div class="form-field"><label for="campo-rg">RG</label>
+            <input id="campo-rg" type="text" name="rg" placeholder="RG" required /></div>
+      <div class="form-field"><label for="cep">CEP</label>
+            <input type="text" name="cep" id="cep" placeholder="CEP" required onblur="pesquisacep(this.value)" /></div>
 
-      <div style="display: flex; gap: 10px;">
-        <input type="text" name="rua" id="rua" placeholder="Rua" style="flex: 3;" required />
-        <input type="text" name="numero" placeholder="Nº" style="flex: 1;" required />
+      <div class="form-row">
+        <div class="form-field field-street"><label for="rua">Rua</label>
+            <input type="text" name="rua" id="rua" placeholder="Rua" required /></div>
+        <div class="form-field field-short"><label for="campo-numero">Número</label>
+            <input id="campo-numero" type="text" name="numero" placeholder="Nº" required /></div>
       </div>
 
-      <input type="text" name="complemento" placeholder="Complemento" />
+      <div class="form-field"><label for="campo-complemento">Complemento</label>
+            <input id="campo-complemento" type="text" name="complemento" placeholder="Complemento" /></div>
 
-      <div style="display: flex; gap: 10px;">
-        <input type="text" name="bairro" id="bairro" placeholder="Bairro" style="flex: 1;" required />
-        <input type="text" name="cidade" id="cidade" placeholder="Cidade" style="flex: 1;" required />
-        <input type="text" name="uf" id="uf" placeholder="UF" maxlength="2" style="width: 60px;" required />
+      <div class="form-row">
+        <div class="form-field"><label for="bairro">Bairro</label>
+            <input type="text" name="bairro" id="bairro" placeholder="Bairro" required /></div>
+        <div class="form-field"><label for="cidade">Cidade</label>
+            <input type="text" name="cidade" id="cidade" placeholder="Cidade" required /></div>
+        <div class="form-field field-short"><label for="uf">UF</label>
+            <input type="text" name="uf" id="uf" placeholder="UF" maxlength="2" required /></div>
       </div>
 
-      <input type="text" name="celular" id="celular" placeholder="Tel/Cel" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="senha" id="senha" placeholder="Senha" required />
+      <div class="form-field"><label for="celular">Celular</label>
+            <input type="text" name="celular" id="celular" placeholder="Tel/Cel" required /></div>
+      <div class="form-field"><label for="campo-email">E-mail</label>
+            <input autocomplete="email" id="campo-email" type="email" name="email" placeholder="Email" required /></div>
+      <div class="form-field"><label for="senha">Senha</label>
+            <input autocomplete="new-password" type="password" name="senha" id="senha" placeholder="Senha" required /></div>
 
-      <div class="checkbox-container" style="justify-content: flex-start;">
+      <div class="checkbox-container">
         <input type="checkbox" id="ver_senha">
         <label for="ver_senha">Ver senha</label>
       </div>
 
-      <a href="loginAdm.php" class="link" style="border-botton: 10px">Já tenho uma conta</a>
+      <a href="loginAdm.php" class="link">Já tenho uma conta</a>
       <button type="submit">Cadastrar</button>
-      
+
     </form>
   </div>
 
@@ -219,6 +241,5 @@ $conn->close();
       senhaInput.type = this.checked ? "text" : "password";
     });
   </script>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

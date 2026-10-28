@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/paginaInicial.css">
-    <link rel="stylesheet" href="css/global.css">
     <title>Arcana - Onde Tudo Começa</title>
+    <link rel="stylesheet" href="css/fontes.css">
 </head>
-<body>
+<body class="page-story">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <div class="page-transition hidden" id="page-transition"></div>
 
 
@@ -20,18 +30,10 @@
         <div class="text">O que vem depois é incerto, mas todos sabem o que está por vir.</div>
         <div class="text">O caos está se aproximando, e a cidade jamais será a mesma.</div>
     </div>
-    
+
 
     <button id="start-button">
         JOGAR
-        <div id="clip">
-            <div id="leftTop" class="corner"></div>
-            <div id="rightBottom" class="corner"></div>
-            <div id="rightTop" class="corner"></div>
-            <div id="leftBottom" class="corner"></div>
-        </div>
-        <span id="rightArrow" class="arrow"></span>
-        <span id="leftArrow" class="arrow"></span>
     </button>
 
     <script>
@@ -51,16 +53,13 @@
 
             // Initially show the first text
             showNextText();
-            setInterval(showNextText, 3000); // Change text every 3 seconds
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(showNextText, 5000); // Alterna a narrativa a cada cinco segundos.
 
-            // Show the start button after 10 seconds
-            setTimeout(() => {
-                startButton.style.display = 'block';
-            }, 10000); // 10000ms = 10 seconds
 
             // Magic sparkle trail
             document.addEventListener('mousemove', (event) => {
-                const sparkCount = Math.random() * 5 + 5; // Random number of sparks (5-10)
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const sparkCount = 2;
 
                 for (let i = 0; i < sparkCount; i++) {
                     const spark = document.createElement('div');
@@ -77,12 +76,12 @@
 
                     setTimeout(() => {
                         spark.remove();
-                    }, 1500); 
+                    }, 1500);
                 }
             });
 
             // Add transition effect when navigating away
-            document.querySelectorAll('button').forEach(button => {
+            document.querySelectorAll('#start-button').forEach(button => {
                 button.addEventListener('click', (event) => {
                     pageTransition.classList.remove('hidden');
                     setTimeout(() => {
@@ -92,6 +91,5 @@
             });
         });
     </script>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

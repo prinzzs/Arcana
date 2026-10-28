@@ -70,13 +70,22 @@ $conn->close();
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcana - Login</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/fontes.css">
-    <link rel="stylesheet" href="css/global.css">
 </head>
-<body>
+<body class="page-auth">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <div class="container">
         <h1 id="arca">ARCANA</h1>
         <p class="subtitulo">Faça seu login</p>
@@ -93,14 +102,15 @@ $conn->close();
         <?php endif; ?>
 
         <form method="POST" action="login.php">
-            <input type="email" placeholder="Email:" id="email" name="email" required>
-            <input type="password" placeholder="Senha:" id="senha" name="senha" required>
+            <div class="form-field"><label for="email">E-mail</label>
+            <input autocomplete="email" type="email" placeholder="Email:" id="email" name="email" required></div>
+            <div class="form-field"><label for="senha">Senha</label>
+            <input autocomplete="current-password" type="password" placeholder="Senha:" id="senha" name="senha" required></div>
 
             <button type="submit" class="entrar">Entrar</button>
         </form>
-        
+
         <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se aqui</a></p>
     </div>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

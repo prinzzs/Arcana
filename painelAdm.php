@@ -57,110 +57,23 @@ $total_pages = ceil($total_items / $items_per_page);
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Arcana</title>
     <link rel="stylesheet" href="css/painelAdm.css">
     <link rel="stylesheet" href="css/fontes.css">
-    <link rel="stylesheet" href="css/global.css">
-    <style>
-            .actions {
-                margin-top: 10px;
-            }
-            .actions a {
-                margin-right: 10px;
-                color: #6c1ee6;
-                text-decoration: none;
-            }
-            .actions a:hover {
-                text-decoration: underline;
-            }
-            .search-form {
-                margin-bottom: 20px;
-            }
-            .search-input {
-                padding: 8px;
-                width: 300px;
-                max-width: 100%;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-            }
-            .search-button {
-                padding: 8px 15px;
-                border-radius: 5px;
-                border: none;
-                background-color: #6c1ee6;
-                color: var(--septenary-color);
-                cursor: pointer;
-            }
-            .search-button:hover {
-                background-color: #0056b3;
-            }
-            .pagination {
-                margin-top: 20px;
-            }
-            .pagination a {
-                margin: 0 5px;
-                padding: 7px 12px;
-                border-radius: 4px;
-                background-color: #eee;
-                color: #333;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            .pagination a.active {
-                background-color: #6c1ee6;
-                color: var(--septenary-color);
-            }
-            .pagination a:hover {
-                background-color: #0056b3;
-                color: var(--septenary-color);
-            }
-            
-            .search-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.search-input {
-    flex: 1 1 300px;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border: 1px solid #6c1ee6;
-    border-radius: 8px;
-    outline: none;
-    transition: all 0.3s ease;
-    background-color: var(--septenary-color);
-    color: #333;
-}
-
-.search-input:focus {
-    border-color: #6c1ee6;
-    box-shadow: 0 0 5px #6c1ee6;
-}
-
-.search-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #6c1ee6;
-    color: var(--septenary-color);
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-    background-color: #6c1ee6;
-}
- 
-    </style>
 </head>
-<body>
+<body class="page-admin">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
 
 <header>
     <h1>Arcana Painel</h1>
@@ -177,11 +90,12 @@ $total_pages = ceil($total_items / $items_per_page);
 
     <!-- Formulário de busca -->
     <form method="GET" class="search-form" action="">
-        <input 
-            type="text" 
-            name="search" 
-            class="search-input" 
-            placeholder="Pesquisar por nome ou email..." 
+        <label class="visually-hidden" for="campo-search">Pesquisar por nome ou e-mail</label>
+            <input id="campo-search"
+            type="text"
+            name="search"
+            class="search-input"
+            placeholder="Pesquisar por nome ou email..."
             value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>"
             autocomplete="off"
         >
@@ -210,8 +124,8 @@ $total_pages = ceil($total_items / $items_per_page);
     <?php if ($total_pages > 1): ?>
     <div class="pagination">
         <?php for ($p = 1; $p <= $total_pages; $p++): ?>
-            <a 
-                href="?search=<?= urlencode($search) ?>&page=<?= $p ?>" 
+            <a
+                href="?search=<?= urlencode($search) ?>&page=<?= $p ?>"
                 class="<?= $p == $page ? 'active' : '' ?>"
             ><?= $p ?></a>
         <?php endfor; ?>
@@ -219,6 +133,5 @@ $total_pages = ceil($total_items / $items_per_page);
     <?php endif; ?>
 
 </div>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>

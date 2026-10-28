@@ -71,91 +71,22 @@ $conn->close();
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcana - Login Administrador</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/fontes.css">
-    <link rel="stylesheet" href="css/global.css">
-    <style>
-        body {
-            background-color: var(--primary-color);
-            color: var(--septenary-color);
-            font-family: 'Arial', sans-serif;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 80px auto;
-            padding: 20px;
-            background: #1f1f1f;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #000000;
-            text-align: center;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        input {
-            background-color: #2c2c2c;
-            color: var(--septenary-color);
-        }
-
-        button.entrar {
-            background-color: #6200ee;
-            color: var(--septenary-color);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button.entrar:hover {
-            background-color: #3700b3;
-        }
-
-        .message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 6px;
-        }
-
-        .success {
-            background-color: #4caf50;
-            color: var(--septenary-color);
-        }
-
-        .error {
-            background-color: #f44336;
-            color: var(--septenary-color);
-        }
-
-        a {
-            color: #bb86fc;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        #arca {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .subtitulo {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #cccccc;
-        }
-    </style>
 </head>
-<body>
+<body class="page-auth">
+    <div class="site-toolbar">
+        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <div class="theme-controls" role="group" aria-label="Aparência">
+            <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
+            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
+        </div>
+    </div>
     <div class="container">
         <h1 id="arca">ARCANA - ADM</h1>
         <p class="subtitulo">Login do administrador</p>
@@ -172,13 +103,14 @@ $conn->close();
         <?php endif; ?>
 
         <form method="POST" action="">
-            <input type="email" name="email" placeholder="Email:" required>
-            <input type="password" name="senha" placeholder="Senha:" required>
+            <div class="form-field"><label for="campo-email">E-mail</label>
+            <input autocomplete="email" id="campo-email" type="email" name="email" placeholder="Email:" required></div>
+            <div class="form-field"><label for="campo-senha">Senha</label>
+            <input autocomplete="current-password" id="campo-senha" type="password" name="senha" placeholder="Senha:" required></div>
             <button type="submit" class="entrar">Entrar</button>
         </form>
 
         <p>Não tem conta de administrador? <a href="cadastroAdm.php">Cadastre-se</a></p>
     </div>
-    <script src="js/lightmode.js"></script>
 </body>
 </html>
