@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="page-auth">
     <div class="site-toolbar">
-        <a class="brand" href="index.php" aria-label="Arcana — início">ARCANA</a>
+        <a class="brand" href="index.html" aria-label="Arcana — início">ARCANA</a>
         <div class="theme-controls" role="group" aria-label="Aparência">
             <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
             <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>

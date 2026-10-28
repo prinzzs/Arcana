@@ -7,10 +7,10 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const origin = 'http://arcana.test';
 const pages = [
-    'index.php', 'login.php', 'cadastro.php', 'loginAdm.php', 'cadastroAdm.php',
-    'editarUsuario.php', 'edit.php', 'painelAdm.php', 'fichas.php', 'mecanica.php',
-    'dado.php', 'conversas.php', 'paginaInicial.php', 'paginaInicial2.php',
-    'Entidades/fichaNoxlith.php', 'Entidades/fichaRatos.php', 'Entidades/fichaSerafim.php'
+    'index.html', 'login.php', 'cadastro.php', 'loginAdm.php', 'cadastroAdm.php',
+    'editarUsuario.php', 'edit.php', 'painelAdm.php', 'fichas.html', 'mecanica.html',
+    'dado.html', 'conversas.html', 'paginaInicial.html', 'paginaInicial2.html',
+    'Entidades/fichaNoxlith.html', 'Entidades/fichaRatos.html', 'Entidades/fichaSerafim.html'
 ];
 
 function fixture(source) {
@@ -82,13 +82,13 @@ function contrast(a, b) {
                     await page.locator('#lightModeToggle').click();
                     await checkTheme(page, theme === 'dark' ? 'light' : 'dark');
                     // In the story page the appearance button must not trigger navigation.
-                    if (name === 'paginaInicial.php') {
+                    if (name === 'paginaInicial.html') {
                         await page.waitForTimeout(650);
-                        assert.equal(new URL(page.url()).pathname, '/paginaInicial.php');
+                        assert.equal(new URL(page.url()).pathname, '/paginaInicial.html');
                     }
                     await page.locator('[data-theme-system]').click();
                     await checkTheme(page, theme);
-                    if (process.env.ARCANA_SCREENSHOTS && ['index.php', 'login.php', 'fichas.php', 'Entidades/fichaSerafim.php'].includes(name) && width !== 320) {
+                    if (process.env.ARCANA_SCREENSHOTS && ['index.html', 'login.php', 'fichas.html', 'Entidades/fichaSerafim.html'].includes(name) && width !== 320) {
                         fs.mkdirSync(process.env.ARCANA_SCREENSHOTS, { recursive: true });
                         await page.screenshot({ path: path.join(process.env.ARCANA_SCREENSHOTS, name.replaceAll('/', '-').replace('.php', '') + `-${theme}-${width}.png`), fullPage: true });
                     }
@@ -115,14 +115,14 @@ function contrast(a, b) {
         const context = await browser.newContext({ colorScheme: 'light', reducedMotion: 'reduce' });
         await serve(context);
         const page = await context.newPage();
-        await page.goto(origin + '/index.php');
+        await page.goto(origin + '/index.html');
         await page.locator('#lightModeToggle').focus();
         assert.equal(await page.locator('#lightModeToggle').evaluate(el => getComputedStyle(el).outlineStyle), 'solid');
         await page.keyboard.press('Enter');
         await checkTheme(page, 'dark');
         await page.reload();
         await checkTheme(page, 'dark');
-        await page.goto(origin + '/Entidades/fichaRatos.php');
+        await page.goto(origin + '/Entidades/fichaRatos.html');
         await checkTheme(page, 'dark');
         await page.emulateMedia({ colorScheme: 'dark' });
         await page.locator('#lightModeToggle').click();
@@ -152,7 +152,7 @@ function contrast(a, b) {
         await page.reload();
         await checkTheme(page, 'light');
 
-        await page.goto(origin + '/fichas.php');
+        await page.goto(origin + '/fichas.html');
         await page.locator('[data-filter="Medo"]').click();
         await page.locator('#search').fill('Ratos');
         assert.equal(await page.locator('.card:visible').count(), 0);
@@ -163,11 +163,11 @@ function contrast(a, b) {
         await page.getByRole('button', { name: 'Descrição', exact: true }).click();
         assert.ok(await page.locator('#descricao').isVisible());
         assert.ok(!(await page.locator('#status').isVisible()));
-        await page.goto(origin + '/index.php');
+        await page.goto(origin + '/index.html');
         await page.locator('[aria-controls="loreContent"]').click();
         assert.ok(await page.locator('#loreContent').isVisible());
         assert.equal(await page.locator('[aria-controls="loreContent"]').getAttribute('aria-expanded'), 'true');
-        await page.goto(origin + '/dado.php');
+        await page.goto(origin + '/dado.html');
         await page.getByRole('button', { name: 'Rolar d20', exact: true }).click();
         const result = await page.locator('#resultado span').first().textContent();
         assert.ok(+result >= 1 && +result <= 20);
@@ -184,7 +184,7 @@ function contrast(a, b) {
         const blockedPage = await blocked.newPage();
         const blockedErrors = [];
         blockedPage.on('pageerror', error => blockedErrors.push(error.message));
-        await blockedPage.goto(origin + '/index.php');
+        await blockedPage.goto(origin + '/index.html');
         await checkTheme(blockedPage, 'dark');
         await blockedPage.locator('#lightModeToggle').click();
         await checkTheme(blockedPage, 'light');
