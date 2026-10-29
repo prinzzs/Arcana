@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if (password_verify($senha, $storedPassword)) {
                     $_SESSION['user_id'] = $userId;
-                    header("Location: edit.php");
+                    session_regenerate_id(true);
+                    header("Location: campanhas.php");
                     exit;
                 } else {
                     $_SESSION['msg'] = "Senha incorreta.";
