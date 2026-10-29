@@ -1,1 +1,111 @@
-.atlas{max-width:1450px;margin:auto;display:grid;grid-template-columns:330px 1fr;min-height:85vh}.atlas aside{padding:40px 28px;border-right:1px solid #84758b55}.atlas section{padding:40px clamp(20px,5vw,80px)}.eyebrow{font:600 11px sans-serif;letter-spacing:.22em;color:#a178c5}h1,.chapter h2{font-family:Georgia,serif;font-weight:400;line-height:1.05;font-size:clamp(38px,5vw,70px);letter-spacing:-.045em}.chapter{padding:35px 0;border-bottom:1px solid #85758b55}.tabs,.picker{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.atlas form{display:grid;gap:15px;margin:24px 0}.atlas label{display:grid;gap:8px}.atlas input,.atlas textarea{width:100%;box-sizing:border-box;background:transparent;color:inherit;border:1px solid #85758b77;padding:12px;border-radius:5px;font:inherit}button{background:transparent;color:inherit;border:1px solid #85758b77;padding:12px 18px;border-radius:4px;cursor:pointer}button:hover,button[aria-pressed=true]{background:#8357aa33}button:focus-visible{outline:3px solid #ac83ce}.attributes{display:grid;grid-template-columns:1fr 1fr;gap:16px}#campaigns,#sheets{display:grid;gap:8px}.tray{min-height:230px;display:grid;place-items:center;background:radial-gradient(ellipse,#8054a522,transparent 70%);perspective:600px}.die{width:100px;height:110px;display:grid;place-items:center;background:linear-gradient(135deg,#be9cdd,#603481);color:white;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);font:42px Georgia}.rolling{animation:tumble .65s ease-out}#invite{overflow-wrap:anywhere;font-size:13px}[hidden]{display:none!important}@keyframes tumble{0%{transform:translateX(-100px) rotate(-240deg)}50%{transform:translateY(-45px) rotate(180deg)}100%{transform:rotate(360deg)}}@media(max-width:800px){.atlas{grid-template-columns:1fr}.atlas aside{border-right:0;border-bottom:1px solid #85758b55;padding:24px}.atlas section{padding:24px}}@media(prefers-reduced-motion:reduce){.rolling{animation:none}}
+.atlas {
+    max-width:1450px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:330px 1fr;
+    min-height:85vh}
+.atlas aside {
+    padding:40px 28px;
+    border-right:1px solid #84758b55}
+.atlas section {
+    padding:40px clamp(20px,5vw,80px)}
+.eyebrow {
+    font:600 11px sans-serif;
+    letter-spacing:.22em;
+    color:#a178c5}
+h1,.chapter h2 {
+    font-family:Georgia,serif;
+    font-weight:400;
+    line-height:1.05;
+    font-size:clamp(38px,5vw,70px);
+    letter-spacing:-.045em}
+.chapter {
+    padding:35px 0;
+    border-bottom:1px solid #85758b55}
+.tabs,.picker {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:24px 0}
+.atlas form {
+    display:grid;
+    gap:15px;
+    margin:24px 0}
+.atlas label {
+    display:grid;
+    gap:8px}
+.atlas input,.atlas textarea {
+    width:100%;
+    box-sizing:border-box;
+    background:transparent;
+    color:inherit;
+    border:1px solid #85758b77;
+    padding:12px;
+    border-radius:5px;
+    font:inherit}
+button {
+    background:transparent;
+    color:inherit;
+    border:1px solid #85758b77;
+    padding:12px 18px;
+    border-radius:4px;
+    cursor:pointer}
+button:hover,button[aria-pressed=true] {
+    background:#8357aa33}
+button:focus-visible {
+    outline:3px solid #ac83ce}
+.attributes {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px}
+#campaigns,#sheets {
+    display:grid;
+    gap:8px}
+.tray {
+    min-height:230px;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(ellipse,#8054a522,transparent 70%);
+    perspective:600px}
+.die {
+    width:100px;
+    height:110px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#be9cdd,#603481);
+    color:white;
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+    font:42px Georgia}
+.rolling {
+    animation:tumble .65s ease-out}
+#invite {
+    overflow-wrap:anywhere;
+    font-size:13px}
+[hidden] {
+    display:none!important}
+@keyframes tumble {
+    0% {
+    transform:translateX(-100px) rotate(-240deg)}
+50% {
+    transform:translateY(-45px) rotate(180deg)}
+100% {
+    transform:rotate(360deg)}
+}
+@media(max-width:800px) {
+    .atlas {
+    grid-template-columns:1fr}
+.atlas aside {
+    border-right:0;
+    border-bottom:1px solid #85758b55;
+    padding:24px}
+.atlas section {
+    padding:24px}
+}
+@media(prefers-reduced-motion:reduce) {
+    .rolling {
+    animation:none}
+}
+
+
+.local-notice { margin: 20px; padding: 16px; border-left: 3px solid #9471b3; }
+select { padding: 10px; color: inherit; background: var(--surface, transparent); }
