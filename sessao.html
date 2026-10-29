@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sala da sessão · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/campanhas.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+</head>
+<body data-world-page="session">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="page-intro"><p class="eyebrow">À MESA / <span id="campaign-title"></span></p><h1>A história está acontecendo.</h1></header>
+    <div class="session-grid"><section class="world-panel scene-panel"><p class="eyebrow">CENA ATUAL</p><h2 id="scene-title"></h2><p id="scene-text" class="preserve-lines"></p><hr><h3>Participantes</h3><div id="participants" class="participant-list"></div></section>
+    <section class="world-panel"><div class="section-heading"><h2>O destino em suas mãos</h2><span>D4 — D100</span></div><div data-dice></div><label id="private-roll-label" hidden><input id="private-roll" type="checkbox"> Rolagem privada do mestre</label><p id="last-roll" class="roll-record" aria-live="polite"></p></section></div>
+</div>
+    <p class="local-notice">Versão local. Perfis e dados ficam neste navegador; a separação entre mestre e jogador é uma demonstração, sem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>

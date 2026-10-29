@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fichas de personagem · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/campanhas.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+</head>
+<body data-world-page="characters">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="page-intro"><p class="eyebrow">ROSTOS DA HISTÓRIA</p><h1>Personagens de Arcana.</h1><p id="sheet-description"></p></header>
+    <div class="character-workspace"><aside class="world-panel"><h2>Fichas da mesa</h2><div id="sheets" class="sheet-summary"></div><button id="new-character" type="button">+ Nova ficha</button></aside>
+    <form id="character-form" class="world-panel"><input type="hidden" name="id"><div class="section-heading"><h2 id="editor-title">Uma nova história</h2><span>FICHA DE PERSONAGEM</span></div>
+        <div class="fields-two"><label>Nome<input name="name" required maxlength="100"></label><label>Dono da ficha<select name="owner" id="character-owner"></select></label></div>
+        <div class="fields-two"><label>Vida atual<input name="hp" type="number" required min="0" max="99999" value="20"></label><label>Nível<input name="level" type="number" required min="1" max="999" value="1"></label></div>
+        <label>Atributos e habilidades<textarea name="body" rows="6" maxlength="12000" placeholder="Registre os atributos do seu sistema, poderes e habilidades."></textarea></label>
+        <label>Inventário<textarea name="inventory" rows="4" maxlength="6000" placeholder="Itens, equipamentos e recursos."></textarea></label>
+        <label>História e aparência<textarea name="bio" rows="4" maxlength="6000"></textarea></label><button>Salvar ficha</button>
+    </form></div>
+</div>
+    <p class="local-notice">Versão local. Perfis e dados ficam neste navegador; a separação entre mestre e jogador é uma demonstração, sem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>

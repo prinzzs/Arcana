@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>O mundo do jogador · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/campanhas.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+</head>
+<body data-world-page="player">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="world-hero player-hero"><div><p class="eyebrow">SEU LUGAR NA HISTÓRIA / JOGADOR</p><h1 id="campaign-title"></h1><p>Seu personagem. Suas escolhas. O próximo capítulo começa à mesa.</p></div><div class="ritual-seal" aria-hidden="true"><span>◇</span></div></header>
+    <div class="player-grid"><section class="world-panel scene-panel"><p class="eyebrow">A CENA ATUAL</p><h2 id="scene-title"></h2><p id="scene-text" class="preserve-lines"></p><a class="world-link" data-destination="sessao.html">Entrar na sessão ↗</a></section><section class="world-panel"><p class="eyebrow">QUEM É VOCÊ EM ARCANA?</p><h2>Seus personagens</h2><div id="my-characters" class="sheet-summary"></div><a class="world-link" data-destination="personagens.html">Abrir minhas fichas ↗</a></section></div>
+    <section class="world-panel journal-preview"><p class="eyebrow">O QUE FOI REVELADO</p><h2>Memórias da jornada</h2><p id="journal-preview" class="preserve-lines"></p><a class="world-link" data-destination="diario.html">Ler diário completo ↗</a></section>
+</div>
+    <p class="local-notice">Versão local. Perfis e dados ficam neste navegador; a separação entre mestre e jogador é uma demonstração, sem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>
