@@ -6,7 +6,7 @@
 }
 .hero::before { content: ""; position: absolute; width: min(70vw, 650px); aspect-ratio: 1; border: 1px solid var(--border); border-radius: 50%; pointer-events: none; opacity: .5; }
 .hero > * { position: relative; }
-.hero .title { font-family: Nevan, "Segoe UI", sans-serif; font-size: clamp(2.6rem, 8.5vw, 6.4rem); letter-spacing: -.03em; }
+.hero .title { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.6rem, 8.5vw, 6.4rem); letter-spacing: -.03em; }
 .hero .title span { color: var(--accent); }
 .hero .subtitle { max-width: 560px; color: var(--text-muted); font-size: clamp(1rem, 2vw, 1.2rem); }
 .hero .button { padding: 14px 38px; margin-top: 8px; border-radius: 12px; font-size: 1.05rem; }

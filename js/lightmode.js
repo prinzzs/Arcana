@@ -1,82 +1,67 @@
-/* Carregado no <head>, antes do CSS: aplica o tema antes da primeira pintura. */
+// Aplica o tema antes de desenhar a página e cria um único seletor flutuante.
 (() => {
-    'use strict';
-
-    const root = document.documentElement;
-    const storageKey = 'arcana-theme';
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-    const validPreferences = ['light', 'dark', 'system'];
-    let preference = 'system';
-
+    const key = "arcana-theme";
+    const themes = ["light", "dark", "red", "system"];
+    const system = window.matchMedia("(prefers-color-scheme: dark)");
+    let preference = "system";
     try {
-        const saved = localStorage.getItem(storageKey);
-        if (validPreferences.includes(saved)) {
-            preference = saved;
-        } else if (localStorage.getItem('lightMode') === 'enabled') {
-            // Na versão anterior, "lightMode=enabled" aplicava o tema escuro.
-            preference = 'dark';
-            localStorage.setItem(storageKey, preference);
-            localStorage.removeItem('lightMode');
-        }
-    } catch (_) {
-        // Storage bloqueado: a troca continua válida nesta página.
-    }
+        const saved = localStorage.getItem(key);
+        if (themes.includes(saved)) preference = saved;
+    } catch (error) { /* O seletor continua funcionando sem armazenamento. */ }
 
-    const icons = {
-        light: '<svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>',
-        dark: '<svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>'
-    };
-
-    function applyTheme() {
-        const theme = preference === 'system' ? (systemTheme.matches ? 'dark' : 'light') : preference;
-        root.dataset.theme = theme;
-        root.dataset.themePreference = preference;
-        const toggle = document.getElementById('lightModeToggle');
-        if (toggle) {
-            const next = theme === 'dark' ? 'light' : 'dark';
-            const label = next === 'light' ? 'Modo claro' : 'Modo escuro';
-            toggle.innerHTML = icons[next] + '<span>' + label + '</span>';
-            toggle.setAttribute('aria-label', 'Ativar ' + label.toLowerCase());
-            toggle.setAttribute('aria-pressed', String(theme === 'dark'));
-            toggle.title = 'Tema atual: ' + (theme === 'dark' ? 'escuro' : 'claro');
-        }
-        document.querySelectorAll('[data-theme-system]').forEach(button => {
-            button.setAttribute('aria-pressed', String(preference === 'system'));
-            button.title = preference === 'system' ? 'Acompanhando o tema do dispositivo' : 'Usar tema do dispositivo';
+    function apply() {
+        const theme = preference === "system" ? (system.matches ? "dark" : "light") : preference;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themePreference = preference;
+        document.querySelectorAll("[data-choice]").forEach(button => {
+            button.setAttribute("aria-pressed", String(button.dataset.choice === preference));
         });
     }
+    apply();
 
-    function chooseTheme(value) {
-        preference = value;
-        try {
-            localStorage.setItem(storageKey, value);
-            localStorage.removeItem('lightMode');
-        } catch (_) { /* O tema continua funcionando sem persistência. */ }
-        applyTheme();
-    }
-
-    applyTheme();
-
-    function bindControls() {
-        const toggle = document.getElementById('lightModeToggle');
-        if (toggle) toggle.addEventListener('click', () => chooseTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
-        document.querySelectorAll('[data-theme-system]').forEach(button => {
-            button.addEventListener('click', () => chooseTheme('system'));
+    document.addEventListener("DOMContentLoaded", () => {
+        const widget = document.createElement("div");
+        widget.className = "theme-float";
+        widget.innerHTML = '<button id="lightModeToggle" type="button" aria-label="Escolher aparência" aria-expanded="false" aria-controls="themePanel">◐</button><div id="themePanel" class="theme-panel" role="group" aria-label="Aparência" hidden></div>';
+        document.body.append(widget);
+        const toggle = widget.querySelector("button");
+        const panel = widget.querySelector(".theme-panel");
+        function close() {
+            panel.hidden = true;
+            toggle.setAttribute("aria-expanded", "false");
+        }
+        for (const [value, label] of [["light", "☀ Claro"], ["dark", "☾ Escuro"], ["red", "◆ Vermelho"], ["system", "◐ Sistema"]]) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.dataset.choice = value;
+            button.textContent = label;
+            button.onclick = () => {
+                preference = value;
+                try { localStorage.setItem(key, value); } catch (error) {}
+                apply();
+                close();
+                toggle.focus();
+            };
+            panel.append(button);
+        }
+        toggle.onclick = () => {
+            panel.hidden = !panel.hidden;
+            toggle.setAttribute("aria-expanded", String(!panel.hidden));
+            if (!panel.hidden) panel.querySelector("button").focus();
+        };
+        document.addEventListener("click", event => {
+            if (!widget.contains(event.target)) close();
         });
-        applyTheme();
-    }
-
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindControls, { once: true });
-    else bindControls();
-
-    const followSystem = () => { if (preference === 'system') applyTheme(); };
-    if (systemTheme.addEventListener) systemTheme.addEventListener('change', followSystem);
-    else systemTheme.addListener(followSystem);
-
-    window.addEventListener('storage', event => {
-        if (event.key === storageKey || event.key === null) {
-            preference = validPreferences.includes(event.newValue) ? event.newValue : 'system';
-            applyTheme();
+        widget.addEventListener("keydown", event => {
+            if (event.key === "Escape") { close(); toggle.focus(); }
+        });
+        apply();
+    });
+    system.addEventListener("change", () => { if (preference === "system") apply(); });
+    window.addEventListener("storage", event => {
+        if (event.key === key || event.key === null) {
+            preference = themes.includes(event.newValue) ? event.newValue : "system";
+            apply();
         }
     });
 })();
