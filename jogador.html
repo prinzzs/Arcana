@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="css/campanhas.css">
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/mundos.css">
+    <link rel="stylesheet" href="css/preparacao.css">
 </head>
 <body data-world-page="player">
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
 </header>
 <main class="world-shell">
     <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
@@ -21,6 +22,10 @@
     <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
     <div id="world-content">
     <header class="world-hero player-hero"><div><p class="eyebrow">SEU LUGAR NA HISTÓRIA / JOGADOR</p><h1 id="campaign-title"></h1><p>Seu personagem. Suas escolhas. O próximo capítulo começa à mesa.</p></div><div class="ritual-seal" aria-hidden="true"><span>◇</span></div></header>
+    <section class="campaign-overview world-panel">
+        <div><p class="eyebrow">GUIA DA CAMPANHA</p><p id="campaign-brief"></p><div id="campaign-meta" class="campaign-meta"></div></div>
+        <a class="world-link" data-destination="guia-campanha.html">Consultar guia da mesa ↗</a>
+    </section>
     <div class="player-grid"><section class="world-panel scene-panel"><p class="eyebrow">A CENA ATUAL</p><h2 id="scene-title"></h2><p id="scene-text" class="preserve-lines"></p><a class="world-link" data-destination="sessao.html">Entrar na sessão ↗</a></section><section class="world-panel"><p class="eyebrow">QUEM É VOCÊ EM ARCANA?</p><h2>Seus personagens</h2><div id="my-characters" class="sheet-summary"></div><a class="world-link" data-destination="personagens.html">Abrir minhas fichas ↗</a></section></div>
     <section class="world-panel journal-preview"><p class="eyebrow">O QUE FOI REVELADO</p><h2>Memórias da jornada</h2><p id="journal-preview" class="preserve-lines"></p><a class="world-link" data-destination="diario.html">Ler diário completo ↗</a></section>
 </div>
@@ -28,6 +33,7 @@
 </main>
 <script src="js/local.js"></script>
 <script src="js/dice.js"></script>
+<script src="js/campanha.js"></script>
 <script src="js/mundos.js"></script>
 </body>
 </html>

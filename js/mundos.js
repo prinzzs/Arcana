@@ -18,6 +18,12 @@
         return true;
     }
 
+    if (page === "create") {
+        byId("world-nav").hidden = true;
+        setupCampaignForm(null, profile);
+        return;
+    }
+
     if (page === "hub") {
         const select = byId("activeProfile");
         localData.profiles.forEach(item => {
@@ -43,31 +49,31 @@
             const title = document.createElement("h3");
             title.textContent = item.name;
             const detail = document.createElement("p");
-            detail.textContent = item.characters.length + " fichas · Abrir campanha ↗";
-            link.append(role, title, detail);
+            const data = campaignDetails(item);
+            detail.textContent = data.system + " · " + item.characters.length + " fichas";
+            const next = document.createElement("p");
+            next.className = "campaign-next";
+            next.textContent = "Próxima sessão · " + sessionLabel(data.nextSession);
+            const cover = document.createElement("div");
+            cover.className = "campaign-card-cover";
+            cover.setAttribute("aria-hidden", "true");
+            setCampaignCover(cover, data.cover);
+            link.append(cover, role, title, detail, next);
             list.append(link);
         });
         if (!list.children.length) list.textContent = "Nenhuma história por aqui ainda. Crie sua mesa ou use um convite local.";
         if (!profile) say("Escolha um perfil ou crie o seu para começar.");
-        byId("create").onsubmit = event => {
-            event.preventDefault();
-            if (!profile) return say("Crie um perfil primeiro.");
-            const name = event.target.elements.name.value.trim();
-            if (!name) return say("Dê um nome à sua campanha.");
-            const item = {
-                id: localId(), name, owner: profile.id, code: localId().toUpperCase(),
-                members: [profile.id], characters: [], journal: "", shield: ""
-            };
-            localData.campaigns.push(item);
-            if (saveLocal()) location.href = "mestre.html?campanha=" + encodeURIComponent(item.id);
-        };
         byId("join").onsubmit = event => {
             event.preventDefault();
             if (!profile) return say("Crie um perfil primeiro.");
             const code = event.target.elements.code.value.trim().toUpperCase();
             const item = localData.campaigns.find(c => c.code === code);
             if (!item) return say("Este convite não foi encontrado neste navegador.");
-            if (!item.members.includes(profile.id)) item.members.push(profile.id);
+            if (!item.members.includes(profile.id)) {
+                const players = item.members.filter(id => id !== item.owner).length;
+                if (players >= campaignDetails(item).maxPlayers) return say("Esta mesa atingiu o limite de jogadores definido pelo mestre.");
+                item.members.push(profile.id);
+            }
             if (saveLocal()) location.href = (item.owner === profile.id ? "mestre.html" : "jogador.html") +
                 "?campanha=" + encodeURIComponent(item.id);
         };
@@ -79,16 +85,16 @@
         say("Escolha uma campanha do seu perfil na central para acessar esta página.");
         return;
     }
-    if (["master", "shield"].includes(page) && !master) {
+    if (["master", "shield", "prepare"].includes(page) && !master) {
         byId("world-content").hidden = true;
         say("Esta área pertence ao mestre. Abra sua jornada pelo menu da campanha.");
     }
     const navigation = [
         [home(), master ? "Visão do mestre" : "Minha jornada"],
         ["sessao.html", "Sessão"], ["personagens.html", master ? "Personagens" : "Minhas fichas"],
-        ["diario.html", "Diário"]
+        ["diario.html", "Diário"], ["guia-campanha.html", "Guia da campanha"]
     ];
-    if (master) navigation.push(["escudo.html", "Escudo"]);
+    if (master) navigation.push(["escudo.html", "Escudo"], ["preparar-campanha.html", "Preparação"]);
     navigation.forEach(([file, label]) => {
         const link = document.createElement("a");
         link.href = url(file);
@@ -96,7 +102,9 @@
         if (location.pathname.endsWith(file)) link.setAttribute("aria-current", "page");
         byId("world-nav").append(link);
     });
-    if (["master", "shield"].includes(page) && !master) return;
+    const currentLink = byId("world-nav").querySelector('[aria-current="page"]');
+    if (currentLink) byId("world-nav").scrollLeft = currentLink.offsetLeft - 12;
+    if (["master", "shield", "prepare"].includes(page) && !master) return;
     if (page === "player" && master) {
         say("Você está visualizando a jornada como mestre. Para experimentar um jogador, troque o perfil na central.");
     }
@@ -106,6 +114,48 @@
     if (byId("campaign-title")) byId("campaign-title").textContent = campaign.name;
     if (byId("scene-title")) byId("scene-title").textContent = campaign.sceneTitle || "Aguardando o próximo capítulo";
     if (byId("scene-text")) byId("scene-text").textContent = campaign.sceneText || "O mestre ainda não revelou a cena desta sessão.";
+
+    const details = campaignDetails(campaign);
+    if (page === "prepare") {
+        setupCampaignForm(campaign, profile);
+        return;
+    }
+    if (byId("campaign-brief")) {
+        byId("campaign-brief").textContent = details.synopsis || "O mestre ainda está preparando a apresentação da aventura.";
+        for (const value of [details.system, "Próxima sessão · " + sessionLabel(details.nextSession), details.location]) {
+            if (!value) continue;
+            const item = document.createElement("span");
+            item.textContent = value;
+            byId("campaign-meta").append(item);
+        }
+    }
+    if (page === "guide") {
+        byId("guide-synopsis").textContent = details.synopsis || "A apresentação desta aventura ainda está sendo preparada.";
+        setCampaignCover(byId("campaign-cover"), details.cover);
+        const facts = [
+            ["Sistema", details.system], ["Cenário", details.setting || "A definir"],
+            ["Tom", details.tone || "A combinar"], ["Próxima sessão", sessionLabel(details.nextSession)],
+            ["Local / plataforma", details.location || "A combinar"],
+            ["Jogadores", campaign.members.filter(id => id !== campaign.owner).length + " de " + details.maxPlayers + " vagas"]
+        ];
+        facts.forEach(([label, value]) => {
+            const item = document.createElement("div");
+            const term = document.createElement("dt");
+            const description = document.createElement("dd");
+            term.textContent = label;
+            description.textContent = value;
+            item.append(term, description);
+            byId("campaign-facts").append(item);
+        });
+        for (const key of ["objective", "rules", "safety"]) {
+            byId("guide-" + key).textContent = details[key] || "O mestre ainda não registrou esta informação.";
+        }
+        byId("guide-starting").textContent = details.startingHp + " pontos de vida · Nível " + details.startingLevel + ". Valores iniciais definidos pela mesa para novas fichas.";
+        byId("guide-template").textContent = details.sheetTemplate || "Preenchimento livre. Combine os atributos com o mestre.";
+        byId("guide-inventory").textContent = details.startingInventory || "Nenhum equipamento inicial definido.";
+        byId("edit-preparation").hidden = !master;
+        byId("arcana-material").hidden = details.system.toLowerCase() !== "arcana";
+    }
 
     if (page === "master") {
         const stats = [
@@ -117,6 +167,7 @@
             const card = document.createElement("div");
             const number = document.createElement("strong");
             number.textContent = value;
+            if (label === "cena atual") number.id = "scene-state";
             const caption = document.createElement("span");
             caption.textContent = label;
             card.append(number, caption);
@@ -138,7 +189,9 @@
             event.preventDefault();
             campaign.sceneTitle = form.elements.title.value.trim();
             campaign.sceneText = form.elements.text.value.trim();
-            save("Cena revelada. Ela já está disponível na jornada do jogador e na sessão.");
+            if (save("Cena revelada. Ela já está disponível na jornada do jogador e na sessão.")) {
+                byId("scene-state").textContent = campaign.sceneTitle ? "Pronta" : "Em preparo";
+            }
         };
     }
 
@@ -188,6 +241,8 @@
         byId("sheet-description").textContent = master
             ? "Como mestre, você acompanha todas as fichas e pode criar personagens para o grupo."
             : "Aqui ficam as suas fichas. O mestre também pode acompanhá-las e editá-las.";
+        byId("sheet-guidance").textContent = details.system + " · Novas fichas começam com " +
+            details.startingHp + " PV e nível " + details.startingLevel + ". Preencha os atributos conforme o guia da mesa.";
         const owners = master
             ? localData.profiles.filter(p => campaign.members.includes(p.id))
             : [profile];
@@ -216,6 +271,10 @@
             form.reset();
             form.elements.id.value = "";
             form.elements.owner.value = profile.id;
+            form.elements.hp.value = details.startingHp;
+            form.elements.level.value = details.startingLevel;
+            form.elements.body.value = details.sheetTemplate;
+            form.elements.inventory.value = details.startingInventory;
             byId("editor-title").textContent = "Uma nova história";
         }
         byId("new-character").onclick = () => { reset(); form.elements.name.focus(); };

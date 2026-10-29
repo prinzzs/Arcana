@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Entre dois mundos · Arcana</title>
+    <title>Minhas campanhas · Arcana</title>
     <script src="js/lightmode.js"></script>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/campanhas.css">
@@ -13,7 +13,7 @@
 <body data-world-page="hub">
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html" aria-current="page">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
 </header>
 <main class="world-shell">
     <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
@@ -21,17 +21,17 @@
 
     <div id="world-content">
     <header class="world-hero portal-hero">
-        <div><p class="eyebrow">UM UNIVERSO. INÚMERAS HISTÓRIAS.</p><h1>De que lado<br>da mesa você está?</h1>
-        <p>Conduza os mistérios de Arcana ou viva a história através do seu personagem.</p></div>
+        <div><p class="eyebrow">SUAS HISTÓRIAS / SEU GRUPO</p><h1>Sua próxima<br>sessão começa aqui.</h1>
+        <p>Prepare a aventura como mestre. Entre na história como jogador.</p></div>
         <div class="ritual-seal" aria-hidden="true"><span>✦</span></div>
     </header>
     <div class="profile-switch"><label for="activeProfile">Perfil neste navegador</label><select id="activeProfile"></select><a href="cadastro.html">Criar perfil</a></div>
     <div class="portal-grid">
         <section class="portal-card master-portal"><span class="chapter-number">I / CONDUZIR</span><h2>O mundo do mestre</h2>
         <p>Prepare a próxima cena, acompanhe os personagens e guarde o que ainda não pode ser revelado.</p>
-        <form id="create"><label>Nome da campanha<input name="name" required maxlength="100" placeholder="Os segredos do Submundo"></label><button>Criar campanha ↗</button></form></section>
+        <a class="button" id="create-campaign" href="criar-campanha.html">+ Criar campanha</a><a class="portal-more" href="arcana.html">Conhecer o RPG Arcana ↗</a></section>
         <section class="portal-card player-portal"><span class="chapter-number">II / VIVER</span><h2>O mundo do jogador</h2>
-        <p>Dê vida à sua ficha, descubra pistas e acompanhe o que o mestre revelou à mesa.</p>
+        <p>Use o convite do mestre para acessar o guia, criar sua ficha e acompanhar a sessão neste navegador.</p>
         <form id="join"><label>Código da campanha local<input name="code" required maxlength="32" placeholder="Cole seu convite"></label><button>Entrar como jogador ↗</button></form></section>
     </div>
     <section class="campaign-library"><div class="section-heading"><h2>Suas histórias</h2><span>Continue de onde parou</span></div><div id="campaigns" class="campaign-grid"></div></section>
@@ -40,6 +40,7 @@
 </main>
 <script src="js/local.js"></script>
 <script src="js/dice.js"></script>
+<script src="js/campanha.js"></script>
 <script src="js/mundos.js"></script>
 </body>
 </html>

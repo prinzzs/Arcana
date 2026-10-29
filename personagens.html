@@ -13,7 +13,7 @@
 <body data-world-page="characters">
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
 </header>
 <main class="world-shell">
     <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
@@ -21,6 +21,7 @@
     <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
     <div id="world-content">
     <header class="page-intro"><p class="eyebrow">ROSTOS DA HISTÓRIA</p><h1>Personagens de Arcana.</h1><p id="sheet-description"></p></header>
+    <div class="sheet-guidance"><p id="sheet-guidance"></p><a data-destination="guia-campanha.html">Consultar regras e orientações ↗</a></div>
     <div class="character-workspace"><aside class="world-panel"><h2>Fichas da mesa</h2><div id="sheets" class="sheet-summary"></div><button id="new-character" type="button">+ Nova ficha</button></aside>
     <form id="character-form" class="world-panel"><input type="hidden" name="id"><div class="section-heading"><h2 id="editor-title">Uma nova história</h2><span>FICHA DE PERSONAGEM</span></div>
         <div class="fields-two"><label>Nome<input name="name" required maxlength="100"></label><label>Dono da ficha<select name="owner" id="character-owner"></select></label></div>
@@ -34,6 +35,7 @@
 </main>
 <script src="js/local.js"></script>
 <script src="js/dice.js"></script>
+<script src="js/campanha.js"></script>
 <script src="js/mundos.js"></script>
 </body>
 </html>
