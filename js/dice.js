@@ -1,1 +1,57 @@
-window.arcanaDice=function(root,remote){root.innerHTML='<div class="picker"></div><label>Quantidade <input type="number" min="1" max="10" value="1"></label><div class="tray"><span class="die">20</span></div><button class="roll">Rolar ↗</button><p role="status"></p>';let sides=20;[4,6,8,10,12,20,100].forEach(n=>{const b=document.createElement('button');b.textContent='D'+n;b.onclick=()=>{sides=n;root.querySelectorAll('.picker button').forEach(x=>x.setAttribute('aria-pressed',x===b));};root.querySelector('.picker').append(b);});root.querySelector('.roll').onclick=async function(){this.disabled=true;const die=root.querySelector('.die');die.classList.add('rolling');try{const count=Math.max(1,Math.min(10,+root.querySelector('input').value||1));let r;if(remote)r=await remote(sides,count);else{const values=Array.from({length:count},()=>{const a=new Uint32Array(1),limit=Math.floor(4294967296/sides)*sides;do{crypto.getRandomValues(a);}while(a[0]>=limit);return a[0]%sides+1;});r={values,total:values.reduce((a,b)=>a+b,0)};}await new Promise(r=>setTimeout(r,650));die.textContent=r.total;root.querySelector('p').textContent=r.values.join(' + ')+' = '+r.total;}catch(e){root.querySelector('p').textContent=e.message;}finally{die.classList.remove('rolling');this.disabled=false;}};};document.querySelectorAll('[data-standalone-dice]').forEach(r=>arcanaDice(r));
+// O resultado é calculado uma vez; a animação apenas o apresenta.
+function rollDice(sides, count) {
+    const values = [];
+    for (let index = 0; index < count; index++) {
+        values.push(Math.floor(Math.random() * sides) + 1);
+    }
+    return { values, total: values.reduce((sum, value) => sum + value, 0) };
+}
+
+function arcanaDice(root, onRoll) {
+    root.innerHTML = `
+        <div class="picker" aria-label="Tipo de dado"></div>
+        <label>Quantidade <input type="number" min="1" max="10" value="1"></label>
+        <div class="tray"><span class="die" aria-hidden="true">20</span></div>
+        <button class="roll" type="button">Rolar ↗</button>
+        <p role="status" aria-live="polite"></p>
+    `;
+    let sides = 20;
+    const picker = root.querySelector(".picker");
+    for (const number of [4, 6, 8, 10, 12, 20, 100]) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "D" + number;
+        button.setAttribute("aria-pressed", String(number === sides));
+        button.onclick = () => {
+            sides = number;
+            picker.querySelectorAll("button").forEach(item => {
+                item.setAttribute("aria-pressed", String(item === button));
+            });
+        };
+        picker.append(button);
+    }
+
+    const rollButton = root.querySelector(".roll");
+    rollButton.onclick = async () => {
+        const input = root.querySelector('input[type="number"]');
+        if (!input.reportValidity()) return;
+        const count = Number(input.value);
+        rollButton.disabled = true;
+        const die = root.querySelector(".die");
+        die.classList.add("rolling");
+        try {
+            const result = onRoll ? await onRoll(sides, count) : rollDice(sides, count);
+            await new Promise(resolve => setTimeout(resolve, 650));
+            die.textContent = result.total;
+            root.querySelector('p[role="status"]').textContent =
+                result.values.join(" + ") + " = " + result.total;
+        } catch (error) {
+            root.querySelector('p[role="status"]').textContent = "Não foi possível rolar. Tente novamente.";
+        } finally {
+            die.classList.remove("rolling");
+            rollButton.disabled = false;
+        }
+    };
+}
+
+document.querySelectorAll("[data-standalone-dice]").forEach(root => arcanaDice(root));
