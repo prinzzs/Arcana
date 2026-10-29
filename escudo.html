@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Escudo do mestre · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/campanhas.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+</head>
+<body data-world-page="shield">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="page-intro"><p class="eyebrow">RESERVADO AO MESTRE</p><h1>Por trás do escudo.</h1><p>Organize o que acontece longe dos olhos dos personagens.</p></header>
+    <form id="shield-form" class="shield-grid">
+        <section class="world-panel"><span class="chapter-number">I / SEGREDOS</span><h2>Trama &amp; revelações</h2><label>Suas anotações privadas<textarea name="shield" rows="13" maxlength="20000" placeholder="O que ainda não pode ser revelado?"></textarea></label></section>
+        <section class="world-panel"><span class="chapter-number">II / ENCONTROS</span><h2>Quem espera por eles</h2><label>Personagens da história e encontros<textarea name="encounters" rows="13" maxlength="10000" placeholder="Nome, intenção, pistas e possíveis reações…"></textarea></label></section>
+        <section class="world-panel"><span class="chapter-number">III / À MÃO</span><h2>Lembretes de sessão</h2><label>Regras e preparação<textarea name="reminders" rows="13" maxlength="10000" placeholder="Condições, testes importantes, próximas cenas…"></textarea></label></section>
+        <div class="save-bar"><span>Estas notas não aparecem nas páginas do jogador.</span><button>Salvar escudo</button></div>
+    </form>
+</div>
+    <p class="local-notice">Versão local. Perfis e dados ficam neste navegador; a separação entre mestre e jogador é uma demonstração, sem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>

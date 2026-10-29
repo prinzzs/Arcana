@@ -73,3 +73,48 @@ button:focus-visible,a:focus-visible { outline:3px solid var(--focus); outline-o
 [hidden] { display:none!important; }
 @media(max-width:800px) { .atlas { grid-template-columns:1fr; margin:16px; } .atlas aside { border-right:0; border-bottom:1px solid var(--border); } .atlas section { padding:20px; } .site-toolbar nav { margin-left:0; } .simple-page { margin:24px 16px; } }
 @media(max-width:480px) { body .site-toolbar { padding:16px; gap:12px; } .site-toolbar nav { gap:14px; } .theme-float { right:16px; bottom:16px; } #character,#journalForm,#shieldForm { padding:16px; } .tabs button { flex:1 1 40%; padding:10px; } }
+
+/* Identidade original restaurada: Nevan nos títulos de marca e círculo na abertura. */
+:root[data-theme="red"] {
+    --bg:#140c0f; --surface:#25171c; --surface-raised:#301d24; --surface-soft:#3b222b;
+    --text:#fff0eb; --text-muted:#d5b8bb; --border:#67313e;
+    --accent:#ff7367; --accent-border:#c3404e; --accent-soft:#4b202c;
+    --button:#b32940; --button-hover:#cc344c; --focus:#ff9788;
+    --input-border:#a36473; --glow:#ff162426;
+}
+@font-face {
+    font-family: Nevan;
+    src: url("../fontes/Nevan.otf") format("opentype");
+    font-display: swap;
+}
+body h1, body .hero .title, body .brand { font-family:Nevan,"Segoe UI",sans-serif; }
+body h2, body h3 { font-family:"Segoe UI",system-ui,sans-serif; font-weight:600; letter-spacing:-.02em; }
+.hero::before {
+    width:min(70vw,650px);
+    border-radius:50%;
+    transform:none;
+    opacity:.5;
+}
+:root[data-theme="red-light"] {
+    color-scheme:light;
+    --bg:#f3e9e3; --surface:#fff8f1; --surface-raised:#fffcf8; --surface-soft:#ecd9d2;
+    --text:#30171c; --text-muted:#74545a; --border:#cfa6a2; --accent:#9e243b;
+    --button:#9e243b; --button-hover:#7d1b30; --accent-soft:#f5d9d7;
+    --accent-border:#bf6b72; --focus:#9e243b; --input-border:#a97579; --glow:#b8203520;
+    --success:#24633d; --success-bg:#e9f5ec; --danger:#a42c43; --danger-bg:#fcecf0;
+    --shadow:0 12px 40px #7c263711;
+}
+:root[data-palette="red"] .hero {
+    background:repeating-conic-gradient(from 20deg at 50% 50%,transparent 0deg 59deg,var(--glow) 59deg 60deg,transparent 60deg 120deg),radial-gradient(ellipse,var(--glow),transparent 70%);
+}
+:root[data-palette="red"] .hero::before {
+    border:2px solid var(--accent-border);
+    box-shadow:0 0 0 14px var(--bg),0 0 0 15px var(--accent-border),inset 0 0 60px var(--glow);
+}
+:root[data-palette="red"] .timeline-cards .card,
+:root[data-palette="red"] .wallpaper-card { border-radius:3px; border-top:3px solid var(--accent); }
+:root[data-palette="red"] .tray { border-radius:5px; border:2px solid var(--accent-border); background:repeating-conic-gradient(from 15deg,var(--surface) 0deg 89deg,var(--glow) 89deg 90deg),var(--surface); }
+.theme-panel { width:220px; }
+.theme-panel > div { display:grid; gap:4px; }
+.theme-panel .theme-heading { margin:8px 8px 2px; color:var(--text-muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em; }
+.theme-panel button { width:100%; }
