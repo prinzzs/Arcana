@@ -52,7 +52,7 @@
 }
 /* Fallback quando JavaScript está desativado. */
 @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
+    :root:not([data-theme]) {
     color-scheme: dark;
     --bg: #100d16;
     --surface: #1c1726;
@@ -166,7 +166,7 @@ label { font-size: .9rem; font-weight: 600; }
     border-bottom: 1px solid var(--border);
     background: var(--surface);
 }
-.brand { color: var(--text); font-family: Nevan, "Segoe UI", sans-serif; font-size: 1.25rem; text-decoration: none; letter-spacing: .08em; }
+.brand { color: var(--text); font-family: Georgia, "Times New Roman", serif; font-size: 1.25rem; text-decoration: none; letter-spacing: .08em; }
 .brand::before { content: "✦"; color: var(--brand); margin-right: 10px; }
 .theme-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .theme-toggle, .theme-system {
@@ -181,7 +181,7 @@ body > header {
     max-width: var(--content-width); margin: 0 auto; padding: 32px 20px 24px;
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
 }
-body > header h1 { font-family: Nevan, "Segoe UI", sans-serif; font-size: clamp(1.5rem, 3vw, 2.3rem); }
+body > header h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.5rem, 3vw, 2.3rem); }
 nav { display: flex; flex-wrap: wrap; gap: 8px; }
 nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 14px; border-radius: var(--radius-sm); color: var(--text-muted); text-decoration: none; font-weight: 600; }
 nav a:hover, nav a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }

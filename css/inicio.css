@@ -2,7 +2,7 @@
 .background-image { position: fixed; inset: 0; background-size: cover; background-position: center; opacity: .08; pointer-events: none; z-index: -1; }
 .voltara { display: inline-block; margin: 20px; color: var(--accent); }
 .header { padding: 24px; text-align: center; }
-.persona { font-family: Nevan, "Segoe UI", sans-serif; font-size: clamp(2rem, 5vw, 3rem); }
+.persona { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 5vw, 3rem); }
 .container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; width: min(1160px, calc(100% - 32px)); margin: 24px auto; }
 .char-list, .stats, .attributes, .habilidades { display: grid; gap: 16px; }
 .char-item, .level, .stats { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
