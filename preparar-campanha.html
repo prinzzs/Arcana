@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Preparar campanha · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+    <link rel="stylesheet" href="css/preparacao.css">
+</head>
+<body data-world-page="prepare">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="page-intro"><p class="eyebrow">MESTRE / CONFIGURAÇÃO DA MESA</p><h1>Prepare a jornada.</h1><p>Organize o que o grupo precisa saber antes da primeira rolagem.</p></header>
+    <ol class="setup-steps" aria-label="Etapas da criação"><li><b>01</b> A campanha</li><li aria-current="step"><b>02</b> Preparação</li><li><b>03</b> Mesa de jogo</li></ol>
+    <div class="setup-layout">
+        <form id="campaign-form" class="setup-form">
+            <fieldset class="world-panel" id="identity"><legend>01 / Campanha</legend>
+    <label>Nome da campanha <span class="field-required">obrigatório</span><input name="name" required maxlength="100" placeholder="O nome da sua próxima história"></label>
+    <div class="fields-two">
+        <label>Sistema<input name="system" required maxlength="80" list="systems" placeholder="Ex.: Arcana"><datalist id="systems"><option value="Arcana"></option><option value="Sistema próprio"></option></datalist></label>
+        <label>Tom da aventura<input name="tone" maxlength="120" placeholder="Ex.: investigação e horror sobrenatural"></label>
+    </div>
+    <label>Sinopse para os jogadores<textarea name="synopsis" rows="4" maxlength="3000" placeholder="Qual é o ponto de partida? Conte o que o grupo já pode saber."></textarea></label>
+    <div class="fields-two">
+        <label>Cenário ou região<input name="setting" maxlength="140" placeholder="Ex.: Submundo de Arcana"></label>
+        <label>Capa<select name="cover"><option value="sigil">Selo de Arcana</option><option value="submundo">Submundo</option><option value="ruas">Nível das Ruas</option><option value="altissimo">Altíssimo</option></select></label>
+    </div></fieldset>
+            <fieldset class="world-panel" id="briefing"><legend>02 / Guia dos jogadores</legend>
+                <p class="field-help">Tudo aqui aparece no guia da campanha. As notas do escudo permanecem separadas.</p>
+                <label>Objetivo inicial<textarea name="objective" rows="3" maxlength="3000" placeholder="O que move o grupo nesta aventura?"></textarea></label>
+                <label>Regras e orientações da mesa<textarea name="rules" rows="5" maxlength="6000" placeholder="Como vocês vão jogar? Registre regras, adaptações e orientações."></textarea></label>
+                <label>Combinados do grupo<textarea name="safety" rows="3" maxlength="3000" placeholder="Temas a evitar, pausas e outros combinados para a sessão."></textarea></label>
+            </fieldset>
+            <fieldset class="world-panel" id="schedule"><legend>03 / Próxima sessão</legend>
+                <div class="fields-two"><label>Data e horário<input name="nextSession" type="datetime-local"><small class="field-help">Horário combinado pela mesa, sem conversão de fuso.</small></label><label>Local ou plataforma<input name="location" maxlength="200" placeholder="Ex.: Discord, canal da campanha"></label></div>
+                <label>Limite de jogadores (sem contar o mestre)<input name="maxPlayers" type="number" min="1" max="20" required></label>
+            </fieldset>
+            <fieldset class="world-panel" id="sheet-defaults"><legend>04 / Novas fichas</legend>
+                <p class="field-help">Estes valores são sugestões da mesa, não regras oficiais. São aplicados ao criar uma ficha; fichas existentes mantêm seus dados.</p>
+                <div class="fields-two"><label>Vida inicial<input name="startingHp" type="number" min="1" max="99999" required></label><label>Nível inicial<input name="startingLevel" type="number" min="1" max="999" required></label></div>
+                <label>Modelo de atributos e habilidades<textarea name="sheetTemplate" rows="6" maxlength="12000" placeholder="Liste os atributos que o jogador deverá preencher."></textarea></label>
+                <label>Inventário inicial<textarea name="startingInventory" rows="3" maxlength="6000" placeholder="Equipamentos e recursos concedidos pelo mestre."></textarea></label>
+            </fieldset>
+            <div class="form-actions save-preparation"><a data-destination="mestre.html">Voltar à mesa</a><button>Salvar preparação</button></div>
+            <p id="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+        <aside class="setup-aside"><nav class="section-index" aria-label="Seções da preparação"><span class="eyebrow">NESTA PÁGINA</span><a href="#identity">01 · Campanha</a><a href="#briefing">02 · Guia dos jogadores</a><a href="#schedule">03 · Próxima sessão</a><a href="#sheet-defaults">04 · Novas fichas</a></nav>
+            <section class="world-panel"><h2>Pronto para o grupo?</h2><p>Salve a preparação e veja a apresentação que aparece para os jogadores.</p><a class="world-link" data-destination="guia-campanha.html">Abrir guia da campanha ↗</a></section>
+            <section class="setup-help"><h2>Tem um segredo?</h2><p>NPCs, encontros e revelações ainda ocultas têm seu próprio lugar.</p><a data-destination="escudo.html">Abrir escudo do mestre ↗</a></section>
+        </aside>
+    </div>
+    </div>
+    <p class="local-notice">Versão local: os dados ficam neste navegador. Convites funcionam entre os perfis daqui; ainda não há sincronização entre dispositivos nem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/campanha.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>
+

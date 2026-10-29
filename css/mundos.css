@@ -25,6 +25,7 @@
 .world-shell form { gap:20px; }
 .world-shell form button { justify-self:start; }
 .world-shell textarea { resize:vertical; min-height:120px; line-height:1.7; }
+.world-shell input,.world-shell textarea,.world-shell select { font-weight:400; }
 .world-shell h2 { font-size:24px; margin-bottom:16px; }
 .world-shell h3 { font-size:20px; margin:12px 0; }
 .world-panel > p { color:var(--text-muted); }
@@ -75,10 +76,6 @@
 body[data-world-page] .world-shell h1 { font-family:Nevan,system-ui,sans-serif; }
 body[data-world-page] .world-shell h2,body[data-world-page] .world-shell h3 { font-family:system-ui,sans-serif; font-weight:600; letter-spacing:-.03em; }
 :root[data-palette="red"] { --world-radius:3px; }
-:root[data-palette="red"] .ritual-seal { border-width:2px; box-shadow:0 0 0 6px var(--bg),0 0 0 7px var(--accent-border),0 0 65px var(--glow); }
-:root[data-palette="red"] .ritual-seal::before { border-style:solid; border-width:3px; }
-:root[data-palette="red"] .ritual-seal::after { transform:rotate(30deg); border-width:2px; }
-:root[data-palette="red"] .world-hero { background:repeating-conic-gradient(from 15deg at 85% 50%,transparent 0deg 44deg,var(--glow) 44deg 45deg,transparent 45deg 90deg); }
 :root[data-palette="red"] .portal-card { background:linear-gradient(135deg,var(--accent-soft),transparent 60%),var(--surface); border-top-width:4px; }
 :root[data-palette="red"] .scene-panel { border-left:3px solid var(--accent); }
 @media(max-width:900px) {
@@ -91,3 +88,46 @@ body[data-world-page] .world-shell h2,body[data-world-page] .world-shell h3 { fo
  .fields-two { grid-template-columns:1fr; } .save-bar,.section-heading { align-items:start; flex-direction:column; } .world-nav { gap:4px; } .world-nav a { padding:8px 10px; }
 }
 @media(prefers-reduced-motion:reduce) { .campaign-card:hover,.tool-card:hover { transform:none; } }
+
+/* As informações da campanha têm prioridade sobre a decoração. */
+.world-status:empty { display:none; }
+.world-top { margin-bottom:20px; }
+.world-hero { padding:30px 0; grid-template-columns:minmax(0,1fr) 160px; }
+.world-hero h1 { font-size:clamp(28px,3.8vw,44px); }
+.ritual-seal { width:140px; height:140px; }
+.ritual-seal span { font-size:44px; }
+.ritual-seal::after { inset:30px; }
+.portal-hero { padding-block:42px; }
+.portal-more { display:block; margin-top:16px; font-size:14px; }
+.portal-card > .button { margin-top:16px; }
+.campaign-actions { display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin:0 0 28px; }
+.campaign-actions > a:last-child { font-size:14px; }
+.campaign-overview { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; margin-bottom:28px; padding:24px; }
+.campaign-overview > div { flex:1 1 500px; }
+.campaign-overview .eyebrow { margin-bottom:10px; }
+.campaign-overview .world-link { margin:0; font-size:14px; }
+#campaign-brief { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; color:var(--text-muted); font-size:14px; }
+.campaign-meta { display:flex; flex-wrap:wrap; gap:10px 20px; color:var(--accent); font-size:12px; margin-top:12px; }
+.campaign-card { padding:0 22px 22px; overflow:hidden; }
+.campaign-card-cover { height:120px; margin:0 -22px 20px; background:var(--surface-soft) url('../img/ritual-trace.svg') center / 120px no-repeat; border-bottom:1px solid var(--border); }
+.campaign-card-cover[data-cover="submundo"] { background-image:url('../img/submundo.jpg'); background-size:cover; }
+.campaign-card-cover[data-cover="ruas"] { background-image:url('../img/ruas.jpg'); background-size:cover; }
+.campaign-card-cover[data-cover="altissimo"] { background-image:url('../img/altissimo.jpg'); background-size:cover; }
+.campaign-card .campaign-next { font-size:12px; border-top:1px solid var(--border); margin-top:16px; padding-top:12px; }
+.sheet-guidance { padding:18px 22px; border-left:2px solid var(--accent); background:var(--surface); font-size:14px; margin-bottom:24px; }
+.sheet-guidance > a { display:inline-flex; margin-top:8px; }
+.world-nav { gap:4px; position:relative; }
+.world-nav a { border-radius:0; border-bottom:2px solid transparent; padding:10px 12px; }
+.world-nav a[aria-current] { background:transparent; border-bottom-color:var(--accent); }
+:root[data-palette="red"] .ritual-seal { border:0; box-shadow:none; border-radius:50%; background:url('../img/ritual-trace.svg') center/contain no-repeat; width:150px; height:150px; opacity:.65; }
+:root[data-palette="red"] .ritual-seal::before,:root[data-palette="red"] .ritual-seal::after,:root[data-palette="red"] .ritual-seal span { display:none; }
+:root[data-palette="red"] .world-hero { background:none; }
+:root[data-palette="red"] .portal-card { background:var(--surface); border-top-width:2px; }
+@media(max-width:600px) {
+    .world-hero { grid-template-columns:1fr; }
+    .world-hero h1 { font-size:28px; }
+    .world-nav { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+    .world-nav a { flex:none; white-space:nowrap; }
+    .world-nav a { font-size:12px; padding:8px; }
+    .campaign-overview { padding:20px; }
+}

@@ -1,0 +1,97 @@
+/* Criação, preparação e guia compartilham a mesma estrutura de formulário. */
+.setup-steps { display:flex; list-style:none; padding:0; margin:0 0 32px; border-block:1px solid var(--border); }
+.setup-steps li { flex:1; padding:18px 12px; color:var(--text-muted); font-size:14px; }
+.setup-steps b { margin-right:10px; color:var(--accent); font-size:12px; }
+.setup-steps [aria-current] { color:var(--text); background:var(--accent-soft); border-bottom:2px solid var(--accent); }
+.setup-layout,.guide-layout { display:grid; grid-template-columns:minmax(0,1fr) 310px; gap:28px; align-items:start; }
+.setup-aside,.guide-content { display:grid; gap:24px; min-width:0; }
+.setup-layout fieldset { margin:0; min-width:0; display:grid; gap:22px; }
+#campaign-fields { padding:0; border:0; }
+.setup-layout legend { padding:0 8px; color:var(--accent); font-weight:650; font-size:15px; }
+#campaign-fields legend { padding:0 0 24px; }
+.field-required { display:inline; font-size:11px; font-weight:400; color:var(--text-muted); }
+.field-help { color:var(--text-muted); font-size:13px; font-weight:400; line-height:1.6; }
+.world-shell label:has(.field-required) { gap:6px; }
+.form-actions,.action-row { display:flex; flex-wrap:wrap; align-items:center; gap:18px; }
+.form-actions { justify-content:space-between; padding-top:8px; }
+.action-row { margin-top:24px; }
+.secondary-button { background:var(--surface); color:var(--text); border:1px solid var(--border); }
+.secondary-button:hover { background:var(--accent-soft); color:var(--accent); }
+.template-card { border-top:3px solid var(--accent); }
+.template-card button { margin:20px 0 12px; width:100%; }
+.template-card > a { display:block; font-size:14px; }
+.template-card #template-status { font-size:13px; margin-top:16px; color:var(--accent); }
+.setup-help { padding:0 8px; color:var(--text-muted); font-size:14px; }
+.setup-help h2 { font-size:17px; color:var(--text); }
+.setup-help ol { padding-left:20px; }
+.setup-help li { padding-bottom:12px; }
+.setup-help a { display:inline-flex; margin-top:16px; }
+.section-index { display:grid; gap:4px; padding:16px; border-left:1px solid var(--border); }
+.section-index .eyebrow { margin:0 14px 10px; }
+.section-index a { font-size:14px; }
+.setup-form .world-panel { padding-top:20px; }
+.save-preparation { padding:18px 0; border-top:1px solid var(--border); }
+#form-feedback { color:var(--accent); }
+#profile-gate { margin-bottom:24px; }
+.campaign-dossier { display:grid; grid-template-columns:minmax(0,1fr) 240px; gap:40px; align-items:center; padding:40px 0 32px; }
+.campaign-dossier h1 { font-size:clamp(28px,4vw,46px); margin:20px 0; }
+.campaign-dossier > div > p:not(.eyebrow) { color:var(--text-muted); }
+.campaign-cover { height:220px; background:var(--surface-soft) url('../img/ritual-trace.svg') center / 75% no-repeat; border:1px solid var(--border); border-radius:var(--world-radius,8px); }
+[data-cover="submundo"] { background-image:url('../img/submundo.jpg'); background-size:cover; }
+[data-cover="ruas"] { background-image:url('../img/ruas.jpg'); background-size:cover; }
+[data-cover="altissimo"] { background-image:url('../img/altissimo.jpg'); background-size:cover; }
+.campaign-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; padding:24px 0; margin:0 0 32px; border-block:1px solid var(--border); }
+.campaign-facts dt { color:var(--text-muted); font-size:12px; margin-bottom:6px; }
+.campaign-facts dd { margin:0; font-size:15px; font-weight:600; }
+.guide-layout details { margin:18px 0; border-block:1px solid var(--border); padding:12px 0; }
+.guide-layout details + details { border-top:0; margin-top:-18px; }
+.guide-layout summary { cursor:pointer; font-size:14px; min-height:28px; }
+.guide-layout details p { font-size:13px; margin-top:16px; color:var(--text-muted); }
+.guide-layout .button { margin-top:10px; }
+.arcana-intro { display:grid; grid-template-columns:1.15fr 1fr; align-items:center; gap:60px; padding:44px 0 48px; }
+.arcana-intro h1 { font-size:clamp(30px,4.5vw,58px); line-height:1.3; margin:22px 0; }
+.arcana-intro p { max-width:610px; }
+.intro-description { color:var(--text-muted); font-size:15px; }
+.arcana-intro figure { margin:0; position:relative; }
+.arcana-intro img { height:400px; width:100%; object-fit:cover; border:1px solid var(--border); border-radius:var(--world-radius,8px); }
+.arcana-intro figcaption { position:absolute; bottom:0; left:0; right:0; padding:32px 20px 18px; background:linear-gradient(transparent,#000b); font-size:10px; letter-spacing:.18em; color:white; }
+.arcana-section { padding:56px 0; border-bottom:1px solid var(--border); scroll-margin-top:24px; }
+.arcana-section > h2 { margin:14px 0 28px; }
+.arcana-section .section-heading { margin:0 0 20px; }
+.arcana-section .section-heading h2 { margin-top:14px; }
+.lore-intro { display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:28px; color:var(--text-muted); }
+.lore-intro p + p { margin:0; }
+.setting-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+.setting-grid article { border:1px solid var(--border); border-radius:var(--world-radius,8px); overflow:hidden; background:var(--surface); }
+.setting-grid img { width:100%; height:220px; object-fit:cover; }
+.setting-grid article > div { padding:24px; }
+.setting-grid p { font-size:14px; color:var(--text-muted); }
+.attribute-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+.attribute-tags span { padding:5px 10px; border:1px solid var(--border); color:var(--accent); font-size:12px; }
+.page-arcana #como-jogar .guide-layout { grid-template-columns:1.2fr 1fr; }
+.page-arcana .world-panel h3 { margin-top:0; }
+.arcana-start { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:48px; padding:40px; }
+.arcana-start h2 { margin:16px 0; }
+.arcana-start p,.arcana-start span { color:var(--text-muted); }
+.arcana-start .button { margin-top:24px; }
+.arcana-start ol { margin:0; padding-left:22px; }
+.arcana-start li { padding:0 0 18px 12px; }
+.arcana-start li::marker { color:var(--accent); }
+.arcana-start span { display:block; font-size:14px; margin-top:4px; }
+@media(max-width:900px) {
+    .setup-layout,.guide-layout { grid-template-columns:minmax(0,1fr) 260px; gap:20px; }
+    .arcana-intro { gap:28px; } .arcana-intro img { height:360px; }
+    .campaign-dossier { grid-template-columns:minmax(0,1fr) 200px; }
+    .setting-grid img { height:180px; } .setting-grid article > div { padding:18px; }
+}
+@media(max-width:700px) {
+    .setup-layout,.guide-layout,.page-arcana #como-jogar .guide-layout,.arcana-intro,.arcana-start,.lore-intro { grid-template-columns:1fr; }
+    .setup-steps { gap:0; } .setup-steps li { padding:14px 8px; font-size:12px; } .setup-steps b { display:block; }
+    .setup-aside { gap:20px; } .section-index { display:none; }
+    .campaign-dossier { grid-template-columns:1fr; gap:24px; padding-top:28px; }
+    .campaign-cover { height:180px; } .campaign-facts { grid-template-columns:1fr 1fr; gap:20px; }
+    .arcana-intro { padding:32px 0; } .arcana-intro img { height:280px; }
+    .setting-grid { grid-template-columns:1fr; } .setting-grid img { height:240px; }
+    .arcana-section { padding:36px 0; } .arcana-start { padding:24px; }
+    .lore-intro { gap:16px; }
+}

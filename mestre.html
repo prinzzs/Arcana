@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="css/campanhas.css">
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/mundos.css">
+    <link rel="stylesheet" href="css/preparacao.css">
 </head>
 <body data-world-page="master">
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="index.html">O universo</a><a href="campanhas.html">Minhas campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
 </header>
 <main class="world-shell">
     <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
@@ -21,6 +22,11 @@
     <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
     <div id="world-content">
     <header class="world-hero"><div><p class="eyebrow">BASTIDORES DA AVENTURA / MESTRE</p><h1 id="campaign-title"></h1><p>Você conhece os segredos. A mesa ainda está prestes a descobri-los.</p></div><div class="ritual-seal" aria-hidden="true"><span>✦</span></div></header>
+    <div class="campaign-actions"><a class="button" data-destination="sessao.html">Abrir sessão ↗</a><a class="button secondary-button" data-destination="preparar-campanha.html">Configurar campanha</a><a data-destination="guia-campanha.html">Ver guia dos jogadores</a></div>
+    <section class="campaign-overview world-panel">
+        <div><p class="eyebrow">GUIA DA CAMPANHA</p><p id="campaign-brief"></p><div id="campaign-meta" class="campaign-meta"></div></div>
+        <a class="world-link" data-destination="guia-campanha.html">Consultar guia da mesa ↗</a>
+    </section>
     <div id="campaign-stats" class="world-stats"></div>
     <div class="master-grid">
         <section class="world-panel scene-panel"><p class="eyebrow">PRÓXIMA CENA</p><h2>Prepare o momento.</h2>
@@ -33,6 +39,7 @@
 </main>
 <script src="js/local.js"></script>
 <script src="js/dice.js"></script>
+<script src="js/campanha.js"></script>
 <script src="js/mundos.js"></script>
 </body>
 </html>

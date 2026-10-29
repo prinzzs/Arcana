@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Guia da campanha · Arcana</title>
+    <script src="js/lightmode.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/mundos.css">
+    <link rel="stylesheet" href="css/preparacao.css">
+</head>
+<body data-world-page="guide">
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+</header>
+<main class="world-shell">
+    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+    <p id="status" class="world-status" role="status" aria-live="polite"></p>
+    <nav id="world-nav" class="world-nav" aria-label="Sua campanha"></nav>
+    <div id="world-content">
+    <header class="campaign-dossier"><div><p class="eyebrow">ARQUIVO DA MESA / PARA TODO O GRUPO</p><h1 id="campaign-title"></h1><p id="guide-synopsis" class="preserve-lines"></p></div><div id="campaign-cover" class="campaign-cover" role="img" aria-label="Capa da campanha"></div></header>
+    <dl id="campaign-facts" class="campaign-facts"></dl>
+    <div class="guide-layout">
+        <div class="guide-content">
+            <section class="world-panel"><p class="eyebrow">01 / A AVENTURA</p><h2>O que nos trouxe até aqui</h2><p id="guide-objective" class="preserve-lines"></p></section>
+            <section class="world-panel"><p class="eyebrow">02 / COMO VAMOS JOGAR</p><h2>Regras da mesa</h2><p id="guide-rules" class="preserve-lines"></p></section>
+            <section class="world-panel"><p class="eyebrow">03 / O NOSSO ACORDO</p><h2>Combinados do grupo</h2><p id="guide-safety" class="preserve-lines"></p></section>
+        </div>
+        <aside class="setup-aside">
+            <section class="world-panel"><p class="eyebrow">SUA PRÓXIMA FICHA</p><h2>O ponto de partida</h2><p id="guide-starting"></p><details><summary>Modelo de atributos</summary><p id="guide-template" class="preserve-lines"></p></details><details><summary>Inventário inicial</summary><p id="guide-inventory" class="preserve-lines"></p></details><a class="button" data-destination="personagens.html">Abrir minhas fichas ↗</a></section>
+            <section class="world-panel" id="arcana-material"><h2>Conheça Arcana</h2><p>Explore o universo, as mecânicas e as entidades do nosso RPG.</p><a class="world-link" href="arcana.html">Acessar o material ↗</a></section>
+            <a id="edit-preparation" class="button secondary-button" data-destination="preparar-campanha.html" hidden>Editar preparação</a>
+        </aside>
+    </div>
+    </div>
+    <p class="local-notice">Versão local: os dados ficam neste navegador. Convites funcionam entre os perfis daqui; ainda não há sincronização entre dispositivos nem proteção de servidor.</p>
+</main>
+<script src="js/local.js"></script>
+<script src="js/campanha.js"></script>
+<script src="js/mundos.js"></script>
+</body>
+</html>
+

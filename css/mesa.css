@@ -11,14 +11,7 @@
     --button:#72508f; --button-hover:#835ca3; --accent-soft:#34273f;
     --accent-border:#836496; --focus:#d5b4ed; --input-border:#8c769b; --glow:#9d72bf15;
 }
-:root[data-theme="red"] {
-    color-scheme:dark;
-    --bg:#1a1113; --surface:#281a1e; --surface-raised:#342126; --surface-soft:#40272d;
-    --text:#fae9e4; --text-muted:#cfb3b0; --border:#654047; --accent:#f0a298;
-    --button:#a33d4d; --button-hover:#bb485a; --accent-soft:#49252d;
-    --accent-border:#b26972; --focus:#ffbeb4; --input-border:#a77b80; --glow:#d9475c18;
-    --success:#a9dbb5; --success-bg:#20372b; --danger:#ffb6ab; --danger-bg:#49252d;
-}
+
 :root { --radius:10px; --radius-sm:6px; --brand:var(--accent); }
 body { font-family:system-ui,-apple-system,"Segoe UI",sans-serif; padding-bottom:90px; background:var(--bg); }
 body h1, body h2, body h3, .hero .title, .brand { font-family:Georgia,"Times New Roman",serif; font-weight:500; letter-spacing:-.025em; }
@@ -75,13 +68,7 @@ button:focus-visible,a:focus-visible { outline:3px solid var(--focus); outline-o
 @media(max-width:480px) { body .site-toolbar { padding:16px; gap:12px; } .site-toolbar nav { gap:14px; } .theme-float { right:16px; bottom:16px; } #character,#journalForm,#shieldForm { padding:16px; } .tabs button { flex:1 1 40%; padding:10px; } }
 
 /* Identidade original restaurada: Nevan nos títulos de marca e círculo na abertura. */
-:root[data-theme="red"] {
-    --bg:#140c0f; --surface:#25171c; --surface-raised:#301d24; --surface-soft:#3b222b;
-    --text:#fff0eb; --text-muted:#d5b8bb; --border:#67313e;
-    --accent:#ff7367; --accent-border:#c3404e; --accent-soft:#4b202c;
-    --button:#b32940; --button-hover:#cc344c; --focus:#ff9788;
-    --input-border:#a36473; --glow:#ff162426;
-}
+
 @font-face {
     font-family: Nevan;
     src: url("../fontes/Nevan.otf") format("opentype");
@@ -95,22 +82,9 @@ body h2, body h3 { font-family:"Segoe UI",system-ui,sans-serif; font-weight:600;
     transform:none;
     opacity:.5;
 }
-:root[data-theme="red-light"] {
-    color-scheme:light;
-    --bg:#f3e9e3; --surface:#fff8f1; --surface-raised:#fffcf8; --surface-soft:#ecd9d2;
-    --text:#30171c; --text-muted:#74545a; --border:#cfa6a2; --accent:#9e243b;
-    --button:#9e243b; --button-hover:#7d1b30; --accent-soft:#f5d9d7;
-    --accent-border:#bf6b72; --focus:#9e243b; --input-border:#a97579; --glow:#b8203520;
-    --success:#24633d; --success-bg:#e9f5ec; --danger:#a42c43; --danger-bg:#fcecf0;
-    --shadow:0 12px 40px #7c263711;
-}
-:root[data-palette="red"] .hero {
-    background:repeating-conic-gradient(from 20deg at 50% 50%,transparent 0deg 59deg,var(--glow) 59deg 60deg,transparent 60deg 120deg),radial-gradient(ellipse,var(--glow),transparent 70%);
-}
-:root[data-palette="red"] .hero::before {
-    border:2px solid var(--accent-border);
-    box-shadow:0 0 0 14px var(--bg),0 0 0 15px var(--accent-border),inset 0 0 60px var(--glow);
-}
+
+
+
 :root[data-palette="red"] .timeline-cards .card,
 :root[data-palette="red"] .wallpaper-card { border-radius:3px; border-top:3px solid var(--accent); }
 :root[data-palette="red"] .tray { border-radius:5px; border:2px solid var(--accent-border); background:repeating-conic-gradient(from 15deg,var(--surface) 0deg 89deg,var(--glow) 89deg 90deg),var(--surface); }
@@ -118,3 +92,52 @@ body h2, body h3 { font-family:"Segoe UI",system-ui,sans-serif; font-weight:600;
 .theme-panel > div { display:grid; gap:4px; }
 .theme-panel .theme-heading { margin:8px 8px 2px; color:var(--text-muted); font-size:11px; text-transform:uppercase; letter-spacing:.12em; }
 .theme-panel button { width:100%; }
+
+/* Ritual: papel, carvão e escarlate. A mesma tipografia de Arcana. */
+:root[data-theme="red"] {
+    color-scheme:dark;
+    --bg:#0c0c0e; --surface:#151517; --surface-raised:#1d1c1f; --surface-soft:#242124;
+    --text:#f4efeb; --text-muted:#bdb4b4; --border:#393237;
+    --accent:#ff625b; --accent-border:#b33838; --accent-soft:#32191c;
+    --button:#b8262d; --button-hover:#ca3139; --focus:#ff8079; --input-border:#897174;
+    --glow:#bc1c2820; --success:#a9dbb5; --success-bg:#20372b;
+    --danger:#ffb6ab; --danger-bg:#421b20; --shadow:0 16px 44px #0005;
+}
+:root[data-theme="red-light"] {
+    color-scheme:light;
+    --bg:#f1efeb; --surface:#fdfbf7; --surface-raised:#ffffff; --surface-soft:#e9e4de;
+    --text:#272021; --text-muted:#685a5c; --border:#d0c2bf;
+    --accent:#a21f27; --accent-border:#b74c51; --accent-soft:#f2dddd;
+    --button:#a21f27; --button-hover:#85181f; --focus:#a21f27; --input-border:#997b7c;
+    --glow:#c71b2310; --success:#24633d; --success-bg:#e9f5ec;
+    --danger:#a42c43; --danger-bg:#fcecf0; --shadow:0 12px 40px #7c263711;
+}
+body .site-toolbar { padding-block:10px; }
+.site-toolbar nav a { border-radius:0; border-bottom:2px solid transparent; }
+.site-toolbar nav a:hover,.site-toolbar nav a[aria-current] { border-bottom-width:2px; background:transparent; }
+:root[data-palette="red"] .site-toolbar { border-bottom-color:var(--accent-border); box-shadow:0 1px 0 var(--glow); }
+:root[data-palette="red"] .brand::before { content:"✦"; }
+:root[data-palette="red"] .hero {
+    align-items:flex-start; text-align:left; min-height:500px; gap:20px;
+    padding:72px max(24px,calc((100vw - 1160px)/2)) 96px;
+    background:linear-gradient(110deg,var(--bg) 40%,transparent),repeating-linear-gradient(172deg,transparent 0 83px,var(--glow) 84px,transparent 85px),var(--bg);
+    isolation:isolate; overflow:hidden; border-bottom:1px solid var(--accent-border);
+}
+:root[data-palette="red"] .hero::before {
+    right:max(4%,calc((100vw - 1240px)/2)); top:38px; width:min(40vw,440px);
+    border:0; border-radius:50%; opacity:.46; box-shadow:none;
+    background:url('../img/ritual-trace.svg') center/contain no-repeat; z-index:-1;
+}
+:root[data-palette="red"] .hero .title { font-size:clamp(34px,5.4vw,70px); max-width:750px; }
+:root[data-palette="red"] .hero .subtitle { max-width:540px; }
+:root[data-palette="red"] .hero .button { border-radius:3px; }
+.hero-about { font-size:14px; }
+.page-home .wallpapers-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+:root[data-palette="red"] .tray { background:radial-gradient(ellipse,var(--accent-soft),var(--surface)); border-width:1px; }
+@media(max-width:700px) {
+    :root[data-palette="red"] .hero { padding:48px 20px 90px; min-height:510px; }
+    :root[data-palette="red"] .hero::before { width:330px; right:-120px; top:72px; opacity:.18; }
+    .site-toolbar nav { width:100%; min-width:0; flex-wrap:nowrap; gap:16px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+    .site-toolbar nav a { flex:none; font-size:13px; white-space:nowrap; }
+    .page-home .wallpapers-grid { grid-template-columns:1fr; }
+}

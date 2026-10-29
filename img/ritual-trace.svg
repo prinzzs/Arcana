@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">
+  <!-- Selo original do tema Ritual: anéis interrompidos e seis marcas. -->
+  <g stroke="#d73232" stroke-linecap="square">
+    <circle cx="250" cy="250" r="192" stroke-width="2" stroke-dasharray="620 18 270 12 180 106"/>
+    <circle cx="250" cy="250" r="178" stroke-width="1" stroke-dasharray="12 4 2 10"/>
+    <circle cx="250" cy="250" r="140" stroke-width="2"/>
+    <path d="M250 52 385 328 103 330 250 52ZM250 447 115 172 397 171 250 447Z" stroke-width="3"/>
+    <path d="M250 208 285 270 215 270 250 208ZM250 184v-18M306 280l17 10M194 280l-17 10" stroke-width="4"/>
+    <path d="M249 17v27m-12-17 27 9M449 133l-23 12m13-24-5 28M451 369l-26-14m25 0-21 16M250 458v28m-11-14 25 5M51 367l23-13m-22-3 18 20M52 134l24 14m-20 2 18-24" stroke-width="3"/>
+    <path d="m67 251 25-3-5 9 24-8M392 251l23 7-4-11 27 4M165 78l18 25-3-15 17 19M339 413l-13-24 16 11-15-24" opacity=".7"/>
+    <path d="m310 50-8 27m-181 53 11 9M371 88l-11 22M77 325l19 6m219 97-7-21m113-99-19-4" stroke-width="5"/>
+  </g>
+</svg>
