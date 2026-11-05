@@ -67,30 +67,6 @@
             if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(showNextText, 5000); // Alterna a narrativa a cada cinco segundos.
 
 
-            // Magic sparkle trail
-            document.addEventListener('mousemove', (event) => {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-                const sparkCount = 2;
-
-                for (let i = 0; i < sparkCount; i++) {
-                    const spark = document.createElement('div');
-                    spark.className = 'spark';
-
-                    const angle = Math.random() * 2 * Math.PI;
-                    spark.style.setProperty('--dx', Math.cos(angle));
-                    spark.style.setProperty('--dy', Math.sin(angle));
-
-                    spark.style.left = `${event.clientX}px`;
-                    spark.style.top = `${event.clientY}px`;
-
-                    document.body.appendChild(spark);
-
-                    setTimeout(() => {
-                        spark.remove();
-                    }, 1500);
-                }
-            });
-
             // Add transition effect when navigating away
             document.querySelectorAll('#start-button').forEach(button => {
                 button.addEventListener('click', (event) => {

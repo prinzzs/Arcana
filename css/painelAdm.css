@@ -1,11 +1,70 @@
+
 @import url("./collections.css");
-.search-form { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
-.search-form input { flex: 1 1 240px; }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border-radius: 8px; color: var(--accent); background: var(--accent-soft); font-weight: 600; text-decoration: none; }
-.actions a:hover { text-decoration: underline; }
-.actions a[href^="excluir"] { color: var(--danger); background: var(--danger-bg); }
-.pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 32px; }
-.pagination a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: var(--surface); text-decoration: none; }
-.pagination a:hover { background: var(--accent-soft); }
-.pagination a.active { background: var(--button); color: var(--on-button); }
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.search-form input {
+    flex: 1 1 240px;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}
+
+.actions a[href^="excluir"] {
+    color: var(--danger);
+    background: var(--danger-bg);
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.pagination a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background: var(--accent-soft);
+}
+
+.pagination a.active {
+    background: var(--button);
+    color: var(--on-button);
+}

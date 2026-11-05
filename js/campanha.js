@@ -69,8 +69,8 @@ function setupCampaignForm(campaign, profile) {
         }
         if (!profile) {
             document.getElementById("profile-gate").hidden = false;
-            document.getElementById("campaign-fields").disabled = true;
-            document.getElementById("save-campaign").disabled = true;
+
+
             const next = encodeURIComponent("criar-campanha.html" + (["arcana", "proprio"].includes(model) ? "?modelo=" + model : ""));
             document.getElementById("create-profile").href = "cadastro.html?next=" + next;
             document.getElementById("choose-profile").href = "login.html?next=" + next;
@@ -80,9 +80,27 @@ function setupCampaignForm(campaign, profile) {
         if (new URLSearchParams(location.search).get("nova")) tell("Campanha criada. Complete a preparação e salve para começar a jogar.");
     }
 
+    // Guarda os campos enquanto a pessoa escolhe um perfil na mesma aba.
+    const draftKey = "arcana-rascunho-" + (new URLSearchParams(location.search).get("modelo") || "livre");
+    if (creating) {
+        try {
+            const draft = JSON.parse(sessionStorage.getItem(draftKey) || "{}");
+            for (const key of Object.keys(draft)) {
+                if (form.elements[key] && typeof draft[key] === "string") form.elements[key].value = draft[key];
+            }
+        } catch (error) {}
+        form.addEventListener("input", () => {
+            try { sessionStorage.setItem(draftKey, JSON.stringify(Object.fromEntries(new FormData(form)))); } catch (error) {}
+        });
+    }
     form.onsubmit = event => {
         event.preventDefault();
-        if (!profile || (!creating && campaign.owner !== profile.id)) return;
+        if (!profile) {
+            tell("Escolha ou crie um perfil para salvar. Seus campos continuam disponíveis nesta página.");
+            document.getElementById("create-profile").focus();
+            return;
+        }
+        if (!creating && campaign.owner !== profile.id) return;
         const name = form.elements.name.value.trim();
         if (!name || !form.elements.system.value.trim()) {
             tell("Informe o nome da campanha e o sistema.");
@@ -107,7 +125,10 @@ function setupCampaignForm(campaign, profile) {
                 members: [profile.id], characters: [], journal: "", shield: "", details: updated
             };
             localData.campaigns.push(item);
-            if (saveLocal()) location.href = "preparar-campanha.html?campanha=" + encodeURIComponent(item.id) + "&nova=1";
+            if (saveLocal()) {
+                try { sessionStorage.removeItem(draftKey); } catch (error) {}
+                location.href = "preparar-campanha.html?campanha=" + encodeURIComponent(item.id) + "&nova=1";
+            }
             else localData.campaigns.pop();
         } else {
             const previous = { name: campaign.name, details: campaign.details };

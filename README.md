@@ -14,8 +14,7 @@ Para manter os dados locais no mesmo endereço, use a mesma pasta e o mesmo nave
 - Vida, nível, modelo de atributos e inventário da preparação são aplicados apenas a novas fichas. Fichas e campanhas antigas são preservadas.
 - Fichas, escudo, diário e sessão têm páginas próprias: personagens.html, escudo.html, diario.html e sessao.html.
 - O mestre pode revelar uma cena, publicar o diário e editar as fichas do grupo. O jogador acessa suas fichas e os materiais revelados.
-- O seletor flutuante combina identidade (Arcana/roxo ou Ritual/vermelho) e luminosidade (claro, escuro ou sistema).
-- Ritual usa carvão e escarlate no escuro e papel claro com vermelho no claro. As fontes continuam Nevan nos títulos e fontes do sistema no texto.
+- O botão do cabeçalho alterna apenas entre claro e escuro.
 - Estilos ficam em css/ e comportamentos ficam em js/.
 - Não precisa instalar dependências para usar o site.
 - Campanhas, fichas, diário e perfis ficam no localStorage.
@@ -30,3 +29,13 @@ Para manter os dados locais no mesmo endereço, use a mesma pasta e o mesmo nave
 ## Verificação
 
 Para os testes: `npm install`, `npx playwright install chromium` e `npm test`.
+
+## Versão simplificada
+
+A aparência agora usa apenas claro e escuro. O botão fica no cabeçalho.
+O rodapé da inicial contém um mapa incorporado. Em `js/mapa.js`, altere
+`localizacaoInicial` para o endereço desejado. O formulário também permite
+consultar outro endereço; essa consulta não muda o endereço padrão do site.
+O mapa depende de internet e do Google Maps. O link abaixo abre a mesma busca.
+Os campos de campanha podem ser preenchidos sem perfil; salvar continua exigindo
+um perfil local. Os CSS estão divididos em blocos com uma propriedade por linha.

@@ -29,7 +29,7 @@
     <section class="home-intro" aria-labelledby="home-title">
         <div class="home-copy">
             <p class="eyebrow">RPG INDEPENDENTE · HISTÓRIAS EM CONJUNTO</p>
-            <h1 id="home-title">Conheça Arcana.<br><span>Crie o seu RPG.</span></h1>
+            <h1 id="home-title">Conheça Arcana. <span>Crie o seu RPG.</span></h1>
             <p class="home-description">Explore nosso universo de tecnologia e sobrenatural ou dê vida ao seu próprio cenário. Sua próxima história começa com uma mesa.</p>
             <div class="home-actions">
                 <a id="discover-arcana" class="button" href="arcana.html">Conhecer Arcana <span aria-hidden="true">↗</span></a>
@@ -37,19 +37,9 @@
             </div>
             <p class="home-return">Já tem uma campanha? <a href="campanhas.html">Volte à sua mesa <span aria-hidden="true">→</span></a></p>
         </div>
-        <figure class="home-art">
-            <div class="home-circle"><img src="img/submundo.jpg" alt="Túneis em ruínas do Submundo de Arcana" fetchpriority="high" width="480" height="480"></div>
-            <figcaption>SUBMUNDO DE ARCANA</figcaption>
-        </figure>
+
     </section>
-    <section class="home-tools" aria-labelledby="tools-title">
-        <div class="home-section-heading"><h2 id="tools-title">Mais espaço para a história.</h2><p>O essencial para preparar e jogar a sua campanha.</p></div>
-        <div class="home-tool-grid">
-            <article><span class="eyebrow">01 / CAMPANHA</span><h3>Prepare o seu mundo.</h3><p>Reúna o cenário, as regras e os combinados num guia para os jogadores.</p></article>
-            <article><span class="eyebrow">02 / PERSONAGENS</span><h3>Dê vida ao grupo.</h3><p>Crie fichas e acompanhe atributos, inventário e histórias de cada personagem.</p></article>
-            <article><span class="eyebrow">03 / SESSÃO</span><h3>Leve a aventura adiante.</h3><p>Tenha dados, diário e notas do mestre à mão durante a sessão.</p></article>
-        </div>
-    </section>
+
     <section class="home-help" aria-labelledby="help-title">
         <div><h2 id="help-title">Primeira vez no RPG?</h2><p>Você só precisa de curiosidade e uma história para construir em conjunto.</p></div>
         <a href="arcana.html#como-jogar">Entenda como jogar <span aria-hidden="true">→</span></a>
@@ -59,6 +49,18 @@
 <footer class="home-footer">
     <div><a class="brand" href="index.html">ARCANA</a><p>Um RPG da Wolves Club Studio.</p></div>
     <nav aria-label="Rodapé"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="dado.html">Dados</a></nav>
+    <section class="footer-map" aria-labelledby="map-title">
+        <h2 id="map-title">Localização</h2>
+        <p>Escolha um endereço ou uma cidade para visualizar no mapa.</p>
+        <form id="map-form">
+            <label for="map-address">Endereço ou cidade</label>
+            <div class="map-fields"><input id="map-address" required maxlength="200" placeholder="Ex.: Campinas, São Paulo"><button type="submit">Mostrar no mapa</button></div>
+        </form>
+        <p id="map-status" role="status"></p>
+        <iframe id="location-map" title="Mapa da localização escolhida" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Brasil&amp;output=embed"></iframe>
+        <a id="map-link" href="https://www.google.com/maps?q=Brasil" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+    </section>
 </footer>
+<script src="js/mapa.js"></script>
 </body>
 </html>
