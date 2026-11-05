@@ -6,16 +6,32 @@
     <script src="js/lightmode.js"></script>
     <link rel="stylesheet" href="css/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard UI</title>
+    <title>Sua aventura · Arcana</title>
     <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/simple.css">
     <link rel="stylesheet" href="css/mesa.css">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body class="page-dashboard">
-    <header class="site-toolbar"><a class="brand" href="index.html">ARCANA</a><nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a></nav></header>
-<main class="simple-page">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="arcana.html">Sobre Arcana</a>
+        <a href="campanhas.html" aria-current="location">Campanhas</a>
+        <a href="fichas.html">Entidades</a>
+        <a href="dado.html">Dados</a>
+        <a href="login.html">Perfis</a>
+    </nav>
+</header>
+<nav class="page-navigation" aria-label="Navegação da página">
+    <a class="back-link" href="index.html" aria-label="Voltar para início"><span aria-hidden="true">←</span> Voltar</a>
+    <div class="page-location"><span aria-current="page">Sua aventura</span></div>
+</nav>
+<main id="conteudo" tabindex="-1" class="simple-page">
     <h1>Sua aventura começa aqui</h1>
     <p>Escolha como continuar.</p>
     <nav><a href="campanhas.html">Campanhas</a> · <a href="fichas.html">Entidades</a> · <a href="dado.html">Dados</a></nav>

@@ -37,6 +37,35 @@ async function run() {
         }
     }
 
+    // O retorno ocupa a mesma posição em todas as páginas, inclusive no celular.
+    for (const width of [320, 390, 1440]) {
+        await page.setViewportSize({width,height:1000});
+        let reference;
+        for (const file of pages) {
+            await page.goto(origin + "/" + file);
+            await page.evaluate(() => document.fonts.ready);
+            assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), file + " " + width);
+            assert.equal(await page.locator("#conteudo").count(),1,file);
+            assert.equal(await page.locator(".back-link").count(),file === "index.html" ? 0 : 1,file);
+            if (file !== "index.html") {
+                const box = await page.locator(".back-link").boundingBox();
+                assert(box && box.width >= 44 && box.height >= 44,file);
+                if (!reference) reference = box;
+                assert(Math.abs(box.x-reference.x)<1 && Math.abs(box.y-reference.y)<1,file+" retorno desalinhado em "+width);
+            }
+            if (width <= 760) {
+                assert(await page.locator("#site-navigation").isHidden(),file);
+                await page.locator(".nav-toggle").click();
+                assert.equal(await page.locator(".nav-toggle").getAttribute("aria-expanded"),"true");
+                assert(await page.locator("#site-navigation").isVisible());
+                assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),file+" menu");
+                await page.keyboard.press("Escape");
+                assert(await page.locator("#site-navigation").isHidden());
+                assert(await page.locator(".nav-toggle").evaluate(el=>el === document.activeElement));
+            }
+        }
+    }
+
     // Confere a migração do vermelho antigo para vermelho escuro.
     await page.evaluate(() => { localStorage.setItem("arcana-theme","red"); localStorage.removeItem("arcana-palette"); });
     await page.reload();
@@ -52,14 +81,41 @@ async function run() {
                 assert.equal(await page.locator("html").getAttribute("data-mode"),mode);
                 assert.equal(await page.locator("html").getAttribute("data-palette"),palette);
                 assert(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1));
+                if (process.env.ARCANA_SCREENSHOTS) {
+                    fs.mkdirSync(process.env.ARCANA_SCREENSHOTS,{recursive:true});
+                    await page.keyboard.press("Escape");
+                    await page.screenshot({path:path.join(process.env.ARCANA_SCREENSHOTS,"home-"+palette+"-"+mode+"-"+width+".png"),fullPage:true});
+                    await page.locator("#lightModeToggle").click();
+                }
             }
         }
         await page.keyboard.press("Escape");
         assert(await page.locator("#themePanel").isHidden());
-        assert.equal(await page.locator(".hero").evaluate(el=>getComputedStyle(el,"::before").borderRadius),"50%");
+        assert.equal(await page.locator(".home-circle").evaluate(el=>getComputedStyle(el).borderRadius),"50%");
     }
     await page.reload();
     assert.equal(await page.locator("html").getAttribute("data-theme"),"red");
+
+    // Os dois convites da inicial levam aos fluxos corretos.
+    await page.goto(origin+"/index.html");
+    await page.locator("#discover-arcana").click();
+    await page.waitForURL("**/arcana.html");
+    await page.locator(".back-link").click();
+    await page.waitForURL("**/index.html");
+    await page.locator("#create-own-rpg").click();
+    await page.waitForURL("**/criar-campanha.html?modelo=proprio");
+    assert(await page.locator("#profile-gate").isVisible());
+    await page.locator("#choose-profile").click();
+    assert.equal(await page.locator(".back-link").getAttribute("href"),"criar-campanha.html?modelo=proprio");
+    await page.getByRole("link",{name:"Criar perfil",exact:true}).click();
+    await page.locator('[name="name"]').fill("Criador");
+    await page.locator('[name="email"]').fill("criador@example.test");
+    await page.locator("form button").click();
+    await page.waitForURL("**/criar-campanha.html?modelo=proprio");
+    assert.equal(await page.locator('[name="system"]').inputValue(),"Sistema próprio");
+    assert.equal(await page.locator('[name="synopsis"]').inputValue(),"");
+    assert.equal(await page.locator('[name="setting"]').inputValue(),"");
+    await page.evaluate(()=>localStorage.removeItem("arcana-local-v1"));
 
     // Dois perfis usam a mesma campanha local, com páginas e dados diferentes.
     async function createProfile(name,email) {
@@ -101,6 +157,11 @@ async function run() {
     assert.equal(await page.locator('[name="startingHp"]').inputValue(),"32");
     assert.equal(await page.locator('[name="nextSession"]').inputValue(),"2026-11-07T19:30");
     await page.goto(origin+"/mestre.html"+query);
+    for (const file of ["preparar-campanha", "guia-campanha", "escudo", "personagens", "diario", "sessao"]) {
+        await page.goto(origin+"/"+file+".html"+query);
+        await page.locator(".back-link").click();
+        await page.waitForURL(origin+"/mestre.html"+query);
+    }
     const code = await page.locator("#invite").textContent();
     const masterId = await page.evaluate(()=>JSON.parse(localStorage.getItem("arcana-local-v1")).active);
     await page.locator('#scene-form [name="title"]').fill("A porta vermelha");
@@ -123,6 +184,11 @@ async function run() {
     await page.locator('#join [name="code"]').fill(code);
     await page.locator("#join button").click();
     await page.waitForURL("**/jogador.html?*");
+    for (const file of ["guia-campanha", "personagens", "diario", "sessao"]) {
+        await page.goto(origin+"/"+file+".html"+query);
+        await page.locator(".back-link").click();
+        await page.waitForURL(origin+"/jogador.html"+query);
+    }
     assert.equal(await page.locator("#scene-title").textContent(),"A porta vermelha");
     assert((await page.locator("#journal-preview").textContent()).includes("chave"));
     assert.equal(await page.locator('#world-nav a[href*="escudo"]').count(),0);
@@ -251,8 +317,20 @@ async function run() {
         const result = Number(await page.locator(".die").textContent());
         assert(result>=1 && result<=sides);
     }
+    // Uma campanha própria não preenche conteúdo de Arcana nem reescreve as outras.
+    const previousCampaigns = await page.evaluate(()=>JSON.parse(localStorage.getItem("arcana-local-v1")).campaigns);
+    await page.goto(origin+"/index.html");
+    await page.locator("#create-own-rpg").click();
+    await page.locator('[name="name"]').fill("A ilha esquecida");
+    await page.locator("#save-campaign").click();
+    await page.waitForURL("**/preparar-campanha.html?*");
+    const ownCampaigns = await page.evaluate(()=>JSON.parse(localStorage.getItem("arcana-local-v1")).campaigns);
+    assert.deepEqual(ownCampaigns.slice(0,-1),previousCampaigns);
+    const own = ownCampaigns.at(-1);
+    assert.equal(own.details.system,"Sistema próprio");
+    for (const field of ["setting","synopsis","rules","sheetTemplate"]) assert.equal(own.details[field],"",field);
     assert.deepEqual(errors,[]);
     await browser.close();
-    console.log("Páginas, links, quatro temas, fontes, criação, preparação, guia, dados nas fichas, convites, legado, mestre/jogador e sessão: OK");
+    console.log("Páginas, navegação consistente, menu móvel, início, quatro temas, fontes, campanha própria, preparação, guia, fichas, convites, legado e sessão: OK");
 }
 run().catch(error=>{console.error(error);process.exit(1)});

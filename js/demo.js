@@ -2,10 +2,16 @@ const status = document.getElementById("status");
 const adminPage = location.pathname.includes("Adm");
 const profileForm = document.querySelector("[data-profile]");
 const requestedNext = new URLSearchParams(location.search).get("next");
-const nextPage = ["criar-campanha.html", "criar-campanha.html?modelo=arcana"].includes(requestedNext)
+const nextPage = ["criar-campanha.html", "criar-campanha.html?modelo=arcana", "criar-campanha.html?modelo=proprio"].includes(requestedNext)
     ? requestedNext : "campanhas.html";
 for (const link of document.querySelectorAll('a[href="login.html"], a[href="cadastro.html"]')) {
     if (nextPage !== "campanhas.html") link.href += "?next=" + encodeURIComponent(nextPage);
+}
+
+if (nextPage !== "campanhas.html") {
+    const back = document.querySelector(".back-link");
+    back.href = nextPage;
+    back.setAttribute("aria-label", "Voltar para criar campanha");
 }
 
 if (profileForm) {

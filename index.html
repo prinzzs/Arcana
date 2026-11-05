@@ -2,132 +2,63 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conheça o RPG independente Arcana ou crie a sua própria campanha. Organize personagens, regras e sessões em um só lugar.">
+    <title>Arcana · Sua próxima história começa aqui</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
     <script src="js/lightmode.js"></script>
     <link rel="stylesheet" href="css/global.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="imagex/png" href="img/logo.png">
-    <title>Arcana - Inicio</title>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/mesa.css">
+    <link rel="stylesheet" href="css/home.css">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body class="page-home">
-    <header class="site-toolbar"><a class="brand" href="index.html" aria-current="page">ARCANA</a><nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a></nav></header>
-    <div class="container">
-        <!-- Seção Hero -->
-        <section class="hero">
-            <p class="eyebrow">Tecnologia · Mistério · Sobrenatural</p>
-            <h1 class="title">Arcana: <span>rpg</span></h1>
-            <p class="subtitle">Explore uma cidade onde as fronteiras entre tecnologia e o paranormal deixaram de existir.</p>
-            <a href="campanhas.html" class="button">Começar a jogar ↗</a>
-            <a class="hero-about" href="arcana.html">Conheça o RPG e suas ferramentas →</a>
-            <a class="scroll-down" href="#niveis">↓ Explore o universo</a>
-        </section>
-
-        <!-- Seção Linha do Tempo -->
-        <section class="timeline" id="niveis">
-            <h2 class="section-title">Níveis de Arcana</h2>
-            <div class="timeline-cards">
-                <div class="card">
-                    <img src="img/submundo.jpg" alt="O Submundo de Arcana" loading="lazy">
-                    <h3>Nível I</h3>
-                    <p>Submundo</p>
-                </div>
-                <div class="card">
-                    <img src="img/ruas.jpg" alt="O nível das ruas de Arcana" loading="lazy">
-                    <h3>Nível II</h3>
-                    <p>Nível Das Ruas</p>
-                </div>
-                <div class="card">
-                    <img src="img/altissimo.jpg" alt="As torres do Altíssimo" loading="lazy">
-                    <h3>Nível III</h3>
-                    <p>Altissimo</p>
-                </div>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-toolbar">
+    <a class="brand" href="index.html" aria-current="page">ARCANA</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="arcana.html">Sobre Arcana</a>
+        <a href="campanhas.html">Campanhas</a>
+        <a href="fichas.html">Entidades</a>
+        <a href="dado.html">Dados</a>
+        <a href="login.html">Perfis</a>
+    </nav>
+</header>
+<main id="conteudo" tabindex="-1" class="home-shell">
+    <section class="home-intro" aria-labelledby="home-title">
+        <div class="home-copy">
+            <p class="eyebrow">RPG INDEPENDENTE · HISTÓRIAS EM CONJUNTO</p>
+            <h1 id="home-title">Conheça Arcana.<br><span>Crie o seu RPG.</span></h1>
+            <p class="home-description">Explore nosso universo de tecnologia e sobrenatural ou dê vida ao seu próprio cenário. Sua próxima história começa com uma mesa.</p>
+            <div class="home-actions">
+                <a id="discover-arcana" class="button" href="arcana.html">Conhecer Arcana <span aria-hidden="true">↗</span></a>
+                <a id="create-own-rpg" class="button secondary-button" href="criar-campanha.html?modelo=proprio">Criar meu RPG <span aria-hidden="true">+</span></a>
             </div>
-        </section>
-
-    <!-- Seção Características do Personagem -->
-
-    <section class="character">
-    <h2 class="section-title">A história...</h2>
-        <div class="character-content">
-            <!-- Botão e conteúdo para Lore -->
-            <button class="toggle-btn" aria-expanded="false" aria-controls="loreContent" onclick="toggleContent('loreContent')">Mostrar Lore</button>
-            <div class="hidden-content" id="loreContent">
-                <div class="text">
-                    <h3>Lore</h3>
-                    <p>Há 50 anos, Arcana sofreu um evento cataclísmico conhecido como <strong>O Blecaute</strong>. Durante um experimento envolvendo a fusão de dimensões,
-                        a Spectra Dynamics abriu acidentalmente uma fenda paranormal. Essa anomalia liberou criaturas sobrenaturais, conhecidas como <strong>Umbra</strong>,
-                        e deixou um rastro de energia paranormal que transformou para sempre o equilíbrio entre tecnologia e sobrenatural. Desde então,
-                        as fronteiras entre o natural e o paranormal se tornaram quase inexistentes.</p>
-                </div>
-            </div>
-
-            <!-- Botão e conteúdo para Níveis -->
-            <button class="toggle-btn" aria-expanded="false" aria-controls="niveisContent" onclick="toggleContent('niveisContent')">Mostrar Níveis</button>
-            <div class="hidden-content" id="niveisContent">
-                <div class="text">
-                    <h3>Níveis</h3>
-                    <p>
-                        <strong>Submundo: </strong> Nessa parte de Arcana tem várias redes de labirintos, túneis e esgotos abandonados, lar dos marginalizados e esquecidos pela sociedade.
-                        Os habitantes enfrentam uma luta constante contra os perigos do ambiente hostil e a ameaça permanente das entidades Umbra, que se escondem nas sombras.
-                        Lá é o polo da fenda. Apesar disso, grupos de rebeldes se organizam no Submundo, por ser um lugar onde as pessoas da elite se recusam a ir.
-                        <br><br>
-                        <strong>Nível das Ruas: </strong> é uma parte mais segura, marcado pela decadência de arranha-céus e bairros em ruínas, mercados clandestinos e gangues dominantes.
-                        Humanos, androides e cyborgs coexistem em meio à agitação, enquanto rumores de atividades paranormais surgem em alguns bairros populares.
-                        As gangues desempenham um papel duplo: algumas são fantoches das corporações mais ricas com o fim de investigar a fenda e tentar entender a Umbra,
-                        mas algumas resistem e tentam proteger os mais vulneráveis.
-                        <br><br>
-                        <strong>Altíssimos: </strong> A camada mais elevada da cidade, onde as elites e corporações vivem em luxo desmedido. Torres de vidro que atravessam as nuvens abrigam
-                        os poderosos que governam Arcana por meio de megacorporações como a Spectra Dynamics, famosa por suas pesquisas em tecnologia paranormal e segredos perigosos.
-                        Entretanto, nem todos no Altíssimo são leais à ordem vigente: dissidentes e agentes secretos operam nas sombras, buscando expor as megacorporações ou mesmo derrubá-las.
-                    </p>
-                </div>
-            </div>
+            <p class="home-return">Já tem uma campanha? <a href="campanhas.html">Volte à sua mesa <span aria-hidden="true">→</span></a></p>
+        </div>
+        <figure class="home-art">
+            <div class="home-circle"><img src="img/submundo.jpg" alt="Túneis em ruínas do Submundo de Arcana" fetchpriority="high" width="480" height="480"></div>
+            <figcaption>SUBMUNDO DE ARCANA</figcaption>
+        </figure>
+    </section>
+    <section class="home-tools" aria-labelledby="tools-title">
+        <div class="home-section-heading"><h2 id="tools-title">Mais espaço para a história.</h2><p>O essencial para preparar e jogar a sua campanha.</p></div>
+        <div class="home-tool-grid">
+            <article><span class="eyebrow">01 / CAMPANHA</span><h3>Prepare o seu mundo.</h3><p>Reúna o cenário, as regras e os combinados num guia para os jogadores.</p></article>
+            <article><span class="eyebrow">02 / PERSONAGENS</span><h3>Dê vida ao grupo.</h3><p>Crie fichas e acompanhe atributos, inventário e histórias de cada personagem.</p></article>
+            <article><span class="eyebrow">03 / SESSÃO</span><h3>Leve a aventura adiante.</h3><p>Tenha dados, diário e notas do mestre à mão durante a sessão.</p></article>
         </div>
     </section>
-
-    <script>
-        // Função para alternar a visibilidade do conteúdo
-        function toggleContent(sectionId) {
-            const content = document.getElementById(sectionId);
-            content.classList.toggle("active");
-
-            // Altera o texto do botão conforme o estado da seção
-            const button = document.querySelector(`[onclick="toggleContent('${sectionId}')"]`);
-            button.setAttribute("aria-expanded", String(content.classList.contains("active")));
-            if (content.classList.contains("active")) {
-                button.innerText = sectionId === "loreContent" ? "Ocultar Lore" : "Ocultar Níveis";
-            } else {
-                button.innerText = sectionId === "loreContent" ? "Mostrar Lore" : "Mostrar Níveis";
-            }
-        }
-
-        // Garante que ambos os conteúdos comecem ocultos ao carregar a página
-        window.onload = function() {
-            document.getElementById("loreContent").classList.remove("active");
-            document.getElementById("niveisContent").classList.remove("active");
-        }
-    </script>
-
-
-
-        <!-- Seção Wallpapers Animados -->
-        <section class="wallpapers">
-            <h2 class="section-title">No nosso site</h2>
-            <div class="wallpapers-grid">
-                <a href="campanhas.html"><div class="wallpaper-card">Criar Personagem</div></a>
-                <a href="fichas.html"><div class="wallpaper-card">Ficha Das Entidades</div></a>
-                <a href="dado.html"><div class="wallpaper-card">Rolagem De Dados</div></a>
-            </div>
-        </section>
-
-        <!-- Rodapé -->
-        <footer>
-            <p>©2023 Wolves Club Studio. Todos os direitos reservados.</p>
-        </footer>
-    </div>
+    <section class="home-help" aria-labelledby="help-title">
+        <div><h2 id="help-title">Primeira vez no RPG?</h2><p>Você só precisa de curiosidade e uma história para construir em conjunto.</p></div>
+        <a href="arcana.html#como-jogar">Entenda como jogar <span aria-hidden="true">→</span></a>
+    </section>
+    <p class="local-notice">Por enquanto, perfis e campanhas ficam salvos neste navegador, sem sincronização entre dispositivos.</p>
+</main>
+<footer class="home-footer">
+    <div><a class="brand" href="index.html">ARCANA</a><p>Um RPG da Wolves Club Studio.</p></div>
+    <nav aria-label="Rodapé"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="dado.html">Dados</a></nav>
+</footer>
 </body>
 </html>

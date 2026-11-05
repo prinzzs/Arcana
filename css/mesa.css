@@ -1,4 +1,4 @@
-/* Acabamento compartilhado: duas fontes nativas, superfícies e cores por tema. */
+/* Acabamento compartilhado: Nevan, fontes do sistema e cores por tema. */
 :root[data-theme="light"] {
     --bg:#eeeae2; --surface:#faf8f3; --surface-raised:#fffdf8; --surface-soft:#e7e1d8;
     --text:#29232e; --text-muted:#625969; --border:#d4cbd9; --accent:#643c83;
@@ -140,4 +140,42 @@ body .site-toolbar { padding-block:10px; }
     .site-toolbar nav { width:100%; min-width:0; flex-wrap:nowrap; gap:16px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
     .site-toolbar nav a { flex:none; font-size:13px; white-space:nowrap; }
     .page-home .wallpapers-grid { grid-template-columns:1fr; }
+}
+
+/* Navegação e ações mantêm a mesma posição em todas as telas. */
+body .site-toolbar { padding:10px max(28px,calc((100% - 1184px)/2)); min-height:72px; gap:24px; }
+.site-toolbar .nav-toggle { display:none; margin-left:auto; background:var(--surface); color:var(--text); border-color:var(--border); gap:14px; }
+.site-toolbar #site-navigation { width:auto; display:flex; flex-wrap:nowrap; gap:24px; margin-left:auto; overflow:visible; }
+.page-navigation { width:100%; max-width:1240px; margin:0 auto; padding:16px 28px; min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:nowrap; }
+.page-navigation .back-link { flex:none; gap:10px; min-height:44px; padding:8px 14px; border:1px solid var(--border); border-radius:6px; background:var(--surface); color:var(--text-muted); font-size:14px; }
+.page-navigation .back-link:hover { color:var(--accent); background:var(--accent-soft); border-color:var(--accent-border); }
+.page-location { display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:8px 16px; font-size:13px; color:var(--text-muted); text-align:right; }
+.page-location #profile-label { font-size:12px; padding-left:16px; border-left:1px solid var(--border); }
+.page-heading { max-width:1240px; margin:auto; padding:20px 28px 32px; }
+.page-heading h1 { font-size:clamp(28px,4vw,44px); }
+.skip-link { position:absolute; z-index:1100; top:8px; left:16px; padding:12px 18px; background:var(--surface); border:1px solid var(--accent); transform:translateY(-160%); }
+.skip-link:focus { transform:translateY(0); }
+.button.secondary-button { background:var(--surface); color:var(--text); border:1px solid var(--border); }
+.button.secondary-button:hover { background:var(--accent-soft); color:var(--accent); border-color:var(--accent-border); }
+.simple-page { margin-top:12px; }
+.simple-page h1 { margin-bottom:20px; }
+.simple-page input { font-weight:400; }
+.simple-page form button { justify-self:end; }
+.simple-page .form-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; }
+.simple-page #profiles { display:grid; gap:10px; margin:20px 0; }
+.simple-page #profiles button { justify-content:flex-start; color:var(--text); background:var(--surface-raised); border-color:var(--border); }
+.simple-page #profiles button:hover { color:var(--accent); border-color:var(--accent-border); }
+.world-nav:empty { display:none; }
+.danger-button { background:var(--danger-bg); color:var(--danger); border:1px solid currentColor; }
+.danger-button:hover { background:var(--danger-bg); color:var(--danger); box-shadow:inset 0 0 0 1px currentColor; }
+@media(max-width:760px) {
+    body .site-toolbar { min-height:68px; padding:10px 20px; gap:12px; }
+    .site-toolbar .nav-toggle { display:inline-flex; }
+    .site-toolbar #site-navigation { width:100%; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:4px 16px; }
+    .nav-enhanced .site-toolbar #site-navigation:not(.is-open) { display:none; }
+    .site-toolbar #site-navigation a { padding:10px 8px; font-size:14px; }
+    .page-navigation { padding:14px 20px; }
+    .page-location { display:block; font-size:12px; }
+    .page-location #profile-label { display:block; padding:0; border:0; font-size:11px; }
+    .page-heading { padding:16px 20px 24px; }
 }

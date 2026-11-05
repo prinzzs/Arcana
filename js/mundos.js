@@ -85,6 +85,10 @@
         say("Escolha uma campanha do seu perfil na central para acessar esta página.");
         return;
     }
+    document.querySelectorAll("[data-back-campaign]").forEach(link => {
+        link.href = url(home());
+        link.setAttribute("aria-label", master ? "Voltar à visão do mestre" : "Voltar à jornada do jogador");
+    });
     if (["master", "shield", "prepare"].includes(page) && !master) {
         byId("world-content").hidden = true;
         say("Esta área pertence ao mestre. Abra sua jornada pelo menu da campanha.");
