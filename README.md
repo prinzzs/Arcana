@@ -33,9 +33,17 @@ Para os testes: `npm install`, `npx playwright install chromium` e `npm test`.
 ## Versão simplificada
 
 A aparência agora usa apenas claro e escuro. O botão fica no cabeçalho.
-O rodapé da inicial contém um mapa incorporado. Em `js/mapa.js`, altere
-`localizacaoInicial` para o endereço desejado. O formulário também permite
-consultar outro endereço; essa consulta não muda o endereço padrão do site.
-O mapa depende de internet e do Google Maps. O link abaixo abre a mesma busca.
+O rodapé da inicial contém o mapa da Fatec Praia Grande, na Praça 19 de Janeiro, 144,
+Boqueirão, Praia Grande/SP, incorporado diretamente em HTML. O mapa depende de internet.
+O botão redondo Aa, no canto inferior direito, abre opções de texto ampliado,
+alto contraste e destaque de links. Usa HTML e CSS, sem JavaScript novo;
+as opções valem apenas na página atual e não são salvas entre páginas.
+O acabamento compartilhado está em css/refinamento.css. Na tela de personagens,
+a lateral reúne seleção de fichas e atalhos para as seções do formulário;
+no celular ela aparece acima do editor. Atributos e itens são adicionados por linha,
+nos campos existentes, e salvos pelo comportamento já disponível.
 Os campos de campanha podem ser preenchidos sem perfil; salvar continua exigindo
 um perfil local. Os CSS estão divididos em blocos com uma propriedade por linha.
+
+Verificação adicional das opções nativas: `node tests/accessibility-css.cjs`.
+Use `CHROMIUM_EXECUTABLE_PATH` para indicar um Chrome instalado, se necessário.

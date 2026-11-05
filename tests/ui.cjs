@@ -72,9 +72,15 @@ async function run() {
     assert(["light","dark"].includes(theme));
     await page.reload();
     assert.equal(await page.locator("html").getAttribute("data-theme"),theme);
-    await page.locator("#map-address").fill("Campinas, São Paulo");
-    await page.locator("#map-form button").click();
-    assert((await page.locator("#location-map").getAttribute("src")).includes(encodeURIComponent("Campinas, São Paulo")));
+    assert((await page.locator("#location-map").getAttribute("src")).includes("Fatec+Praia+Grande"));
+    await page.locator(".accessibility-panel summary").click();
+    await page.locator("#accessible-text").check();
+    assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).fontSize), "20px");
+    await page.locator("#accessible-contrast").check();
+    assert.equal(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), "rgb(0, 0, 0)");
+    await page.locator("#accessible-links").check();
+    assert((await page.locator("#discover-arcana").evaluate(el => getComputedStyle(el).textDecorationLine)).includes("underline"));
+    await page.locator(".accessibility-panel summary").click();
 
     // Os dois convites da inicial levam aos fluxos corretos.
     await page.goto(origin+"/index.html");

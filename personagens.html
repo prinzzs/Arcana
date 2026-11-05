@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/mundos.css">
     <script src="js/navigation.js" defer></script>
+    <link rel="stylesheet" href="css/refinamento.css">
 </head>
 <body data-world-page="characters">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -34,13 +35,13 @@
     <div id="world-content">
     <header class="page-intro"><p class="eyebrow">ROSTOS DA HISTÓRIA</p><h1>Personagens da campanha.</h1><p id="sheet-description"></p></header>
     <div class="sheet-guidance"><p id="sheet-guidance"></p><a data-destination="guia-campanha.html">Consultar regras e orientações ↗</a></div>
-    <div class="character-workspace"><aside class="world-panel"><h2>Fichas da mesa</h2><div id="sheets" class="sheet-summary"></div><button id="new-character" type="button">+ Nova ficha</button></aside>
+    <div class="character-workspace"><aside class="world-panel character-sidebar"><p class="eyebrow">SUA MESA</p><h2>Fichas da mesa</h2><p>Selecione um personagem para consultar ou editar sua ficha.</p><nav class="sheet-section-nav" aria-label="Seções da ficha"><a href="#character-identity">Identidade</a><a href="#character-skills">Atributos e habilidades</a><a href="#character-inventory">Inventário</a><a href="#character-story">História e aparência</a></nav><div id="sheets" class="sheet-summary"></div><button id="new-character" type="button">+ Nova ficha</button></aside>
     <form id="character-form" class="world-panel"><input type="hidden" name="id"><div class="section-heading"><h2 id="editor-title">Uma nova história</h2><span>FICHA DE PERSONAGEM</span></div>
-        <div class="fields-two"><label>Nome<input name="name" required maxlength="100"></label><label>Dono da ficha<select name="owner" id="character-owner"></select></label></div>
+        <div id="character-identity" class="fields-two"><label>Nome<input name="name" required maxlength="100"></label><label>Dono da ficha<select name="owner" id="character-owner"></select></label></div>
         <div class="fields-two"><label>Vida atual<input name="hp" type="number" required min="0" max="99999" value="20"></label><label>Nível<input name="level" type="number" required min="1" max="999" value="1"></label></div>
-        <label>Atributos e habilidades<textarea name="body" rows="6" maxlength="12000" placeholder="Registre os atributos do seu sistema, poderes e habilidades."></textarea></label>
-        <label>Inventário<textarea name="inventory" rows="4" maxlength="6000" placeholder="Itens, equipamentos e recursos."></textarea></label>
-        <label>História e aparência<textarea name="bio" rows="4" maxlength="6000"></textarea></label><button>Salvar ficha</button>
+        <label id="character-skills">Atributos e habilidades<textarea name="body" rows="6" maxlength="12000" placeholder="Adicione um atributo ou habilidade por linha. Ex.: Força: 3; Investigação: 2; Cura: 1."></textarea></label>
+        <label id="character-inventory">Inventário<textarea name="inventory" rows="4" maxlength="6000" placeholder="Adicione um item por linha, com quantidade e observações. Ex.: Corda — 1; Poção — 2."></textarea></label>
+        <label id="character-story">História e aparência<textarea name="bio" rows="4" maxlength="6000"></textarea></label><button>Salvar ficha</button>
     </form></div>
 </div>
     <p class="local-notice">Versão local. Perfis e dados ficam neste navegador; a separação entre mestre e jogador é uma demonstração, sem proteção de servidor.</p>
@@ -49,5 +50,17 @@
 <script src="js/dice.js"></script>
 <script src="js/campanha.js"></script>
 <script src="js/mundos.js"></script>
+
+<details class="accessibility-panel">
+    <summary aria-label="Opções de acessibilidade">Aa<span class="visually-hidden"> Acessibilidade</span></summary>
+    <div class="accessibility-options">
+        <h2>Acessibilidade</h2>
+        <p>Ajuste a leitura nesta página.</p>
+        <label><input type="checkbox" id="accessible-text"> Texto ampliado</label>
+        <label><input type="checkbox" id="accessible-contrast"> Alto contraste</label>
+        <label><input type="checkbox" id="accessible-links"> Destacar links</label>
+        <p>Use Tab para navegar e Enter para abrir ou fechar este painel. As opções valem nesta página.</p>
+    </div>
+</details>
 </body>
 </html>

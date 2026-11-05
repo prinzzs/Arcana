@@ -1,0 +1,236 @@
+/* Acabamento comum. Controles nativos de HTML, sem dependências adicionais. */
+:root {
+    --reading-width: 72ch;
+}
+body .site-toolbar {
+    gap: 16px;
+    padding-block: 12px;
+}
+.site-toolbar nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 8px;
+}
+a, button, input, select, textarea, summary {
+    touch-action: manipulation;
+}
+button, .button, input:not([type="checkbox"]):not([type="radio"]), select {
+    min-height: 44px;
+}
+:is(a, button, input, select, textarea, summary):focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 4px;
+}
+input, textarea, select {
+    max-width: 100%;
+    font: inherit;
+}
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+.page-intro > p:last-child, .home-description {
+    max-width: var(--reading-width);
+}
+.page-intro h1, .home-copy h1 {
+    letter-spacing: -.04em;
+}
+.world-shell .world-panel, .world-shell .portal-card, .campaign-card {
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+.home-intro {
+    padding-block: clamp(32px, 6vw, 80px);
+    border-bottom: 1px solid var(--border);
+}
+.home-copy h1 span {
+    color: var(--accent);
+}
+.page-intro {
+    padding-block: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+.world-shell .campaign-card-cover {
+    height: 112px;
+}
+.world-shell .campaign-card-cover[data-cover="submundo"] {
+    background: var(--surface-soft) url('../img/submundo.jpg') center / cover;
+}
+.world-shell .campaign-card-cover[data-cover="ruas"] {
+    background: var(--surface-soft) url('../img/ruas.jpg') center / cover;
+}
+.world-shell .campaign-card-cover[data-cover="altissimo"] {
+    background: var(--surface-soft) url('../img/altissimo.jpg') center / cover;
+}
+.world-panel > :is(h2, .section-heading) {
+    margin-bottom: 20px;
+}
+.world-panel label {
+    font-weight: 600;
+}
+.world-panel :is(input, textarea, select) {
+    font-weight: 400;
+}
+.character-sidebar {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+}
+.character-sidebar > p:not(.eyebrow) {
+    color: var(--text-muted);
+    font-size: .9rem;
+}
+.sheet-section-nav {
+    display: grid;
+    gap: 4px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--border);
+}
+.sheet-section-nav a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.sheet-section-nav a:hover, .sheet-summary button:hover,
+.sheet-summary button:focus-visible {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+.character-sidebar #new-character {
+    width: 100%;
+}
+#character-form > label, #character-form > .fields-two {
+    scroll-margin-top: 24px;
+    margin-bottom: 24px;
+}
+.campaign-card-cover[data-cover="sigil"] {
+    background-image: none;
+    background-color: var(--accent-soft);
+}
+.accessibility-panel {
+    position: fixed;
+    inset-inline-end: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 1000;
+}
+.accessibility-panel > summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--on-button);
+    border-radius: 50%;
+    background: var(--button);
+    color: var(--on-button);
+    font: 700 1.15rem/1 system-ui, sans-serif;
+    list-style: none;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 25%);
+}
+.accessibility-panel > summary::-webkit-details-marker {
+    display: none;
+}
+.accessibility-options {
+    position: absolute;
+    bottom: 72px;
+    inset-inline-end: 0;
+    width: min(340px, calc(100vw - 36px));
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    padding: 24px;
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+.accessibility-options h2 {
+    font: 700 1.2rem/1.4 system-ui, sans-serif;
+}
+.accessibility-options p {
+    margin-block: 12px;
+    font-size: .9rem;
+}
+.accessibility-options label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    cursor: pointer;
+}
+.accessibility-options input {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--accent);
+}
+html:has(#accessible-text:checked) {
+    font-size: 125%;
+}
+html:has(#accessible-contrast:checked) {
+    --bg: #000;
+    --surface: #080808;
+    --surface-raised: #161616;
+    --surface-soft: #161616;
+    --text: #fff;
+    --text-muted: #eee;
+    --border: #fff;
+    --input-border: #fff;
+    --accent: #ead5ff;
+    --brand: #ead5ff;
+    --accent-soft: #22132f;
+    --accent-border: #ead5ff;
+    --focus: #ffef75;
+    --button: #57317a;
+    --button-hover: #63398b;
+    --on-button: #fff;
+}
+body:has(#accessible-links:checked) a {
+    text-decoration: underline;
+    text-underline-offset: .2em;
+    text-decoration-thickness: 2px;
+}
+.footer-map address {
+    font-style: normal;
+    line-height: 1.8;
+    margin-block: 16px;
+}
+@media (max-width: 760px) {
+    .character-workspace {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .character-sidebar {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+    .sheet-section-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sheet-summary {
+        max-height: 240px;
+        overflow-y: auto;
+        padding: 4px;
+    }
+    .fields-two {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .site-toolbar nav a {
+        font-size: 1rem;
+    }
+    .accessibility-panel {
+        bottom: max(12px, env(safe-area-inset-bottom));
+        inset-inline-end: 12px;
+    }
+}
+@media (forced-colors: active) {
+    .accessibility-panel > summary {
+        border-color: ButtonText;
+    }
+}

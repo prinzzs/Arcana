@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/mesa.css">
     <script src="js/navigation.js" defer></script>
+    <link rel="stylesheet" href="css/refinamento.css">
 </head>
 <body class="page-catalog">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -107,5 +108,17 @@
         });
         searchInput.addEventListener('input', applyFilters);
     </script>
+
+<details class="accessibility-panel">
+    <summary aria-label="Opções de acessibilidade">Aa<span class="visually-hidden"> Acessibilidade</span></summary>
+    <div class="accessibility-options">
+        <h2>Acessibilidade</h2>
+        <p>Ajuste a leitura nesta página.</p>
+        <label><input type="checkbox" id="accessible-text"> Texto ampliado</label>
+        <label><input type="checkbox" id="accessible-contrast"> Alto contraste</label>
+        <label><input type="checkbox" id="accessible-links"> Destacar links</label>
+        <p>Use Tab para navegar e Enter para abrir ou fechar este painel. As opções valem nesta página.</p>
+    </div>
+</details>
 </body>
 </html>

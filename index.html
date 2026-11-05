@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/home.css">
     <script src="js/navigation.js" defer></script>
+    <link rel="stylesheet" href="css/refinamento.css">
 </head>
 <body class="page-home">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -51,16 +52,24 @@
     <nav aria-label="Rodapé"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="dado.html">Dados</a></nav>
     <section class="footer-map" aria-labelledby="map-title">
         <h2 id="map-title">Localização</h2>
-        <p>Escolha um endereço ou uma cidade para visualizar no mapa.</p>
-        <form id="map-form">
-            <label for="map-address">Endereço ou cidade</label>
-            <div class="map-fields"><input id="map-address" required maxlength="200" placeholder="Ex.: Campinas, São Paulo"><button type="submit">Mostrar no mapa</button></div>
-        </form>
-        <p id="map-status" role="status"></p>
-        <iframe id="location-map" title="Mapa da localização escolhida" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Brasil&amp;output=embed"></iframe>
-        <a id="map-link" href="https://www.google.com/maps?q=Brasil" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+        <address>Fatec Praia Grande<br>Praça 19 de Janeiro, 144 · Boqueirão<br>Praia Grande · SP</address>
+        <p id="map-status">Localização da Fatec Praia Grande. O mapa precisa de internet.</p>
+        <iframe id="location-map" title="Mapa da Fatec Praia Grande" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Fatec+Praia+Grande+Praca+19+de+Janeiro+144&amp;output=embed"></iframe>
+        <a id="map-link" href="https://www.google.com/maps?q=Fatec+Praia+Grande+Praca+19+de+Janeiro+144" target="_blank" rel="noopener noreferrer">Abrir localização no Google Maps (nova aba)</a>
     </section>
 </footer>
-<script src="js/mapa.js"></script>
+
+
+<details class="accessibility-panel">
+    <summary aria-label="Opções de acessibilidade">Aa<span class="visually-hidden"> Acessibilidade</span></summary>
+    <div class="accessibility-options">
+        <h2>Acessibilidade</h2>
+        <p>Ajuste a leitura nesta página.</p>
+        <label><input type="checkbox" id="accessible-text"> Texto ampliado</label>
+        <label><input type="checkbox" id="accessible-contrast"> Alto contraste</label>
+        <label><input type="checkbox" id="accessible-links"> Destacar links</label>
+        <p>Use Tab para navegar e Enter para abrir ou fechar este painel. As opções valem nesta página.</p>
+    </div>
+</details>
 </body>
 </html>
