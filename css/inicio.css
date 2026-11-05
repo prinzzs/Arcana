@@ -1,23 +1,125 @@
+
 /* Tela de personagens: preservada para uso pelo módulo personagens.js. */
-.background-image { position: fixed; inset: 0; background-size: cover; background-position: center; opacity: .08; pointer-events: none; z-index: -1; }
-.voltara { display: inline-block; margin: 20px; color: var(--accent); }
-.header { padding: 24px; text-align: center; }
-.persona { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 5vw, 3rem); }
-.container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; width: min(1160px, calc(100% - 32px)); margin: 24px auto; }
-.char-list, .stats, .attributes, .habilidades { display: grid; gap: 16px; }
-.char-item, .level, .stats { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
-.char-item { display: flex; align-items: center; gap: 16px; cursor: pointer; }
-.char-item:hover { border-color: var(--accent-border); background: var(--accent-soft); }
-.char-img img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; }
-.char-info p + p, #nivel { color: var(--text-muted); }
-.details-container { display: grid; gap: 24px; }
-.level { text-align: center; }
-#nivelNumero { font-size: 3rem; color: var(--accent); }
-.nomeRobo { font-size: 1.5rem; }
-.attr-label { display: flex; justify-content: space-between; }
-progress { width: 100%; height: 8px; border: 0; border-radius: 8px; overflow: hidden; background: var(--surface-soft); accent-color: var(--brand); }
-progress::-webkit-progress-bar { background: var(--surface-soft); }
-progress::-webkit-progress-value { background: var(--brand); }
-progress::-moz-progress-bar { background: var(--brand); }
-.start-btn { margin-top: 20px; }
-@media (max-width: 760px) { .container { grid-template-columns: 1fr; } }
+.background-image {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: .08;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.voltara {
+    display: inline-block;
+    margin: 20px;
+    color: var(--accent);
+}
+
+.header {
+    padding: 24px;
+    text-align: center;
+}
+
+.persona {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 24px;
+    width: min(1160px, calc(100% - 32px));
+    margin: 24px auto;
+}
+
+.char-list, .stats, .attributes, .habilidades {
+    display: grid;
+    gap: 16px;
+}
+
+.char-item, .level, .stats {
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.char-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+.char-item:hover {
+    border-color: var(--accent-border);
+    background: var(--accent-soft);
+}
+
+.char-img img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.char-info p + p, #nivel {
+    color: var(--text-muted);
+}
+
+.details-container {
+    display: grid;
+    gap: 24px;
+}
+
+.level {
+    text-align: center;
+}
+
+#nivelNumero {
+    font-size: 3rem;
+    color: var(--accent);
+}
+
+.nomeRobo {
+    font-size: 1.5rem;
+}
+
+.attr-label {
+    display: flex;
+    justify-content: space-between;
+}
+
+progress {
+    width: 100%;
+    height: 8px;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface-soft);
+    accent-color: var(--brand);
+}
+
+progress::-webkit-progress-bar {
+    background: var(--surface-soft);
+}
+
+progress::-webkit-progress-value {
+    background: var(--brand);
+}
+
+progress::-moz-progress-bar {
+    background: var(--brand);
+}
+
+.start-btn {
+    margin-top: 20px;
+}
+
+@media (max-width: 760px) {
+.container {
+    grid-template-columns: 1fr;
+}
+ }

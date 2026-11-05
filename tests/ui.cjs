@@ -66,35 +66,15 @@ async function run() {
         }
     }
 
-    // Confere a migração do vermelho antigo para vermelho escuro.
-    await page.evaluate(() => { localStorage.setItem("arcana-theme","red"); localStorage.removeItem("arcana-palette"); });
+    await page.goto(origin+"/index.html");
+    await page.locator("#lightModeToggle").click();
+    const theme = await page.locator("html").getAttribute("data-theme");
+    assert(["light","dark"].includes(theme));
     await page.reload();
-    assert.equal(await page.locator("html").getAttribute("data-theme"),"red");
-    for (const width of [390,1440]) {
-        await page.setViewportSize({width,height:1000});
-        await page.goto(origin+"/index.html");
-        await page.locator("#lightModeToggle").click();
-        for (const palette of ["purple","red"]) {
-            await page.locator('[data-palette-choice="'+palette+'"]').click();
-            for (const mode of ["light","dark"]) {
-                await page.locator('[data-choice="'+mode+'"]').click();
-                assert.equal(await page.locator("html").getAttribute("data-mode"),mode);
-                assert.equal(await page.locator("html").getAttribute("data-palette"),palette);
-                assert(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1));
-                if (process.env.ARCANA_SCREENSHOTS) {
-                    fs.mkdirSync(process.env.ARCANA_SCREENSHOTS,{recursive:true});
-                    await page.keyboard.press("Escape");
-                    await page.screenshot({path:path.join(process.env.ARCANA_SCREENSHOTS,"home-"+palette+"-"+mode+"-"+width+".png"),fullPage:true});
-                    await page.locator("#lightModeToggle").click();
-                }
-            }
-        }
-        await page.keyboard.press("Escape");
-        assert(await page.locator("#themePanel").isHidden());
-        assert.equal(await page.locator(".home-circle").evaluate(el=>getComputedStyle(el).borderRadius),"50%");
-    }
-    await page.reload();
-    assert.equal(await page.locator("html").getAttribute("data-theme"),"red");
+    assert.equal(await page.locator("html").getAttribute("data-theme"),theme);
+    await page.locator("#map-address").fill("Campinas, São Paulo");
+    await page.locator("#map-form button").click();
+    assert((await page.locator("#location-map").getAttribute("src")).includes(encodeURIComponent("Campinas, São Paulo")));
 
     // Os dois convites da inicial levam aos fluxos corretos.
     await page.goto(origin+"/index.html");
@@ -105,6 +85,7 @@ async function run() {
     await page.locator("#create-own-rpg").click();
     await page.waitForURL("**/criar-campanha.html?modelo=proprio");
     assert(await page.locator("#profile-gate").isVisible());
+    await page.locator('[name="name"]').fill("Rascunho da campanha");
     await page.locator("#choose-profile").click();
     assert.equal(await page.locator(".back-link").getAttribute("href"),"criar-campanha.html?modelo=proprio");
     await page.getByRole("link",{name:"Criar perfil",exact:true}).click();
@@ -112,6 +93,7 @@ async function run() {
     await page.locator('[name="email"]').fill("criador@example.test");
     await page.locator("form button").click();
     await page.waitForURL("**/criar-campanha.html?modelo=proprio");
+    assert.equal(await page.locator('[name="name"]').inputValue(),"Rascunho da campanha");
     assert.equal(await page.locator('[name="system"]').inputValue(),"Sistema próprio");
     assert.equal(await page.locator('[name="synopsis"]').inputValue(),"");
     assert.equal(await page.locator('[name="setting"]').inputValue(),"");
@@ -129,7 +111,8 @@ async function run() {
     await page.goto(origin+"/arcana.html");
     await page.getByRole("link",{name:"Criar campanha de Arcana ↗",exact:true}).click();
     assert(await page.locator("#profile-gate").isVisible());
-    assert(await page.locator("#save-campaign").isDisabled());
+    assert(await page.locator("#save-campaign").isEnabled());
+    assert(await page.locator('[name="name"]').isEnabled());
     await page.locator("#create-profile").click();
     await page.locator('[name="name"]').fill("Mestre");
     await page.locator('[name="email"]').fill("mestre@example.test");
@@ -254,26 +237,13 @@ async function run() {
         await page.setViewportSize({width,height:1000});
         for (const file of ["index","arcana","criar-campanha","preparar-campanha","guia-campanha","campanhas","mestre","escudo","personagens","diario","sessao"]) {
             await page.goto(origin+"/"+file+".html"+query);
-            await page.locator("#lightModeToggle").click();
-            for (const palette of ["purple","red"]) {
-                await page.locator('[data-palette-choice="'+palette+'"]').click();
-                for (const mode of ["light","dark"]) {
-                    await page.locator('[data-choice="'+mode+'"]').click();
-                    assert(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1),file+" "+width+" "+palette+" "+mode);
-                }
+            for (let mode = 0; mode < 2; mode++) {
+                await page.locator("#lightModeToggle").click();
+                assert(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1),file+" "+width);
             }
-            await page.keyboard.press("Escape");
-            assert((await page.locator("h1").first().evaluate(el=>getComputedStyle(el).fontFamily)).includes("Nevan"));
-            if (process.env.ARCANA_SCREENSHOTS && ["index","arcana","criar-campanha","preparar-campanha","guia-campanha","mestre","campanhas"].includes(file)) {
+            if (process.env.ARCANA_SCREENSHOTS && file === "index") {
                 fs.mkdirSync(process.env.ARCANA_SCREENSHOTS,{recursive:true});
-                await page.screenshot({path:path.join(process.env.ARCANA_SCREENSHOTS,file+"-"+width+".png"),fullPage:true});
-                await page.locator("#lightModeToggle").click();
-                await page.locator('[data-choice="light"]').click();
-                await page.keyboard.press("Escape");
-                await page.screenshot({path:path.join(process.env.ARCANA_SCREENSHOTS,file+"-claro-"+width+".png"),fullPage:true});
-                await page.locator("#lightModeToggle").click();
-                await page.locator('[data-choice="dark"]').click();
-                await page.keyboard.press("Escape");
+                await page.screenshot({path:path.join(process.env.ARCANA_SCREENSHOTS,"simple-"+width+".png"),fullPage:true});
             }
         }
     }
@@ -331,6 +301,6 @@ async function run() {
     for (const field of ["setting","synopsis","rules","sheetTemplate"]) assert.equal(own.details[field],"",field);
     assert.deepEqual(errors,[]);
     await browser.close();
-    console.log("Páginas, navegação consistente, menu móvel, início, quatro temas, fontes, campanha própria, preparação, guia, fichas, convites, legado e sessão: OK");
+    console.log("Páginas, navegação consistente, menu móvel, início, dois temas, fontes, campanha própria, preparação, guia, fichas, convites, legado e sessão: OK");
 }
 run().catch(error=>{console.error(error);process.exit(1)});

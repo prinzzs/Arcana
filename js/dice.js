@@ -38,17 +38,17 @@ function arcanaDice(root, onRoll) {
         const count = Number(input.value);
         rollButton.disabled = true;
         const die = root.querySelector(".die");
-        die.classList.add("rolling");
+
         try {
             const result = onRoll ? await onRoll(sides, count) : rollDice(sides, count);
-            await new Promise(resolve => setTimeout(resolve, 650));
+
             die.textContent = result.total;
             root.querySelector('p[role="status"]').textContent =
                 result.values.join(" + ") + " = " + result.total;
         } catch (error) {
             root.querySelector('p[role="status"]').textContent = "Não foi possível rolar. Tente novamente.";
         } finally {
-            die.classList.remove("rolling");
+
             rollButton.disabled = false;
         }
     };
