@@ -23,7 +23,7 @@
 .chapter-number { font:600 11px system-ui,sans-serif; letter-spacing:.2em; color:var(--accent); }
 .world-shell form,.world-shell label { display:grid; gap:12px; }
 .world-shell form { gap:20px; }
-.world-shell form button { justify-self:start; }
+.world-shell form button { justify-self:end; }
 .world-shell textarea { resize:vertical; min-height:120px; line-height:1.7; }
 .world-shell input,.world-shell textarea,.world-shell select { font-weight:400; }
 .world-shell h2 { font-size:24px; margin-bottom:16px; }
@@ -83,7 +83,7 @@ body[data-world-page] .world-shell h2,body[data-world-page] .world-shell h3 { fo
  .master-grid,.player-grid,.session-grid,.shield-grid { grid-template-columns:1fr; } .character-workspace { grid-template-columns:1fr; } .campaign-grid { grid-template-columns:1fr 1fr; } .shield-grid textarea { min-height:220px; }
 }
 @media(max-width:600px) {
- .world-shell { padding:16px; } .world-hero { grid-template-columns:1fr; padding:30px 0; } .ritual-seal { display:none; } .world-hero h1 { font-size:30px; }
+ .world-shell { padding:20px; } .world-hero { grid-template-columns:1fr; padding:30px 0; } .ritual-seal { display:none; } .world-hero h1 { font-size:30px; }
  .portal-grid,.tool-grid,.campaign-grid { grid-template-columns:1fr; } .world-panel,.portal-card { padding:20px; } .world-stats { gap:8px; } .world-stats > div { padding:4px 10px; } .world-stats strong { font-size:20px; }
  .fields-two { grid-template-columns:1fr; } .save-bar,.section-heading { align-items:start; flex-direction:column; } .world-nav { gap:4px; } .world-nav a { padding:8px 10px; }
 }

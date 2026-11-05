@@ -9,14 +9,26 @@
     <link rel="stylesheet" href="css/campanhas.css">
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/mundos.css">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body data-world-page="hub">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html" aria-current="page">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="arcana.html">Sobre Arcana</a>
+        <a href="campanhas.html" aria-current="page">Campanhas</a>
+        <a href="fichas.html">Entidades</a>
+        <a href="dado.html">Dados</a>
+        <a href="login.html">Perfis</a>
+    </nav>
 </header>
-<main class="world-shell">
-    <div class="world-top"><a href="campanhas.html">← Campanhas</a><span id="profile-label"></span></div>
+<nav class="page-navigation" aria-label="Navegação da página">
+    <a class="back-link" href="index.html" aria-label="Voltar para início"><span aria-hidden="true">←</span> Voltar</a>
+    <div class="page-location"><span aria-current="page">Campanhas</span><span id="profile-label"></span></div>
+</nav>
+<main id="conteudo" tabindex="-1" class="world-shell">
     <p id="status" class="world-status" role="status" aria-live="polite"></p>
 
     <div id="world-content">

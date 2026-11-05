@@ -9,13 +9,26 @@
     <link rel="stylesheet" href="css/mesa.css">
     <link rel="stylesheet" href="css/mundos.css">
     <link rel="stylesheet" href="css/preparacao.css">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body class="page-arcana">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header class="site-toolbar">
     <a class="brand" href="index.html">ARCANA</a>
-    <nav aria-label="Principal"><a href="arcana.html" aria-current="page">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a><a href="login.html">Perfis</a></nav>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="arcana.html" aria-current="page">Sobre Arcana</a>
+        <a href="campanhas.html">Campanhas</a>
+        <a href="fichas.html">Entidades</a>
+        <a href="dado.html">Dados</a>
+        <a href="login.html">Perfis</a>
+    </nav>
 </header>
-<main class="world-shell">
+<nav class="page-navigation" aria-label="Navegação da página">
+    <a class="back-link" href="index.html" aria-label="Voltar para início"><span aria-hidden="true">←</span> Voltar</a>
+    <div class="page-location"><span aria-current="page">Sobre Arcana</span></div>
+</nav>
+<main id="conteudo" tabindex="-1" class="world-shell">
     <header class="arcana-intro"><div><p class="eyebrow">NOSSO RPG INDEPENDENTE</p><h1>Bem-vindo<br>a Arcana.</h1><p>Uma cidade dividida. Uma fenda aberta. Histórias que só a sua mesa pode contar.</p><p class="intro-description">Tecnologia e sobrenatural se encontram em um universo de corporações, rebeldes e entidades Umbra.</p><div class="action-row"><a class="button" href="criar-campanha.html?modelo=arcana">Criar campanha de Arcana ↗</a><a href="#primeiros-passos">É sua primeira vez?</a></div></div><figure><img src="img/submundo.jpg" alt="Túneis em ruínas do Submundo de Arcana"><figcaption>ARQUIVO 01 / SUBMUNDO</figcaption></figure></header>
     <nav class="world-nav" aria-label="Conheça o RPG"><a href="#universo">O universo</a><a href="#como-jogar">Como jogar</a><a href="#ferramentas">Ferramentas</a><a href="#primeiros-passos">Começar uma campanha</a></nav>
     <section class="arcana-section" id="universo">

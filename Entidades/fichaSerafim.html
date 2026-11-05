@@ -11,21 +11,33 @@
     <link rel="stylesheet" href="../Entidades/fichaentidades.css">
     <link rel="stylesheet" href="../css/fontes.css">
     <link rel="stylesheet" href="../css/mesa.css">
+    <script src="../js/navigation.js" defer></script>
 </head>
 <body class="page-entity">
-    <header class="site-toolbar"><a class="brand" href="../index.html">ARCANA</a><nav aria-label="Principal"><a href="../arcana.html">Sobre Arcana</a><a href="../campanhas.html">Campanhas</a><a href="../fichas.html">Entidades</a><a href="../dado.html">Dados</a></nav></header>
-    <header>
-        <h1>Arcana</h1>
-    <nav aria-label="Navegação da ficha"><a href="../fichas.html">← Todas as entidades</a></nav>
-    </header>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-toolbar">
+    <a class="brand" href="../index.html">ARCANA</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="../arcana.html">Sobre Arcana</a>
+        <a href="../campanhas.html">Campanhas</a>
+        <a href="../fichas.html" aria-current="location">Entidades</a>
+        <a href="../dado.html">Dados</a>
+        <a href="../login.html">Perfis</a>
+    </nav>
+</header>
+<nav class="page-navigation" aria-label="Navegação da página">
+    <a class="back-link" href="../fichas.html" aria-label="Voltar para entidades"><span aria-hidden="true">←</span> Voltar</a>
+    <div class="page-location"><span aria-current="page">Serafim Decaído</span></div>
+</nav>
 
     <div class="banner">
-        Para utilizar a ficha em jogo, é necessário ir para a página da campanha, criar um combate e adicionar a ficha ao combate.
+        Consulte os atributos e as ações desta entidade para preparar os encontros da sua campanha.
     </div>
 
-    <div class="content">
+    <div id="conteudo" tabindex="-1" class="content">
         <div class="title">
-            <h2>Serafim Decaído</h2>
+            <h1>Serafim Decaído</h1>
             <p>VD: 120 | Entidade - Grande</p>
         </div>
 

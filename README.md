@@ -4,8 +4,11 @@ Site em HTML, CSS e JavaScript puro. Abra `index.html` no navegador.
 Para manter os dados locais no mesmo endereço, use a mesma pasta e o mesmo navegador.
 
 - Todas as páginas usam a extensão .html.
+- A inicial apresenta dois caminhos: conhecer Arcana ou criar uma campanha com sistema próprio, sem preencher a história de Arcana.
+- O menu principal é igual em todas as telas. O botão Voltar fica abaixo dele; dentro de uma campanha, retorna à visão do mestre ou do jogador mantendo a campanha selecionada.
+- No celular, o botão Menu abre a navegação. Escape fecha o menu e devolve o foco; os links continuam disponíveis sem JavaScript.
 - A central fica em campanhas.html. Mestre e jogador entram em mestre.html e jogador.html.
-- Conheça o RPG e suas ferramentas em arcana.html. O botão “Usar Arcana na minha campanha” preenche uma base do cenário.
+- Conheça o RPG e suas ferramentas em arcana.html. O botão “Criar campanha de Arcana” preenche uma base do cenário.
 - Crie a identidade da campanha em criar-campanha.html e complete a preparação em preparar-campanha.html.
 - O mestre define sinopse, sistema, cenário, objetivo, regras, combinados, agenda, vagas e valores iniciais das fichas. Os jogadores consultam tudo em guia-campanha.html.
 - Vida, nível, modelo de atributos e inventário da preparação são aplicados apenas a novas fichas. Fichas e campanhas antigas são preservadas.

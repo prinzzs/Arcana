@@ -58,12 +58,20 @@ function setupCampaignForm(campaign, profile) {
     fill();
     if (creating) {
         document.getElementById("use-arcana").onclick = useArcana;
-        if (new URLSearchParams(location.search).get("modelo") === "arcana") useArcana();
+        const model = new URLSearchParams(location.search).get("modelo");
+        if (model === "arcana") useArcana();
+        if (model === "proprio") {
+            details.system = "Sistema próprio";
+            fill();
+            document.querySelector(".page-intro h1").textContent = "Crie a sua campanha.";
+            document.querySelector(".page-intro > p:last-child").textContent = "Defina seu universo e as regras da mesa. Você pode mudar o nome do sistema.";
+            form.elements.setting.placeholder = "Ex.: uma cidade, um reino ou um mundo seu";
+        }
         if (!profile) {
             document.getElementById("profile-gate").hidden = false;
             document.getElementById("campaign-fields").disabled = true;
             document.getElementById("save-campaign").disabled = true;
-            const next = encodeURIComponent("criar-campanha.html" + (location.search.includes("modelo=arcana") ? "?modelo=arcana" : ""));
+            const next = encodeURIComponent("criar-campanha.html" + (["arcana", "proprio"].includes(model) ? "?modelo=" + model : ""));
             document.getElementById("create-profile").href = "cadastro.html?next=" + next;
             document.getElementById("choose-profile").href = "login.html?next=" + next;
         }

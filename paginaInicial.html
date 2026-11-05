@@ -11,14 +11,30 @@
     <title>Arcana - Onde Tudo Começa</title>
     <link rel="stylesheet" href="css/fontes.css">
     <link rel="stylesheet" href="css/mesa.css">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body class="page-story">
-    <header class="site-toolbar"><a class="brand" href="index.html">ARCANA</a><nav aria-label="Principal"><a href="arcana.html">Sobre Arcana</a><a href="campanhas.html">Campanhas</a><a href="fichas.html">Entidades</a><a href="dado.html">Dados</a></nav></header>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-toolbar">
+    <a class="brand" href="index.html">ARCANA</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="site-navigation" aria-label="Principal">
+        <a href="arcana.html" aria-current="location">Sobre Arcana</a>
+        <a href="campanhas.html">Campanhas</a>
+        <a href="fichas.html">Entidades</a>
+        <a href="dado.html">Dados</a>
+        <a href="login.html">Perfis</a>
+    </nav>
+</header>
+<nav class="page-navigation" aria-label="Navegação da página">
+    <a class="back-link" href="index.html" aria-label="Voltar para início"><span aria-hidden="true">←</span> Voltar</a>
+    <div class="page-location"><span aria-current="page">Prólogo de Arcana</span></div>
+</nav>
     <div class="page-transition hidden" id="page-transition"></div>
 
 
 
-    <div class="text-container" aria-live="polite" aria-atomic="true">
+    <div id="conteudo" tabindex="-1" class="text-container" aria-live="polite" aria-atomic="true">
         <div class="text">A cidade, sempre imersa em tensão, segue seu curso habitual.</div>
         <div class="text">Mas então, um som ecoa, cortando a tranquilidade.</div>
         <div class="text">A sirene... um aviso que ninguém quer ouvir.</div>
