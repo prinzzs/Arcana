@@ -19,21 +19,10 @@
 }
 
 :root[data-theme="dark"] {
-    --bg:#15131a;
-    --surface:#201d27;
-    --surface-raised:#292430;
-    --surface-soft:#302936;
-    --text:#eee8f1;
-    --text-muted:#bdb1c7;
-    --border:#44394e;
-    --accent:#c9a7e2;
-    --button:#72508f;
-    --button-hover:#835ca3;
-    --accent-soft:#34273f;
-    --accent-border:#836496;
-    --focus:#d5b4ed;
-    --input-border:#8c769b;
-    --glow:#9d72bf15;
+    --bg:#15131a; --surface:#201d27; --surface-raised:#292430; --surface-soft:#302936;
+    --text:#eee8f1; --text-muted:#bdb1c7; --border:#44394e; --accent:#c9a7e2;
+    --button:#72508f; --button-hover:#835ca3; --accent-soft:#34273f;
+    --accent-border:#836496; --focus:#d5b4ed; --input-border:#8c769b; --glow:#9d72bf15;
 }
 
 :root {
