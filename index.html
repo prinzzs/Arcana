@@ -15,18 +15,23 @@
 <body class="page-home">
     <div class="site-toolbar">
         <a class="brand" href="index.html" aria-label="Arcana — início">ARCANA</a>
+        <nav class="home-nav" aria-label="No nosso site"">
+            <span class="home-nav-label">No nosso site</span>
+            <a href="paginaInicial.html">Criar personagem</a>
+            <a href="fichas.html">Fichas das entidades</a>
+            <a href="dado.html">Rolagem de dados</a>
+        </nav>
         <div class="theme-controls" role="group" aria-label="Aparência">
             <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
-            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
         </div>
     </div>
     <div class="container">
         <!-- Seção Hero -->
-        <section class="hero">
+        <section class="hero" id="inicio">
             <p class="eyebrow">Tecnologia · Mistério · Sobrenatural</p>
             <h1 class="title">Arcana: <span>rpg</span></h1>
             <p class="subtitle">Explore uma cidade onde as fronteiras entre tecnologia e o paranormal deixaram de existir.</p>
-            <a href="cadastro.php" class="button">Começar a jogar ↗</a>
+            <a href="php/cadastro.php" class="button">Começar a jogar ↗</a>
             <a class="scroll-down" href="#niveis">↓ Explore o universo</a>
         </section>
 
@@ -54,7 +59,7 @@
 
     <!-- Seção Características do Personagem -->
 
-    <section class="character">
+    <section class="character" id="historia">
     <h2 class="section-title">A história...</h2>
         <div class="character-content">
             <!-- Botão e conteúdo para Lore -->
@@ -116,23 +121,24 @@
         }
     </script>
 
-
-
-        <!-- Seção Wallpapers Animados -->
-        <section class="wallpapers">
-            <h2 class="section-title">No nosso site</h2>
-            <div class="wallpapers-grid">
-                <a href=""><div class="wallpaper-card">Criar Personagem</div></a>
-                <a href="fichas.html"><div class="wallpaper-card">Ficha Das Entidades</div></a>
-                <a href="dado.html"><div class="wallpaper-card">Rolagem De Dados</div></a>
-                <a href="cadastroAdm.php"><div class="wallpaper-card">Painel de adm's</div></a>
-            </div>
-        </section>
-
-        <!-- Rodapé -->
-        <footer>
-            <p>©2023 Wolves Club Studio. Todos os direitos reservados.</p>
-        </footer>
     </div>
+    <footer class="home-footer">
+        <div class="home-footer-content">
+            <div class="home-footer-brand">
+                <a class="brand" href="#inicio">ARCANA</a>
+                <p>Tecnologia, mistério e sobrenatural em uma cidade à beira do inexplicável.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Navegação do rodapé">
+                <a href="#inicio">Início</a>
+                <a href="#niveis">Níveis de Arcana</a>
+                <a href="#historia">A história</a>
+                <a href="fichas.html">Fichas das entidades</a>
+            </nav>
+            <div class="home-footer-bottom">
+                <p>&copy; 2026 Arcana — Wolves Club Studio. Todos os direitos reservados.</p>
+                <a href="#inicio">Voltar ao topo ↑</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

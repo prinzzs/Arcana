@@ -7,8 +7,8 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const origin = 'http://arcana.test';
 const pages = [
-    'index.html', 'login.php', 'cadastro.php', 'loginAdm.php', 'cadastroAdm.php',
-    'editarUsuario.php', 'edit.php', 'painelAdm.php', 'fichas.html', 'mecanica.html',
+    'index.html', 'php/login.php', 'php/cadastro.php', 'php/loginAdm.php', 'php/cadastroAdm.php',
+    'php/editarUsuario.php', 'php/edit.php', 'php/painelAdm.php', 'fichas.html', 'mecanica.html',
     'dado.html', 'conversas.html', 'paginaInicial.html', 'paginaInicial2.html',
     'Entidades/fichaNoxlith.html', 'Entidades/fichaRatos.html', 'Entidades/fichaSerafim.html'
 ];
@@ -74,6 +74,21 @@ function contrast(a, b) {
                     await page.evaluate(() => document.fonts.ready);
                     await checkTheme(page, theme);
                     assert.equal(await page.locator('#lightModeToggle').count(), 1, name);
+                    assert.equal(await page.locator('[data-theme-system]').count(), 0, name);
+                    const themeButton = await page.locator('#lightModeToggle').evaluate(button => {
+                        const styles = getComputedStyle(button);
+                        const rect = button.getBoundingClientRect();
+                        return {
+                            position: styles.position,
+                            radius: styles.borderRadius,
+                            right: window.innerWidth - rect.right,
+                            bottom: window.innerHeight - rect.bottom
+                        };
+                    });
+                    assert.equal(themeButton.position, 'fixed', `${name}: theme button is not floating`);
+                    assert.equal(themeButton.radius, '50%', `${name}: theme button is not round`);
+                    assert.ok(themeButton.right >= 0 && themeButton.right <= 24, `${name}: theme button is not at the right edge`);
+                    assert.ok(themeButton.bottom >= 0 && themeButton.bottom <= 24, `${name}: theme button is not at the bottom edge`);
                     assert.equal(await page.locator('html').getAttribute('data-theme-preference'), 'system');
                     const layout = await page.evaluate(() => ({ doc: document.documentElement.scrollWidth, viewport: window.innerWidth }));
                     assert.ok(layout.doc <= layout.viewport + 1, `${name} ${theme} ${width}: horizontal overflow ${layout.doc}`);
@@ -86,9 +101,10 @@ function contrast(a, b) {
                         await page.waitForTimeout(650);
                         assert.equal(new URL(page.url()).pathname, '/paginaInicial.html');
                     }
-                    await page.locator('[data-theme-system]').click();
+                    await page.locator('#lightModeToggle').click();
                     await checkTheme(page, theme);
-                    if (process.env.ARCANA_SCREENSHOTS && ['index.html', 'login.php', 'fichas.html', 'Entidades/fichaSerafim.html'].includes(name) && width !== 320) {
+                    await page.evaluate(() => localStorage.clear());
+                    if (process.env.ARCANA_SCREENSHOTS && ['index.html', 'php/login.php', 'fichas.html', 'Entidades/fichaSerafim.html'].includes(name) && width !== 320) {
                         fs.mkdirSync(process.env.ARCANA_SCREENSHOTS, { recursive: true });
                         await page.screenshot({ path: path.join(process.env.ARCANA_SCREENSHOTS, name.replaceAll('/', '-').replace('.php', '') + `-${theme}-${width}.png`), fullPage: true });
                     }
@@ -116,6 +132,10 @@ function contrast(a, b) {
         await serve(context);
         const page = await context.newPage();
         await page.goto(origin + '/index.html');
+        assert.equal(await page.locator('.home-nav[aria-label="No nosso site"] a').count(), 4);
+        assert.equal(await page.locator('.wallpapers').count(), 0);
+        assert.equal(await page.locator('.home-footer').count(), 1);
+        assert.equal(await page.locator('.footer-nav a').count(), 4);
         await page.locator('#lightModeToggle').focus();
         assert.equal(await page.locator('#lightModeToggle').evaluate(el => getComputedStyle(el).outlineStyle), 'solid');
         await page.keyboard.press('Enter');
@@ -130,13 +150,14 @@ function contrast(a, b) {
         await page.emulateMedia({ colorScheme: 'light' });
         await page.emulateMedia({ colorScheme: 'dark' });
         await checkTheme(page, 'light'); // Explicit choice overrides OS.
-        await page.locator('[data-theme-system]').click();
+        await page.evaluate(() => localStorage.clear());
+        await page.reload();
         await checkTheme(page, 'dark');
         await page.emulateMedia({ colorScheme: 'light' });
         await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
         await checkTheme(page, 'light');
         const second = await context.newPage();
-        await second.goto(origin + '/login.php');
+        await second.goto(origin + '/php/login.php');
         await second.locator('#lightModeToggle').click();
         await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
         await checkTheme(page, 'dark'); // Shared choice across tabs.
@@ -194,7 +215,7 @@ function contrast(a, b) {
         const noJS = await browser.newContext({ colorScheme: 'dark', javaScriptEnabled: false });
         await serve(noJS);
         const noJSPage = await noJS.newPage();
-        await noJSPage.goto(origin + '/login.php');
+        await noJSPage.goto(origin + '/php/login.php');
         assert.equal(await noJSPage.evaluate(() => getComputedStyle(document.body).backgroundColor), 'rgb(16, 13, 22)');
         await noJS.close();
         console.log(`PASS: ${layouts} page/theme/viewport combinations, palette contrast, keyboard, persistence, OS changes, tab sync, legacy migration, blocked storage, no-control page, no-JS fallback, filters, entity sections, lore and dice.`);

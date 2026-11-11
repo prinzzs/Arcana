@@ -40,10 +40,6 @@
             toggle.setAttribute('aria-pressed', String(theme === 'dark'));
             toggle.title = 'Tema atual: ' + (theme === 'dark' ? 'escuro' : 'claro');
         }
-        document.querySelectorAll('[data-theme-system]').forEach(button => {
-            button.setAttribute('aria-pressed', String(preference === 'system'));
-            button.title = preference === 'system' ? 'Acompanhando o tema do dispositivo' : 'Usar tema do dispositivo';
-        });
     }
 
     function chooseTheme(value) {
@@ -60,9 +56,6 @@
     function bindControls() {
         const toggle = document.getElementById('lightModeToggle');
         if (toggle) toggle.addEventListener('click', () => chooseTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
-        document.querySelectorAll('[data-theme-system]').forEach(button => {
-            button.addEventListener('click', () => chooseTheme('system'));
-        });
         applyTheme();
     }
 
@@ -80,4 +73,3 @@
         }
     });
 })();
-

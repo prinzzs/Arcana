@@ -1,9 +1,36 @@
 @import url("./collections.css");
-.filters { display: grid; gap: 20px; margin-bottom: 28px; }
-.filters input { max-width: 420px; }
-.empty-state { padding: 32px; background: var(--surface); border: 1px dashed var(--input-border); border-radius: var(--radius); text-align: center; color: var(--text-muted); }
+
+.filters {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.filters input {
+    max-width: 420px;
+}
+
+.empty-state {
+    padding: 32px;
+    background: var(--surface);
+    border: 1px dashed var(--input-border);
+    border-radius: var(--radius);
+    text-align: center;
+    color: var(--text-muted);
+}
+
 @media (max-width: 560px) {
-    .page-catalog .card { display: grid; grid-template-columns: auto 1fr; }
-    .page-catalog .card .info:first-child, .page-catalog .card > .button { grid-column: 1 / -1; }
-    .page-catalog .card > .button { justify-self: start; }
+    .page-catalog .card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+
+    .page-catalog .card .info:first-child,
+    .page-catalog .card>.button {
+        grid-column: 1 / -1;
+    }
+
+    .page-catalog .card>.button {
+        justify-self: start;
+    }
 }

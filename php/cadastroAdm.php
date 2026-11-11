@@ -1,78 +1,64 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "usbw";
-$dbname = "UserDB";
+declare(strict_types=1);
+require_once __DIR__ . '/conexao.php';
 
-// Conectando ao servidor e ao banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
+$mensagem = '';
+$tipoMensagem = 'error';
+$totalAdministradores = (int) $conn->query('SELECT COUNT(*) AS total FROM administradores')->fetch_assoc()['total'];
+$chaveConfigurada = getenv('ADMIN_SETUP_KEY') ?: '';
+$cadastroInicial = $totalAdministradores === 0 && $chaveConfigurada !== '';
 
-if ($conn->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
-}
-
-// Garantir que a coluna 'senha' exista na tabela administradores
-$checkColumnQuery = "SHOW COLUMNS FROM administradores LIKE 'senha'";
-$result = $conn->query($checkColumnQuery);
-if ($result->num_rows == 0) {
-    $alterTableQuery = "ALTER TABLE administradores ADD COLUMN senha VARCHAR(255) NOT NULL";
-    if (!$conn->query($alterTableQuery)) {
-        die("Erro ao adicionar a coluna 'senha': " . $conn->error);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $campos = ['nome', 'cpf', 'rg', 'cep', 'rua', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'celular', 'email'];
+    $dados = [];
+    foreach ($campos as $campo) {
+        $dados[$campo] = trim((string) ($_POST[$campo] ?? ''));
     }
-}
+    $senha = (string) ($_POST['senha'] ?? '');
 
-// Criar tabela se não existir
-$createTableQueryAdmin = "CREATE TABLE IF NOT EXISTS administradores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(20) NOT NULL UNIQUE,
-    rg VARCHAR(20) NOT NULL,
-    cep VARCHAR(10) NOT NULL,
-    rua VARCHAR(100) NOT NULL,
-    numero VARCHAR(10) NOT NULL,
-    complemento VARCHAR(50),
-    bairro VARCHAR(50) NOT NULL,
-    cidade VARCHAR(50) NOT NULL,
-    uf VARCHAR(2) NOT NULL,
-    celular VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL
-)";
-
-if (!$conn->query($createTableQueryAdmin)) {
-    die("Erro ao criar a tabela de administradores: " . $conn->error);
-}
-
-// Inserir dados se o formulário for enviado
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nome = $_POST['nome'];
-    $cpf = $_POST['cpf'];
-    $rg = $_POST['rg'];
-    $cep = $_POST['cep'];
-    $rua = $_POST['rua'];
-    $numero = $_POST['numero'];
-    $complemento = $_POST['complemento'];
-    $bairro = $_POST['bairro'];
-    $cidade = $_POST['cidade'];
-    $uf = $_POST['uf'];
-    $celular = $_POST['celular']; 
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Segurança
-
-    if (!empty($cpf) && !empty($email) && !empty($celular)) {
-        // Preparar e executar a query
-        $stmtAdmin = $conn->prepare("INSERT INTO administradores (nome, cpf, rg, cep, rua, numero, complemento, bairro, cidade, uf, celular, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmtAdmin->bind_param("sssssssssssss", $nome, $cpf, $rg, $cep, $rua, $numero, $complemento, $bairro, $cidade, $uf, $celular, $email, $senha);
-
-        if ($stmtAdmin->execute()) {
-            echo "<script>alert('Cadastro realizado com sucesso!');</script>";
-        } else {
-            echo "<script>alert('Erro ao cadastrar: " . $stmtAdmin->error . "');</script>";
-        }
-
-        $stmtAdmin->close();
+    if (!$cadastroInicial) {
+        $mensagem = 'O cadastro público de administradores está encerrado. Faça login.';
+    } elseif (!hash_equals($chaveConfigurada, (string) ($_POST['setup_key'] ?? ''))) {
+        $mensagem = 'Chave de configuração inválida.';
+    } elseif (in_array('', array_diff_key($dados, ['complemento' => true]), true) || $senha === '') {
+        $mensagem = 'Preencha todos os campos obrigatórios.';
+    } elseif (!filter_var($dados['email'], FILTER_VALIDATE_EMAIL)) {
+        $mensagem = 'Informe um e-mail válido.';
     } else {
-        echo "<script>alert('Por favor, preencha todos os campos obrigatórios.');</script>";
+        try {
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare(
+                'INSERT INTO administradores (nome, cpf, rg, cep, rua, numero, complemento, bairro, cidade, uf, celular, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            );
+            $stmt->bind_param(
+                'sssssssssssss',
+                $dados['nome'],
+                $dados['cpf'],
+                $dados['rg'],
+                $dados['cep'],
+                $dados['rua'],
+                $dados['numero'],
+                $dados['complemento'],
+                $dados['bairro'],
+                $dados['cidade'],
+                $dados['uf'],
+                $dados['celular'],
+                $dados['email'],
+                $senhaHash
+            );
+            $stmt->execute();
+            $stmt->close();
+            $mensagem = 'Cadastro realizado com sucesso.';
+            $tipoMensagem = 'success';
+            $cadastroInicial = false;
+        } catch (mysqli_sql_exception $exception) {
+            if ((int) $exception->getCode() === 1062) {
+                $mensagem = 'CPF ou e-mail já cadastrado.';
+            } else {
+                error_log($exception->getMessage());
+                $mensagem = 'Não foi possível concluir o cadastro. Tente novamente.';
+            }
+        }
     }
 }
 
@@ -84,27 +70,35 @@ $conn->close();
 <head>
   <meta charset="UTF-8" />
     <meta name="color-scheme" content="light dark">
-    <script src="js/lightmode.js"></script>
-    <link rel="stylesheet" href="css/global.css">
+    <script src="../js/lightmode.js"></script>
+    <link rel="stylesheet" href="../css/global.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cadastro</title>
-  <link rel="stylesheet" href="css/cadastroadm.css" />
-  <link rel="stylesheet" href="css/fontes.css">
+  <link rel="stylesheet" href="../css/cadastroadm.css" />
+  <link rel="stylesheet" href="../css/fontes.css">
 </head>
 <body class="page-auth admin-registration">
     <div class="site-toolbar">
-        <a class="brand" href="index.html" aria-label="Arcana — início">ARCANA</a>
+        <a class="brand" href="../index.html" aria-label="Arcana — início">ARCANA</a>
         <div class="theme-controls" role="group" aria-label="Aparência">
             <button type="button" class="theme-toggle" id="lightModeToggle" aria-label="Ativar modo escuro" aria-pressed="false">Modo escuro</button>
-            <button type="button" class="theme-system" data-theme-system aria-label="Usar tema do sistema" aria-pressed="true">Sistema</button>
         </div>
     </div>
   <div class="container">
     <h1>Cadastro</h1>
     <p class="subtitulo">Preencha seus dados</p>
 
-    <form action="" method="POST" id="formCadastro">
+    <?php if ($mensagem !== ''): ?>
+      <div class="message <?= htmlspecialchars($tipoMensagem, ENT_QUOTES, 'UTF-8') ?>">
+        <?= htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') ?>
+      </div>
+    <?php endif; ?>
 
+    <?php if ($cadastroInicial): ?>
+    <form action="" method="POST" id="formCadastro" onsubmit="return TestaCPF(document.getElementById('cpf').value)">
+
+      <div class="form-field"><label for="setup-key">Chave de configuração</label>
+            <input id="setup-key" type="password" name="setup_key" autocomplete="off" required /></div>
       <div class="form-field"><label for="campo-nome">Nome</label>
             <input id="campo-nome" type="text" name="nome" placeholder="Nome" required /></div>
       <div class="form-field"><label for="cpf">CPF</label>
@@ -149,22 +143,23 @@ $conn->close();
       <button type="submit">Cadastrar</button>
 
     </form>
+    <?php else: ?>
+      <a href="loginAdm.php" class="link">Ir para o login de administrador</a>
+    <?php endif; ?>
   </div>
 
   <script>
     function TestaCPF(strCPF) {
-      var Soma;
-      var Resto;
-      Soma = 0;
+      let Soma = 0;
+      let Resto;
       strCPF = strCPF.replace(/[^\d]+/g, '');
 
       if (strCPF.length !== 11 || /^(\d)\1+$/.test(strCPF)) {
         alert("CPF Inválido");
-        event.preventDefault(); // Impede o envio do formulário
         return false;
       }
 
-      for (i = 1; i <= 9; i++)
+      for (let i = 1; i <= 9; i++)
         Soma += parseInt(strCPF.substring(i - 1, i)) * (11 - i);
 
       Resto = (Soma * 10) % 11;
@@ -172,12 +167,11 @@ $conn->close();
       if ((Resto === 10) || (Resto === 11)) Resto = 0;
       if (Resto !== parseInt(strCPF.substring(9, 10))) {
         alert("CPF Inválido");
-        event.preventDefault(); // Impede o envio do formulário
         return false;
       }
 
       Soma = 0;
-      for (i = 1; i <= 10; i++)
+      for (let i = 1; i <= 10; i++)
         Soma += parseInt(strCPF.substring(i - 1, i)) * (12 - i);
 
       Resto = (Soma * 10) % 11;
@@ -185,7 +179,6 @@ $conn->close();
       if ((Resto === 10) || (Resto === 11)) Resto = 0;
       if (Resto !== parseInt(strCPF.substring(10, 11))) {
         alert("CPF Inválido");
-        event.preventDefault(); // Impede o envio do formulário
         return false;
       }
 

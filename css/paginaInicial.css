@@ -1,9 +1,66 @@
-.page-story { background: radial-gradient(ellipse at center, var(--glow), transparent 70%), var(--bg); }
-.text-container { display: grid; align-items: center; width: min(800px, calc(100% - 40px)); min-height: calc(100svh - 240px); padding-block: 60px; margin: auto; text-align: center; }
-.text-container .text { grid-area: 1 / 1; visibility: hidden; opacity: 0; font-size: clamp(1.5rem, 4vw, 2.6rem); line-height: 1.4; transition: opacity 600ms ease; }
-.text-container .text.visible { visibility: visible; opacity: 1; }
-#start-button { display: flex; width: fit-content; min-width: 180px; margin: 0 auto 48px; padding: 16px 32px; }
-.spark { position: fixed; width: 4px; height: 4px; background: var(--brand); border-radius: 50%; pointer-events: none; animation: spark-animation 1.5s ease-out forwards; }
-@keyframes spark-animation { to { transform: translate(calc(var(--dx) * 100px), calc(var(--dy) * 100px)); opacity: 0; } }
-.page-transition { position: fixed; inset: 0; background: var(--bg); z-index: 100; pointer-events: none; opacity: 1; transition: opacity 600ms ease; }
-.page-transition.hidden { opacity: 0; }
+.page-story {
+    background: radial-gradient(ellipse at center, var(--glow), transparent 70%), var(--bg);
+}
+
+.text-container {
+    display: grid;
+    align-items: center;
+    width: min(800px, calc(100% - 40px));
+    min-height: calc(100svh - 240px);
+    padding-block: 60px;
+    margin: auto;
+    text-align: center;
+}
+
+.text-container .text {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
+    line-height: 1.4;
+    transition: opacity 600ms ease;
+}
+
+.text-container .text.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+#start-button {
+    display: flex;
+    width: fit-content;
+    min-width: 180px;
+    margin: 0 auto 48px;
+    padding: 16px 32px;
+}
+
+.spark {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--brand);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: spark-animation 1.5s ease-out forwards;
+}
+
+@keyframes spark-animation {
+    to {
+        transform: translate(calc(var(--dx) * 100px), calc(var(--dy) * 100px));
+        opacity: 0;
+    }
+}
+
+.page-transition {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 100;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 600ms ease;
+}
+
+.page-transition.hidden {
+    opacity: 0;
+}
